@@ -1,0 +1,19 @@
+body {
+	margin: 0;
+}
+main {
+	min-height: 80vh;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.flex {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+.MuiDrawer-paper {
+	width: 250px !important;
+}

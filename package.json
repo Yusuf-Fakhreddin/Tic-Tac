@@ -1,0 +1,33 @@
+{
+	"name": "caribbean",
+	"version": "1.0.0",
+	"description": "MERN E-Commerce",
+	"main": "server.js",
+	"type": "module",
+	"scripts": {
+		"server": "nodemon backend/server",
+		"client": "npm start --prefix frontend",
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"data:import": "node backend/dummyData/seeder",
+		"data:destroy": "node backend/dummyData/seeder -d"
+	},
+	"author": "Yusuf Fakhreddin",
+	"license": "MIT",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"chalk": "^4.1.2",
+		"cors": "^2.8.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"express-async-handler": "^1.1.4",
+		"google-auth-library": "^7.6.2",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.13.3",
+		"morgan": "^1.10.0",
+		"nodemailer": "^6.6.3"
+	},
+	"devDependencies": {
+		"concurrently": "^6.2.0",
+		"nodemon": "^2.0.12"
+	}
+}
