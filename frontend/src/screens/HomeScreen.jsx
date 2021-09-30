@@ -1,26 +1,44 @@
-import React from "react";
-import { Grid, Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import Product from "../components/Product";
 import products from "../products";
+import { useListOfProducts } from "../Queries/ProductsQueries";
 
 const HomeScreen = () => {
-	return (
-		<>
-			<Typography variant="h3" marginY="10px">
-				Latest Products
-			</Typography>
-			<Grid container rowSpacing={2} spacing={2} justifyContent="center">
-				{React.Children.toArray(
-					products.map((product) => (
-						<Grid item xs={10} sm="auto">
-							{" "}
-							<Product product={product} />
-						</Grid>
-					))
-				)}
-			</Grid>
-		</>
-	);
+	const [data, isLoading] = useListOfProducts();
+	useEffect(() => {
+		console.log(data, isLoading);
+	}, [data]);
+
+	if (isLoading)
+		return (
+			<div className="flex">
+				<CircularProgress
+					size="3.2em"
+					sx={{
+						margin: "15px auto",
+					}}
+				/>
+			</div>
+		);
+	else
+		return (
+			<>
+				<Typography variant="h3" marginY="10px">
+					Latest Products
+				</Typography>
+				<Grid container rowSpacing={2} spacing={2} justifyContent="center">
+					{React.Children.toArray(
+						data.products.map((product) => (
+							<Grid item xs={10} sm="auto">
+								{" "}
+								<Product product={product} />
+							</Grid>
+						))
+					)}
+				</Grid>
+			</>
+		);
 };
 
 export default HomeScreen;
