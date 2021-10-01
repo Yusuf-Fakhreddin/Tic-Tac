@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import Product from "../components/Product";
-import products from "../products";
 import { useListOfProducts } from "../Queries/ProductsQueries";
 
 const HomeScreen = () => {

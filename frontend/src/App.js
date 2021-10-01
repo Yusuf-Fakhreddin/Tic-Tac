@@ -11,6 +11,7 @@ import ProductScreen from "./screens/ProductScreen";
 import ScrollTop from "./components/BackToTop";
 import { Fab } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import CartScreen from "./screens/CartScreen";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -34,6 +35,7 @@ function App() {
 						<Container>
 							<Switch>
 								<Route path="/product/:id" component={ProductScreen} />
+								<Route path="/cart" component={CartScreen} />
 								<Route path="/" component={HomeScreen} />
 							</Switch>
 						</Container>

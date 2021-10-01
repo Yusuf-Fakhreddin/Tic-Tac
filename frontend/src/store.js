@@ -16,6 +16,7 @@ import {
 	userLoginReducer,
 	userRegisterReducer,
 } from "./reducers/authReducers";
+import { cartReducer } from "./reducers/cartReducers";
 
 const reducer = combineReducers({
 	// part of state : its reducer
@@ -30,6 +31,7 @@ const reducer = combineReducers({
 	userList: userListReducer,
 	userDelete: userDeleteReducer,
 	userUpdate: userUpdateReducer,
+	cartState: cartReducer,
 });
 
 // initializing the userinfo state from what's saved in local storage or nothing
@@ -37,7 +39,18 @@ const userInfoFromStorage = localStorage.getItem("UserInfo")
 	? JSON.parse(localStorage.getItem("UserInfo"))
 	: null;
 
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+	? JSON.parse(localStorage.getItem("cartItems"))
+	: [];
+
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+	? JSON.parse(localStorage.getItem("shippingAddress"))
+	: {};
 const initialState = {
+	cartState: {
+		cartItems: cartItemsFromStorage,
+		shippingAddress: shippingAddressFromStorage,
+	},
 	userLogin: { userInfo: userInfoFromStorage },
 };
 

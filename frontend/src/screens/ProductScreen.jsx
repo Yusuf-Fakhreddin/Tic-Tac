@@ -1,22 +1,13 @@
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {
-	Button,
-	CircularProgress,
-	Container,
-	Divider,
-	Grid,
-	List,
-	ListItem,
-	ListItemText,
-	Rating,
-	Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { NavLink } from "react-router-dom";
-import products from "../products";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { useListProductDetailsById } from "../Queries/ProductsQueries";
+import ProductInfo from "../components/ProductInfo";
+import ProductImageBox from "../components/ProductImageBox";
+import AddToCartBox from "../components/AddToCartBox";
 const ProductScreen = ({ match }) => {
 	// const product = products.find((p) => p._id === match.params.id);
 	const { id } = useParams();
@@ -54,56 +45,13 @@ const ProductScreen = ({ match }) => {
 				>
 					<Grid item xs={10} md={6}>
 						{" "}
-						<Box
-							component="img"
-							sx={{
-								maxWidth: "100%",
-								// height: 233,
-								// width: 350,
-								// maxHeight: { xs: 233, md: 167 },
-								// maxWidth: { xs: 350, md: 250 },
-							}}
-							alt="The house from the offer."
-							src={product.image}
-						/>{" "}
+						<ProductImageBox productImage={product.image} />
 					</Grid>
-					<Grid item xs={10} md={6}>
-						<List>
-							<ListItem>
-								<ListItemText>
-									<Typography variant="h5" component="h1">
-										{product.name}
-									</Typography>
-								</ListItemText>
-							</ListItem>
-							<Divider />
-							<ListItem>
-								<ListItemText>
-									<Typography variant="h6" component="h3">
-										{product.price} EGP
-									</Typography>
-								</ListItemText>
-							</ListItem>
-							<Divider />
-							<Box className="flex" padding={1.5}>
-								<Typography variant="body2" component="div">
-									<Rating
-										name="size-medium"
-										precision={0.5}
-										readOnly
-										defaultValue={product.rating}
-									/>{" "}
-								</Typography>
-								<Typography variant="body2" component="div">
-									{product.numReviews} Reviews{" "}
-								</Typography>
-							</Box>
-							<Divider />
-
-							<ListItem>
-								<ListItemText primary={product.description} />
-							</ListItem>
-						</List>
+					<Grid item xs={10} md={3}>
+						<ProductInfo product={product} />
+					</Grid>
+					<Grid item xs={10} md={3}>
+						<AddToCartBox product={product} />
 					</Grid>
 				</Grid>
 			</Box>
