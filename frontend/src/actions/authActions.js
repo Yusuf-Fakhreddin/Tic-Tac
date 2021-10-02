@@ -23,9 +23,7 @@ import {
 	USER_DETAILS_RESET,
 	USER_LIST_RESET,
 } from "../constants/userConstants";
-import http from "../htppService";
-
-const baseURL = process.env.baseURL;
+import http from "../httpService";
 
 export const googleOauth = (tokenId) => {
 	return async (dispatch) => {
@@ -106,8 +104,6 @@ export const facebookOauth = (userID, accessToken) => {
 };
 
 export const login = (email, password) => async (dispatch) => {
-	console.log("login");
-
 	try {
 		dispatch({
 			type: USER_LOGIN_REQUEST,

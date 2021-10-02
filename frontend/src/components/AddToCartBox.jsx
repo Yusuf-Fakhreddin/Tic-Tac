@@ -3,19 +3,17 @@ import {
 	Button,
 	Divider,
 	FormControl,
-	FormHelperText,
 	InputLabel,
 	List,
 	ListItem,
 	ListItemText,
 	MenuItem,
-	Rating,
 	Select,
 	Typography,
 } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { addToCart } from "../actions/cartActions";
 

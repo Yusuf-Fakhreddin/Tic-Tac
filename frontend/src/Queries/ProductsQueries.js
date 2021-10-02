@@ -26,7 +26,7 @@ const getListOfProducts = async (keyword = "", pageNumber = "") => {
 export const useListOfProducts = (keyword = "", pageNumber = "") => {
 	const { data, error, isLoading, isError } = useQuery(
 		["listProducts", keyword, pageNumber],
-		getListOfProducts
+		() => getListOfProducts(keyword, pageNumber)
 	);
 	return [data, isLoading];
 };

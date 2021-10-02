@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
 		password: {
 			type: String,
 			required: [true, "Please add a password"],
-			minlength: 6,
+			minlength: [6, "Password minimum length is 6"],
 			// can not be retrieved by normal querying of users
 			select: false,
 		},
@@ -40,7 +40,9 @@ const userSchema = new mongoose.Schema(
 
 // schema method we can access with instantiated user obj
 userSchema.methods.matchPassword = async function (enteredPassword) {
-	return await bcrypt.compare(enteredPassword, this.password);
+	const user = await User.findOne({ email: this.email }).select("password");
+
+	return await bcrypt.compare(enteredPassword, user.password);
 };
 
 // before we save we encrypt the password

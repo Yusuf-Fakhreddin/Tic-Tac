@@ -4,10 +4,10 @@ import Product from "../components/Product";
 import { useListOfProducts } from "../Queries/ProductsQueries";
 
 const HomeScreen = () => {
-	const [data, isLoading] = useListOfProducts();
+	const [data, isLoading] = useListOfProducts("", "");
 	useEffect(() => {
-		console.log(data, isLoading);
-	}, [data]);
+		document.title = "Caribbean";
+	}, []);
 
 	if (isLoading)
 		return (

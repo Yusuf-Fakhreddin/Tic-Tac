@@ -52,7 +52,7 @@ const CartScreen = () => {
 			<Grid
 				container
 				justifyContent="center"
-				alignItems="center"
+				// alignItems="center"
 				textAlign="center"
 				rowSpacing={3}
 				spacing={2}

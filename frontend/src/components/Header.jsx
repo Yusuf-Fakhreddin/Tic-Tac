@@ -2,16 +2,16 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginIcon from "@mui/icons-material/Login";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
 import { useEffect, useState } from "react";
-import { Fab } from "@mui/material";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
 	Drawer,
@@ -21,15 +21,30 @@ import {
 	ListItemText,
 } from "@mui/material";
 import React from "react";
-import ScrollTop from "./BackToTop";
-
-let list = [
-	{ label: "Cart", href: "/cart", icon: <ShoppingCartIcon /> },
-	{ label: "Login", href: "/login", icon: <LoginIcon /> },
-];
+import HeaderMenu from "./HeaderMenu";
+import { logout } from "../actions/authActions";
 
 const Header = () => {
+	const dispatch = useDispatch();
+
 	const [displayDrawer, setdisplayDrawer] = useState(false);
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+	const [list, setList] = useState([]);
+	useEffect(() => {
+		if (!userInfo) {
+			setList([
+				{ label: "Cart", href: "/cart", icon: <ShoppingCartIcon /> },
+				{ label: "Login", href: "/login", icon: <LoginIcon /> },
+			]);
+		} else {
+			setList([
+				{ label: "Profile", href: "/profile", icon: <AccountCircleIcon /> },
+				{ label: "Cart", href: "/cart", icon: <ShoppingCartIcon /> },
+				{ label: "Logout", href: "/", icon: <LogoutIcon /> },
+			]);
+		}
+	}, [userInfo]);
 
 	return (
 		<header>
@@ -43,9 +58,12 @@ const Header = () => {
 								button
 								component={NavLink}
 								to={item.href}
-								onClick={() => setdisplayDrawer(false)}
+								onClick={() => {
+									setdisplayDrawer(false);
+									if (item.label === "Logout") dispatch(logout());
+								}}
 							>
-								<ListItemIcon>{item.icon}</ListItemIcon>
+								{item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
 								<ListItemText primary={item.label} />
 							</ListItem>
 						))
@@ -75,20 +93,7 @@ const Header = () => {
 						<SearchInput />
 						<Box sx={{ flexGrow: 1 }} />
 
-						<Box className="flex" sx={{ display: { xs: "none", md: "flex" } }}>
-							{/* to divide into two sides */}
-							<Box sx={{ flexGrow: 1 }} />
-							<NavLink to="/cart">
-								<Button color="inherit" startIcon={<ShoppingCartIcon />}>
-									Cart
-								</Button>
-							</NavLink>
-							<NavLink to="/login">
-								<Button startIcon={<LoginIcon />} color="inherit">
-									Login
-								</Button>
-							</NavLink>
-						</Box>
+						<HeaderMenu userInfo={userInfo} />
 					</Toolbar>
 				</AppBar>
 			</Box>

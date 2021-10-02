@@ -1,3 +1,4 @@
+import { USER_LOGIN_SUCCESS } from "../constants/authConstants";
 import {
 	USER_DETAILS_REQUEST,
 	USER_DETAILS_SUCCESS,
@@ -17,8 +18,8 @@ import {
 	USER_UPDATE_SUCCESS,
 	USER_UPDATE_FAIL,
 } from "../constants/userConstants";
-import http from "../htppService";
-const baseURL = process.env.baseURL;
+import http from "../httpService";
+// const baseURL = process.env.baseURL;
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
 	try {
@@ -37,7 +38,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 				Authorization: `Bearer ${userInfo.token}`,
 			},
 		};
-		const { data } = await http.get(baseURL + `/api/users/${id}`, config);
+		const { data } = await http.get(`/api/users/${id}`, config);
 
 		dispatch({
 			type: USER_DETAILS_SUCCESS,
@@ -71,16 +72,20 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 				Authorization: `Bearer ${userInfo.token}`,
 			},
 		};
-		const { data } = await http.put(
-			baseURL + `/api/users/profile`,
-			user,
-			config
-		);
+		const { data } = await http.put(`/api/users/profile`, user, config);
 
 		dispatch({
 			type: USER_UPDATE_PROFILE_SUCCESS,
 			payload: data,
 		});
+		if (data._id === userInfo._id) {
+			dispatch({
+				type: USER_LOGIN_SUCCESS,
+				payload: data,
+			});
+			data.token = userInfo.token;
+			localStorage.setItem("UserInfo", JSON.stringify(data));
+		}
 	} catch (error) {
 		dispatch({
 			type: USER_UPDATE_PROFILE_FAIL,
@@ -108,7 +113,7 @@ export const listUsers = () => async (dispatch, getState) => {
 				Authorization: `Bearer ${userInfo.token}`,
 			},
 		};
-		const { data } = await http.get(baseURL + `/api/users`, config);
+		const { data } = await http.get(`/api/users`, config);
 
 		dispatch({
 			type: USER_LIST_SUCCESS,
@@ -142,7 +147,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 			},
 		};
 
-		await http.delete(baseURL + `/api/users/${id}`, config);
+		await http.delete(`/api/users/${id}`, config);
 
 		dispatch({
 			type: USER_DELETE_SUCCESS,
@@ -175,11 +180,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
 			},
 		};
 
-		const { data } = await http.put(
-			baseURL + `/api/users/${user._id}`,
-			user,
-			config
-		);
+		const { data } = await http.put(`/api/users/${user._id}`, user, config);
 
 		dispatch({
 			type: USER_UPDATE_SUCCESS,

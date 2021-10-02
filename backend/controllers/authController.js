@@ -109,13 +109,14 @@ const facebookController = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
 	// getting the json data sent through a form in the request body but after initializing the express.json() middleware
 	const { email, password } = req.body;
+	console.log(chalk.yellow.inverse(email, password));
 
 	// find user with email that matches this email so the user exists
 	const user = await User.findOne({ email });
 
 	// checking the password is right
 	if (user && (await user.matchPassword(password))) {
-		res.json({
+		res.status(200).json({
 			_id: user._id,
 			name: user.name,
 			email: user.email,
@@ -126,8 +127,6 @@ const login = asyncHandler(async (req, res) => {
 		res.status(401);
 		throw new Error("Inavalid email or password");
 	}
-
-	res.send({ email, password });
 });
 
 // @desc    Register a new user
