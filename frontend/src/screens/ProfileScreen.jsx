@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
+// import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
@@ -17,12 +17,11 @@ import {
 } from "@mui/material";
 
 import { Box } from "@mui/system";
+import { useUpdateUserProfile } from "../Queries/UserQueries";
 
 const ProfileScreen = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const userDetails = useSelector((state) => state.userDetails);
-	const { loading, error, user } = userDetails;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -47,11 +46,18 @@ const ProfileScreen = () => {
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 	});
-
-	const onSubmit = (data) => {
+	const [
+		updateUserProfile,
+		updateLoading,
+		updateSuccess,
+		updateIsError,
+		updateError,
+	] = useUpdateUserProfile();
+	const onSubmit = async (data) => {
 		console.log(data);
-		let { name, email, password } = data;
-		dispatch(updateUserProfile({ name, email, password }));
+		// let { name, email, password } = data;
+		// dispatch(updateUserProfile({ name, email, password }));
+		await updateUserProfile({ user: data, token: userInfo.token });
 	};
 	return (
 		<Box
@@ -65,10 +71,17 @@ const ProfileScreen = () => {
 				margin: "25px auto",
 			}}
 		>
-			{loading && <CircularProgress />}
-			{error && (
+			{updateLoading && <CircularProgress />}
+			{updateIsError && (
 				<Stack sx={{ width: "100%" }} spacing={2}>
-					<Alert severity="error">{error}</Alert>
+					<Alert severity="error">{updateError.message}</Alert>
+				</Stack>
+			)}
+			{updateSuccess && (
+				<Stack sx={{ width: "100%" }} spacing={2}>
+					<Alert severity="success">
+						Your profile information was successfuly updated
+					</Alert>
 				</Stack>
 			)}
 			<Typography variant="h4" component="h1" mt={3}>

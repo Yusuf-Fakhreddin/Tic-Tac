@@ -20,23 +20,18 @@ import {
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import React from "react";
 import ProductImageBox from "../components/ProductImageBox";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 const CartScreen = () => {
-	const history = useHistory();
 	const cart = useSelector((state) => state.cartState);
 	const { cartItems } = cart;
 	const dispatch = useDispatch();
 
 	const removeFromCartHandler = (id) => {
 		dispatch(removeFromCart(id));
-	};
-	const checkoutHandler = () => {
-		history.push("/login?redirect=shipping");
 	};
 
 	return (
@@ -148,13 +143,8 @@ const CartScreen = () => {
 							</ListItem>
 							<Divider />
 
-							<ListItem>
-								<Button
-									fullWidth
-									variant="contained"
-									disableElevation
-									onClick={checkoutHandler}
-								>
+							<ListItem component={NavLink} to="/login?redirect=shipping">
+								<Button fullWidth variant="contained" disableElevation>
 									Proceed To Checkout
 								</Button>
 							</ListItem>

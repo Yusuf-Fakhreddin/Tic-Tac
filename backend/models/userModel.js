@@ -41,7 +41,6 @@ const userSchema = new mongoose.Schema(
 // schema method we can access with instantiated user obj
 userSchema.methods.matchPassword = async function (enteredPassword) {
 	const user = await User.findOne({ email: this.email }).select("password");
-
 	return await bcrypt.compare(enteredPassword, user.password);
 };
 

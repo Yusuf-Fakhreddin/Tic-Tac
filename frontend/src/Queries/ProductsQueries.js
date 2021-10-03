@@ -1,6 +1,8 @@
 import http from "../httpService";
 import { useMutation, useQuery } from "react-query";
 
+// <----------- Queries ---------->
+
 const getProductDetailsById = async (productId) => {
 	console.log(productId, "productId");
 	const { data } = await http.get(`/api/products/${productId}`);
@@ -31,7 +33,22 @@ export const useListOfProducts = (keyword = "", pageNumber = "") => {
 	return [data, isLoading];
 };
 
-const deleteProductById = async (id, token) => {
+const getTopProducts = async () => {
+	const { data } = await http.get(`/api/products/top`);
+	return data;
+};
+
+export const useTopProducts = () => {
+	const { data, error, isLoading, isError } = useQuery(
+		["topProducts"],
+		getTopProducts
+	);
+	return [data, isLoading];
+};
+
+// <----------- Mutations ---------->
+
+const deleteProductById = async ({ id, token }) => {
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -48,7 +65,7 @@ export const useDeleteProduct = () => {
 	// on the page to call the action : destruct mutateAsync and call it: await mutateAsync(id,token)
 };
 
-const createNewProduct = async (product, token) => {
+const createNewProduct = async ({ product, token }) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -63,7 +80,7 @@ export const useCreateProduct = () => {
 	return [mutateAsync, isLoading];
 };
 
-const updateProduct = async (product, token) => {
+const updateProduct = async ({ product, token }) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -78,20 +95,7 @@ export const useUpdateProduct = () => {
 	return [mutateAsync, isLoading];
 };
 
-const getTopProducts = async () => {
-	const { data } = await http.get(`/api/products/top`);
-	return data;
-};
-
-export const useTopProducts = () => {
-	const { data, error, isLoading, isError } = useQuery(
-		["topProducts"],
-		getTopProducts
-	);
-	return [data, isLoading];
-};
-
-const createProductReview = async (productId, review, token) => {
+const createProductReview = async ({ productId, review, token }) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",

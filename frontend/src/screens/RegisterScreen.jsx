@@ -68,7 +68,7 @@ const RegisterScreen = () => {
 				borderRadius: "5px",
 				padding: "15px",
 				maxWidth: "60%",
-				textAlign: "center",
+				textAlign: "left",
 				margin: "25px auto",
 			}}
 		>
@@ -79,8 +79,17 @@ const RegisterScreen = () => {
 				</Stack>
 			)}
 			<Box marginY={3}>
+				<Typography variant="h4" component="h1" mt={3}>
+					Sign Up
+				</Typography>
 				<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
-					<Grid container justifyContent="center" rowSpacing={3} spacing={2}>
+					<Grid
+						container
+						justifyContent="center"
+						textAlign="center"
+						rowSpacing={3}
+						spacing={2}
+					>
 						<Grid item xs={10} md={10}>
 							<TextField
 								fullWidth

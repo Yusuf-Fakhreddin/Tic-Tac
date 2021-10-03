@@ -23,7 +23,6 @@ const LoginScreen = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const redirect = location.search ? location.search.split("=")[1] : "/";
-
 	const history = useHistory();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { loading, error, userInfo } = userLogin;
@@ -67,8 +66,17 @@ const LoginScreen = () => {
 				</Stack>
 			)}
 			<Box marginY={3}>
+				<Typography variant="h4" component="h1" mt={3}>
+					Sign In
+				</Typography>
 				<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-					<Grid container justifyContent="center" rowSpacing={3} spacing={2}>
+					<Grid
+						container
+						justifyContent="center"
+						textAlign="left"
+						rowSpacing={3}
+						spacing={2}
+					>
 						<Grid item xs={10} md={10}>
 							<TextField
 								fullWidth

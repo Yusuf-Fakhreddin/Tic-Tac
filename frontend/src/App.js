@@ -15,6 +15,9 @@ import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen";
+import PaymentMethodScreen from "./screens/PaymentMethodScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -42,6 +45,9 @@ function App() {
 								<Route path="/login" component={LoginScreen} />
 								<Route path="/register" component={RegisterScreen} />
 								<Route path="/profile" component={ProfileScreen} />
+								<Route path="/shipping" component={ShippingScreen} />
+								<Route path="/paymentmethod" component={PaymentMethodScreen} />
+								<Route path="/placeorder" component={PlaceOrderScreen} />
 								<Route path="/" component={HomeScreen} />
 							</Switch>
 						</Container>

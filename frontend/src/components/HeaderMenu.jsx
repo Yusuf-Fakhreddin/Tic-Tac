@@ -58,22 +58,14 @@ const HeaderMenu = ({ userInfo }) => {
 						TransitionComponent={Fade}
 					>
 						<NavLink to="/profile">
-							<MenuItem
-								startIcon={<AccountCircleIcon />}
-								sx={{ width: "180px" }}
-								onClick={handleClose}
-							>
+							<MenuItem sx={{ width: "180px" }} onClick={handleClose}>
 								<ListItemIcon>
 									<AccountCircleIcon />{" "}
 								</ListItemIcon>
 								Profile
 							</MenuItem>
 						</NavLink>
-						<MenuItem
-							startIcon={<LogoutIcon />}
-							sx={{ width: "180px" }}
-							onClick={logoutHandler}
-						>
+						<MenuItem sx={{ width: "180px" }} onClick={logoutHandler}>
 							<ListItemIcon>
 								<LogoutIcon />{" "}
 							</ListItemIcon>
@@ -95,7 +87,7 @@ const HeaderMenu = ({ userInfo }) => {
 			)}
 			{!userInfo && (
 				<NavLink to="/login">
-					<Button startIcon={<LoginIcon />} color="inherit">
+					<Button color="inherit" startIcon={<LoginIcon />}>
 						Login
 					</Button>
 				</NavLink>
