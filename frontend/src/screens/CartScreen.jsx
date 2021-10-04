@@ -22,17 +22,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import React from "react";
-import ProductImageBox from "../components/ProductImageBox";
-import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import CartItemsTable from "../components/CartItemsTable";
+
 const CartScreen = () => {
 	const cart = useSelector((state) => state.cartState);
 	const { cartItems } = cart;
-	const dispatch = useDispatch();
-
-	const removeFromCartHandler = (id) => {
-		dispatch(removeFromCart(id));
-	};
 
 	return (
 		<Box paddingTop={3}>
@@ -54,71 +48,7 @@ const CartScreen = () => {
 				mt={3}
 			>
 				<Grid item xs={10} md={8}>
-					<TableContainer component={Paper}>
-						<Table sx={{ minWidth: "100%" }} aria-label="simple table">
-							<TableHead>
-								<TableRow>
-									<TableCell align="right">Product Image</TableCell>
-									<TableCell>Product Name</TableCell>
-									<TableCell align="right">Price (EGP)</TableCell>
-									<TableCell align="right">Quantity</TableCell>
-									<TableCell align="right">Remove</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{cartItems.map((row) => (
-									<TableRow
-										key={row.name}
-										sx={{
-											"&:last-child td, &:last-child th": { border: 0 },
-										}}
-									>
-										<TableCell
-											sx={{ maxHeight: "50px", maxWidth: "50px" }}
-											component="th"
-											scope="row"
-										>
-											<ProductImageBox productImage={row.image} />
-										</TableCell>
-										<TableCell component="th" scope="row">
-											{row.name}
-										</TableCell>
-										<TableCell align="right">{row.price}</TableCell>
-										<TableCell align="right">
-											{" "}
-											<FormControl>
-												<Select
-													value={row.qty}
-													onChange={(e) =>
-														dispatch(
-															addToCart(row.product, Number(e.target.value))
-														)
-													}
-													displayEmpty
-												>
-													{React.Children.toArray(
-														[...Array(row.countInStock).keys()].map((x) => (
-															<MenuItem value={x + 1}>{x + 1}</MenuItem>
-														))
-													)}
-												</Select>
-											</FormControl>{" "}
-										</TableCell>
-										<TableCell align="right">
-											{" "}
-											<Button
-												sx={{ padding: "0", margin: "0" }}
-												color="error"
-												onClick={() => removeFromCartHandler(row.product)}
-											>
-												<RemoveShoppingCartIcon />{" "}
-											</Button>
-										</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
+					<CartItemsTable cartItems={cartItems} />
 				</Grid>
 				<Grid item xs={10} md={4}>
 					<Box sx={{ border: "1.5px solid #e0e0e0", borderRadius: "5px" }}>

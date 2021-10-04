@@ -1,13 +1,4 @@
-import {
-	Alert,
-	Button,
-	CircularProgress,
-	Divider,
-	Grid,
-	Stack,
-	TextField,
-	Typography,
-} from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -21,9 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { register as signUp } from "../actions/authActions";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
-import { savePaymentMethod, saveShippingAddress } from "../actions/cartActions";
+import { useHistory } from "react-router-dom";
+import { savePaymentMethod } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 
 const PaymentMethodScreen = () => {
@@ -34,7 +24,7 @@ const PaymentMethodScreen = () => {
 	const { userInfo } = userLogin;
 
 	const cart = useSelector((state) => state.cartState);
-	const { shippingAddress } = cart;
+	const { shippingAddress, paymentMethod } = cart;
 
 	if (!shippingAddress) {
 		history.push("/shipping");
@@ -49,7 +39,7 @@ const PaymentMethodScreen = () => {
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
 			// address: shippingAddress.address ? shippingAddress.address : "",
-			paymentMethod: "PayPal",
+			paymentMethod: paymentMethod ? paymentMethod : "Cash On Delivery",
 		},
 	});
 
@@ -93,7 +83,6 @@ const PaymentMethodScreen = () => {
 						<Grid item xs={10} md={10}>
 							<Controller
 								control={control}
-								defaultValue="PayPal"
 								name="paymentMethod"
 								as={
 									<FormControl
@@ -103,7 +92,11 @@ const PaymentMethodScreen = () => {
 										variant="standard"
 									>
 										<FormLabel component="legend">Select a Method</FormLabel>
-										<RadioGroup defaultValue="PayPal">
+										<RadioGroup
+											defaultValue={
+												paymentMethod ? paymentMethod : "Cash On Delivery"
+											}
+										>
 											<FormControlLabel
 												value="PayPal"
 												control={<Radio />}
@@ -115,12 +108,12 @@ const PaymentMethodScreen = () => {
 												label="Fawry"
 											/>
 											<FormControlLabel
-												value="VodafoneCash"
+												value="Vodafone Cash"
 												control={<Radio />}
 												label="Vodafone Cash"
 											/>
 											<FormControlLabel
-												value="CashOnDelivery"
+												value="Cash On Delivery"
 												control={<Radio />}
 												label="Cash On Delivery"
 											/>

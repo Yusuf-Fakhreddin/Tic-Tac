@@ -1,10 +1,7 @@
 import {
-	Alert,
 	Button,
-	CircularProgress,
-	Divider,
 	Grid,
-	Stack,
+	InputAdornment,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -16,8 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { register as signUp } from "../actions/authActions";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { saveShippingAddress } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 
@@ -34,7 +30,9 @@ const ShippingScreen = () => {
 	const validationSchema = Yup.object({
 		address: Yup.string().required("Required"),
 		city: Yup.string().required("Required"),
-		postalCode: Yup.string().required("Required"),
+		mobileNumber: Yup.string()
+			.required("Required")
+			.matches(/(01)[0-9]{9}/, "Please enter a valid egyptian mobile number"),
 		country: Yup.string().required("Required"),
 	});
 
@@ -42,9 +40,11 @@ const ShippingScreen = () => {
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
+			mobileNumber: shippingAddress.mobileNumber
+				? shippingAddress.mobileNumber
+				: "",
 			address: shippingAddress.address ? shippingAddress.address : "",
 			city: shippingAddress.city ? shippingAddress.city : "",
-			postalCode: shippingAddress.postalCode ? shippingAddress.postalCode : "",
 			country: shippingAddress.country ? shippingAddress.country : "",
 		},
 	});
@@ -56,9 +56,9 @@ const ShippingScreen = () => {
 
 	const onSubmit = (data) => {
 		console.log(data);
-		let { address, city, postalCode, country } = data;
-		dispatch(saveShippingAddress({ address, city, postalCode, country }));
-		history.push("/payment");
+		let { address, city, mobileNumber, country } = data;
+		dispatch(saveShippingAddress({ address, city, mobileNumber, country }));
+		history.push("/paymentmethod");
 	};
 
 	return (
@@ -85,6 +85,25 @@ const ShippingScreen = () => {
 						rowSpacing={3}
 						spacing={2}
 					>
+						{" "}
+						<Grid item xs={10} md={10}>
+							<TextField
+								fullWidth
+								inputRef={register}
+								error={errors.mobileNumber ? true : false}
+								label="Mobile Number"
+								name="mobileNumber"
+								id="mobileNumber"
+								// defaultValue="Hello World"
+								helperText={
+									errors.mobileNumber ? errors.mobileNumber.message : null
+								}
+								variant="filled"
+								startAdornment={
+									<InputAdornment position="start">Hello</InputAdornment>
+								}
+							/>
+						</Grid>
 						<Grid item xs={10} md={10}>
 							<TextField
 								fullWidth
@@ -108,21 +127,6 @@ const ShippingScreen = () => {
 								id="city"
 								// defaultValue="Hello World"
 								helperText={errors.city ? errors.city.message : null}
-								variant="filled"
-							/>
-						</Grid>
-						<Grid item xs={10} md={10}>
-							<TextField
-								fullWidth
-								inputRef={register}
-								error={errors.postalCode ? true : false}
-								label="Postal Code"
-								name="postalCode"
-								id="postalCode"
-								// defaultValue="Hello World"
-								helperText={
-									errors.postalCode ? errors.postalCode.message : null
-								}
 								variant="filled"
 							/>
 						</Grid>
