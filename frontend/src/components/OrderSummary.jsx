@@ -12,8 +12,11 @@ import {
 	Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { useCreateOrder } from "../Queries/OrderQueries";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
 
-const OrderSummary = ({ cart }) => {
+const OrderSummary = ({ cart, token }) => {
 	const { shippingAddress, paymentMethod, cartItems } = cart;
 
 	const addDecimals = (num) => {
@@ -26,18 +29,9 @@ const OrderSummary = ({ cart }) => {
 	let shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 20);
 	let totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);
 
-	const dispatch = useDispatch();
-	const placeOrderHandler = () => {
-		// dispatch(
-		// 	createOrder({
-		// 		orderItems: cartItems,
-		// 		shippingAddress: shippingAddress,
-		// 		paymentMethod: paymentMethod,
-		// 		itemsPrice: itemsPrice,
-		// 		shippingPrice: shippingPrice,
-		// 		totalPrice: totalPrice,
-		// 	})
-		// );
+	const [createOrder, createOrderLoading, createOrderSuccess, createdOrder] =
+		useCreateOrder();
+	const placeOrderHandler = async () => {
 		console.log(
 			cartItems,
 			shippingAddress,
@@ -46,10 +40,31 @@ const OrderSummary = ({ cart }) => {
 			shippingPrice,
 			totalPrice
 		);
+		await createOrder({
+			order: {
+				orderItems: cartItems,
+				shippingAddress: shippingAddress,
+				paymentMethod: paymentMethod,
+				itemsPrice: itemsPrice,
+				shippingPrice: shippingPrice,
+				totalPrice: totalPrice,
+			},
+			token: token,
+		});
 	};
+	const history = useHistory();
 
+	useEffect(() => {
+		if (createOrderSuccess) history.push(`/order/${createdOrder._id}`);
+	}, [createOrderSuccess, history]);
 	return (
-		<Box sx={{ border: "1.5px solid #e0e0e0", borderRadius: "5px" }}>
+		<Box
+			sx={{
+				border: "1.5px solid #e0e0e0",
+				borderRadius: "5px",
+				marginTop: "15px",
+			}}
+		>
 			<List>
 				<ListItem>
 					<ListItemText>

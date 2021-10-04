@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CartItemsTable from "../components/CartItemsTable";
@@ -19,7 +19,13 @@ const PlaceOrderScreen = () => {
 	} else if (!paymentMethod) {
 		history.push("/paymentmethod");
 	}
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
+	useEffect(() => {
+		document.title = "Place Order";
+		if (!userInfo) history.push("/login?redirect=placeorder");
+	}, [userInfo, history]);
 	return (
 		<Box
 			mt={3}
@@ -62,7 +68,7 @@ const PlaceOrderScreen = () => {
 						<CartItemsTable cartItems={cartItems} />
 					</Grid>{" "}
 					<Grid item xs={10} md={3}>
-						<OrderSummary cart={cart} />
+						<OrderSummary cart={cart} token={userInfo.token} />
 					</Grid>
 				</Grid>
 			</Box>{" "}

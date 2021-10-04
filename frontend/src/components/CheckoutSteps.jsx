@@ -3,8 +3,12 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { NavLink } from "react-router-dom";
-
-const steps = ["Shipping", "Payment", "Order"];
+import React from "react";
+const steps = [
+	{ label: "Shipping", link: "/shipping" },
+	{ label: "Payment Method", link: "/paymentmethod" },
+	{ label: "Place Order", link: "/placeorder" },
+];
 const CheckoutSteps = ({ Shipping, Payment, Order }) => {
 	let activeStep = 0;
 	if (Payment) activeStep = 1;
@@ -12,13 +16,15 @@ const CheckoutSteps = ({ Shipping, Payment, Order }) => {
 	return (
 		<Box sx={{ width: "100%" }}>
 			<Stepper activeStep={activeStep} alternativeLabel>
-				{steps.map((label) => (
-					<Step key={label}>
-						<NavLink to={"/" + label}>
-							<StepLabel>{label}</StepLabel>
-						</NavLink>
-					</Step>
-				))}
+				{React.Children.toArray(
+					steps.map((step) => (
+						<Step>
+							<NavLink to={step.link}>
+								<StepLabel>{step.label}</StepLabel>
+							</NavLink>
+						</Step>
+					))
+				)}
 			</Stepper>
 		</Box>
 	);
