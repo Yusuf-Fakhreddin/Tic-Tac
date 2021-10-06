@@ -16,9 +16,17 @@ import { useCreateOrder } from "../Queries/OrderQueries";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 
-const OrderSummary = ({ cart, token }) => {
-	const { shippingAddress, paymentMethod, cartItems } = cart;
-
+const OrderSummary = ({ cart, order, token }) => {
+	let shippingAddress, paymentMethod, cartItems;
+	if (order) {
+		shippingAddress = order.shippingAddress;
+		paymentMethod = order.paymentMethod;
+		cartItems = order.orderItems;
+	} else {
+		shippingAddress = cart.shippingAddress;
+		paymentMethod = cart.paymentMethod;
+		cartItems = cart.orderItems;
+	}
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(2);
 	};
@@ -100,18 +108,22 @@ const OrderSummary = ({ cart, token }) => {
 						</Typography>
 					</ListItemText>
 				</ListItem>
-				<Divider />
-				<ListItem>
-					<Button
-						fullWidth
-						variant="contained"
-						disableElevation
-						onClick={placeOrderHandler}
-						disabled={cartItems === 0}
-					>
-						Place Order
-					</Button>
-				</ListItem>
+				{cart && (
+					<>
+						<Divider />
+						<ListItem>
+							<Button
+								fullWidth
+								variant="contained"
+								disableElevation
+								onClick={placeOrderHandler}
+								disabled={cartItems === 0}
+							>
+								Place Order
+							</Button>
+						</ListItem>
+					</>
+				)}
 			</List>
 		</Box>
 	);

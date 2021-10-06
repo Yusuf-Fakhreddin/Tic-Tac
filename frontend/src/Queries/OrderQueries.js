@@ -91,6 +91,7 @@ export const useCreateOrder = () => {
 const deliverOrder = async ({ orderId, token }) => {
 	const config = {
 		headers: {
+			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
 	};
@@ -105,6 +106,7 @@ export const useDeliverOrder = () => {
 const payOrder = async ({ orderId, paymentResult, token }) => {
 	const config = {
 		headers: {
+			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
 	};

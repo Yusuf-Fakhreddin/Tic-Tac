@@ -1,14 +1,13 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CartItemsTable from "../components/CartItemsTable";
 import CheckoutSteps from "../components/CheckoutSteps";
 import OrderSummary from "../components/OrderSummary";
 
 const PlaceOrderScreen = () => {
-	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const cart = useSelector((state) => state.cartState);
