@@ -11,6 +11,7 @@ import {
 	CircularProgress,
 	Divider,
 	Grid,
+	Paper,
 	Stack,
 	TextField,
 	Typography,
@@ -62,6 +63,7 @@ const ProfileScreen = () => {
 	return (
 		<Box
 			mt={3}
+			component={Paper}
 			sx={{
 				border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",

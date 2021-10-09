@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { useDispatch } from "react-redux";
 import ListItemIcon from "@mui/material/ListItemIcon";
-
+import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import { NavLink } from "react-router-dom";
 import { logout } from "../actions/authActions";
 import { Divider } from "@mui/material";
@@ -65,6 +65,14 @@ const HeaderMenu = ({ userInfo }) => {
 								Profile
 							</MenuItem>
 						</NavLink>
+						<NavLink to="/myorders">
+							<MenuItem sx={{ width: "180px" }} onClick={handleClose}>
+								<ListItemIcon>
+									<LocalShippingTwoToneIcon />{" "}
+								</ListItemIcon>
+								My Orders
+							</MenuItem>
+						</NavLink>
 						<MenuItem sx={{ width: "180px" }} onClick={logoutHandler}>
 							<ListItemIcon>
 								<LogoutIcon />{" "}
@@ -72,15 +80,15 @@ const HeaderMenu = ({ userInfo }) => {
 							Logout
 						</MenuItem>
 						{userInfo.isAdmin && (
-							<>
+							<div>
 								<Divider sx={{ my: 0.5 }} />
-								<NavLink to="/admin/userlist">
+								<NavLink to="/admin/users">
 									<MenuItem onClick={handleClose}>Manage Users</MenuItem>
 								</NavLink>
 								<NavLink to="/admin/productlist">
 									<MenuItem onClick={handleClose}>Manage Products</MenuItem>
 								</NavLink>
-							</>
+							</div>
 						)}
 					</Menu>
 				</div>

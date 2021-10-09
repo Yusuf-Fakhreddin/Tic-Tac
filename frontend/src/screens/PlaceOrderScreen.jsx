@@ -20,10 +20,11 @@ const PlaceOrderScreen = () => {
 	}
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
+	if (!userInfo) history.push("/login");
 
 	useEffect(() => {
 		document.title = "Place Order";
-		if (!userInfo) history.push("/login?redirect=placeorder");
+		if (!userInfo) history.push("/login");
 	}, [userInfo, history]);
 	return (
 		<Box

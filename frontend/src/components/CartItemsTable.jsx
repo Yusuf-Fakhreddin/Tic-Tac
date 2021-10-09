@@ -16,7 +16,7 @@ import ProductImageBox from "./ProductImageBox";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
-const CartItemsTable = ({ cartItems }) => {
+const CartItemsTable = ({ cartItems, order }) => {
 	const dispatch = useDispatch();
 
 	const removeFromCartHandler = (id) => {
@@ -27,17 +27,18 @@ const CartItemsTable = ({ cartItems }) => {
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: "100%" }} aria-label="simple table">
 				<TableHead>
-					<TableRow>
-						<TableCell align="right">Product Image</TableCell>
-						<TableCell>Product Name</TableCell>
-						<TableCell align="right">Price (EGP)</TableCell>
-						<TableCell align="right">Quantity</TableCell>
-						<TableCell align="right">Remove</TableCell>
+					<TableRow sx={{ backgroundColor: "lightGray" }}>
+						<TableCell align="center">Product Image</TableCell>
+						<TableCell align="center">Product Name</TableCell>
+						<TableCell align="center">Price (EGP)</TableCell>
+						<TableCell align="center">Quantity</TableCell>
+						{!order && <TableCell align="center">Remove</TableCell>}
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{cartItems.map((row) => (
 						<TableRow
+							hover
 							key={row.name}
 							sx={{
 								"&:last-child td, &:last-child th": { border: 0 },
@@ -50,11 +51,11 @@ const CartItemsTable = ({ cartItems }) => {
 							>
 								<ProductImageBox productImage={row.image} />
 							</TableCell>
-							<TableCell component="th" scope="row">
+							<TableCell align="center" component="th" scope="row">
 								{row.name}
 							</TableCell>
-							<TableCell align="right">{row.price}</TableCell>
-							<TableCell align="right">
+							<TableCell align="center">{row.price}</TableCell>
+							<TableCell align="center">
 								{" "}
 								<FormControl>
 									<Select
@@ -72,16 +73,18 @@ const CartItemsTable = ({ cartItems }) => {
 									</Select>
 								</FormControl>{" "}
 							</TableCell>
-							<TableCell align="right">
-								{" "}
-								<Button
-									sx={{ padding: "0", margin: "0" }}
-									color="error"
-									onClick={() => removeFromCartHandler(row.product)}
-								>
-									<RemoveShoppingCartIcon />{" "}
-								</Button>
-							</TableCell>
+							{!order && (
+								<TableCell align="center">
+									{" "}
+									<Button
+										sx={{ padding: "0", margin: "0" }}
+										color="error"
+										onClick={() => removeFromCartHandler(row.product)}
+									>
+										<RemoveShoppingCartIcon />{" "}
+									</Button>
+								</TableCell>
+							)}
 						</TableRow>
 					))}
 				</TableBody>

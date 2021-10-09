@@ -110,7 +110,7 @@ const OrderDetailsScreen = () => {
 						<Typography variant="h6" component="h1" marginY={2}>
 							Order Items
 						</Typography>
-						<CartItemsTable cartItems={orderDetails.orderItems} />
+						<CartItemsTable order cartItems={orderDetails.orderItems} />
 					</Grid>{" "}
 					<Grid item xs={10} md={3}>
 						<OrderSummary order={orderDetails} token={userInfo.token} />

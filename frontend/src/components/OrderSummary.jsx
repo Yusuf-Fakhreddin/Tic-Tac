@@ -22,10 +22,10 @@ const OrderSummary = ({ cart, order, token }) => {
 		shippingAddress = order.shippingAddress;
 		paymentMethod = order.paymentMethod;
 		cartItems = order.orderItems;
-	} else {
+	} else if (cart) {
 		shippingAddress = cart.shippingAddress;
 		paymentMethod = cart.paymentMethod;
-		cartItems = cart.orderItems;
+		cartItems = cart.cartItems;
 	}
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(2);

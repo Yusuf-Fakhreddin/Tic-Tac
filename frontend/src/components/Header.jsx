@@ -7,6 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
@@ -41,6 +42,11 @@ const Header = () => {
 			setList([
 				{ label: "Profile", href: "/profile", icon: <AccountCircleIcon /> },
 				{ label: "Cart", href: "/cart", icon: <ShoppingCartIcon /> },
+				{
+					label: "My Orders",
+					href: "/myorders",
+					icon: <LocalShippingTwoToneIcon />,
+				},
 				{ label: "Logout", href: "/", icon: <LogoutIcon /> },
 			]);
 		}

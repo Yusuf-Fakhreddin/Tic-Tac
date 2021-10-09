@@ -7,6 +7,7 @@ import { USER_LOGIN_SUCCESS } from "../constants/authConstants";
 
 const getUserDetailsById = async (userId) => {
 	console.log(userId, "userId");
+
 	const { data } = await http.get(`/api/users/${userId}`);
 	return data;
 };
@@ -20,58 +21,77 @@ export const useListUserDetailsById = (id) => {
 	return [data, isLoading];
 };
 
-const getListOfUsers = async (pageNumber) => {
-	const { data } = await http.get(`/api/users?pageNumber=${pageNumber}`);
+const getListOfUsers = async (pageNumber, token) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	const { data } = await http.get(
+		`/api/users?pageNumber=${pageNumber}`,
+		config
+	);
 	return data;
 };
 
-export const useListOfUsers = (pageNumber) => {
+export const useListOfUsers = (pageNumber = 1, token) => {
 	const { data, error, isLoading, isError } = useQuery(
 		["listUsers", pageNumber],
-		() => getListOfUsers(pageNumber)
+		() => getListOfUsers(pageNumber, token)
 	);
 	return [data, isLoading];
 };
 
 // <----------- Mutations ---------->
 
-const deleteUserById = async (id, token) => {
+const deleteUserById = async ({ id, token, pageNumber = 1 }) => {
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	await http.delete(`/api/users/${id}`, config);
+	const { data } = await http.delete(`/api/users/${id}`, config);
+	return data;
 };
 
 export const useDeleteUser = () => {
-	// TODO:::: Optmistic updates https://react-query.tanstack.com/guides/optimistic-updates
 	const queryClient = useQueryClient();
 
 	const { mutateAsync, isLoading } = useMutation(deleteUserById, {
 		// When mutate is called:
-		onMutate: async (id) => {
+		onMutate: async ({ id, pageNumber }) => {
+			console.log(id, pageNumber);
 			// Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-			await queryClient.cancelQueries("listUsers");
+			await queryClient.cancelQueries(["listUsers", pageNumber]);
 
 			// Snapshot the previous value
-			const previousTodos = queryClient.getQueryData("listUsers");
+			const previousState = queryClient.getQueryData(["listUsers", pageNumber]);
 
 			// Optimistically update to the new value
-			queryClient.setQueryData("todos", (old) =>
-				old.filter((f) => f._id !== id)
-			);
+			queryClient.setQueryData(["listUsers", pageNumber], (old) => {
+				let newState = {
+					...old,
+					users: old.users.filter((f) => f._id !== id),
+					count: old.count - 1,
+				};
+				console.log(newState);
+				return newState;
+			});
 
 			// Return a context object with the snapshotted value
-			return { previousTodos };
+			return { previousState };
 		},
 		// If the mutation fails, use the context returned from onMutate to roll back
-		onError: (err, context) => {
-			queryClient.setQueryData("todos", context.previousTodos);
+		onError: (err, { pageNumber }, context) => {
+			queryClient.setQueryData(
+				["listUsers", pageNumber],
+				context.previousState
+			);
 		},
 		// Always refetch after error or success:
-		onSettled: () => {
-			queryClient.invalidateQueries("listUsers");
+		onSettled: (data, error, { pageNumber }, context) => {
+			console.log(pageNumber);
+			queryClient.invalidateQueries(["listUsers", pageNumber]);
 		},
 	});
 

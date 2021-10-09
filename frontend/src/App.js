@@ -19,6 +19,8 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderDetailsScreen from "./screens/OrderDetailsScreen";
+import MyOrdersTable from "./screens/MyOrdersTableScreen";
+import UsersListScreen from "./screens/UsersListScreen";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -26,6 +28,7 @@ const queryClient = new QueryClient({
 			refetchOnWindowFocus: false,
 			retry: false,
 			staleTime: 30000,
+			keepPreviousData: true,
 		},
 	},
 });
@@ -50,6 +53,8 @@ function App() {
 								<Route path="/paymentmethod" component={PaymentMethodScreen} />
 								<Route path="/placeorder" component={PlaceOrderScreen} />
 								<Route path="/order/:id" component={OrderDetailsScreen} />
+								<Route path="/myorders" component={MyOrdersTable} />
+								<Route path="/admin/users" component={UsersListScreen} />
 
 								<Route path="/" component={HomeScreen} />
 							</Switch>

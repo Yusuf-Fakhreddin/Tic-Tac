@@ -36,7 +36,7 @@ const getListOfOrders = async (token) => {
 };
 
 export const useListOfOrders = (token) => {
-	const { data, error, isLoading, isError } = useQuery("orderList", () =>
+	const { data, error, isLoading, isError } = useQuery("ordersList", () =>
 		getListOfOrders(token)
 	);
 	return [data, isLoading];
@@ -53,7 +53,7 @@ const getListOfUserOrders = async (token) => {
 };
 
 export const useListOfUserOrders = (token) => {
-	const { data, error, isLoading, isError } = useQuery("orderList", () =>
+	const { data, error, isLoading, isError } = useQuery("myOrdersList", () =>
 		getListOfUserOrders(token)
 	);
 	return [data, isLoading];
