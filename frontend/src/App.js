@@ -21,6 +21,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderDetailsScreen from "./screens/OrderDetailsScreen";
 import MyOrdersTable from "./screens/MyOrdersTableScreen";
 import UsersListScreen from "./screens/UsersListScreen";
+import AdminEditUserScreen from "./screens/AdminEditUserScreen";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -28,7 +29,6 @@ const queryClient = new QueryClient({
 			refetchOnWindowFocus: false,
 			retry: false,
 			staleTime: 30000,
-			keepPreviousData: true,
 		},
 	},
 });
@@ -55,6 +55,10 @@ function App() {
 								<Route path="/order/:id" component={OrderDetailsScreen} />
 								<Route path="/myorders" component={MyOrdersTable} />
 								<Route path="/admin/users" component={UsersListScreen} />
+								<Route
+									path="/admin/edituser/:id"
+									component={AdminEditUserScreen}
+								/>
 
 								<Route path="/" component={HomeScreen} />
 							</Switch>

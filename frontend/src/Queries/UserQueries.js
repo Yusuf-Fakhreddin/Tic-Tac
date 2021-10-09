@@ -5,20 +5,24 @@ import { USER_LOGIN_SUCCESS } from "../constants/authConstants";
 
 // <----------- Queries ---------->
 
-const getUserDetailsById = async (userId) => {
+const getUserDetailsById = async (userId, token) => {
 	console.log(userId, "userId");
-
-	const { data } = await http.get(`/api/users/${userId}`);
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	const { data } = await http.get(`/api/users/${userId}`, config);
 	return data;
 };
 
-export const useListUserDetailsById = (id) => {
+export const useListUserDetailsById = (id, token) => {
 	console.log("id", id);
-	const { data, error, isLoading, isError } = useQuery(
+	const { data, error, isLoading, isError, isSuccess } = useQuery(
 		["userDetails", id],
-		() => getUserDetailsById(id)
+		() => getUserDetailsById(id, token)
 	);
-	return [data, isLoading];
+	return [data, isLoading, isSuccess];
 };
 
 const getListOfUsers = async (pageNumber, token) => {
@@ -136,21 +140,38 @@ export const useUpdateUserProfile = () => {
 	// on the page to call the action : destruct mutateAsync and call it: await mutateAsync(id,token)
 };
 
-const adminUpdateUser = async (user, token) => {
+const adminUpdateUser = async ({ id, user, token }) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	await http.put(`/api/users/profile`, user, config);
+	const { data } = await http.put(`/api/users/${id}`, user, config);
+	return data;
 };
 
 export const useAdminUpdateUser = () => {
-	// TODO:::: on Success dispatch (USER_LOGIN_SUCCESS) to update the user global state if the updated user is the logged in user
-	const { mutateAsync, isLoading } = useMutation(adminUpdateUser);
+	const queryClient = useQueryClient();
+	const dispatch = useDispatch();
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+	const { mutateAsync, isLoading, isSuccess, error, isError } = useMutation(
+		adminUpdateUser,
+		{
+			onSuccess: (data) => {
+				queryClient.invalidateQueries(["listUsers", 1]);
+				dispatch({
+					type: USER_LOGIN_SUCCESS,
+					payload: data,
+				});
+				data.token = userInfo.token;
+				localStorage.setItem("UserInfo", JSON.stringify(data));
+			},
+		}
+	);
 
-	return [mutateAsync, isLoading];
+	return [mutateAsync, isLoading, isSuccess, isError, error];
 
 	// on the page to call the action : destruct mutateAsync and call it: await mutateAsync(id,token)
 };

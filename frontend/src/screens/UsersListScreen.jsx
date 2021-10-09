@@ -28,8 +28,6 @@ const UsersListScreen = () => {
 	const { userInfo } = userLogin;
 	const history = useHistory();
 
-	if (!userInfo) history.push("/");
-
 	const [pageNumber, setpageNumber] = useState(1);
 	const [data, isLoadingUsers] = useListOfUsers(pageNumber, userInfo.token);
 	const [deleteUser, isDeleteLoading] = useDeleteUser();
@@ -106,22 +104,22 @@ const UsersListScreen = () => {
 												<ClearTwoToneIcon color="error" />
 											)}
 										</TableCell>
-
 										<TableCell align="center">
-											<Button
-												onClick={() => DeleteUserHandler(row._id)}
-												variant="contained"
-											>
-												<DeleteIcon />
-											</Button>
-										</TableCell>
-										<TableCell align="center">
-											<NavLink to={`/order/${row._id}`}>
-												<Button variant="contained">
+											<NavLink to={`/admin/edituser/${row._id}`}>
+												<Button color="info" variant="contained">
 													{" "}
 													<EditIcon />
 												</Button>
 											</NavLink>
+										</TableCell>
+										<TableCell align="center">
+											<Button
+												onClick={() => DeleteUserHandler(row._id)}
+												variant="contained"
+												color="error"
+											>
+												<DeleteIcon />
+											</Button>
 										</TableCell>
 									</TableRow>
 								))
