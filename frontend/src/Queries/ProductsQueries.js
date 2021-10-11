@@ -1,5 +1,5 @@
 import http from "../httpService";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 // <----------- Queries ---------->
 
@@ -27,7 +27,7 @@ const getListOfProducts = async (keyword = "", pageNumber = "") => {
 
 export const useListOfProducts = (keyword = "", pageNumber = "") => {
 	const { data, error, isLoading, isError } = useQuery(
-		["listProducts", keyword, pageNumber],
+		["listProducts", pageNumber],
 		() => getListOfProducts(keyword, pageNumber)
 	);
 	return [data, isLoading];
@@ -48,7 +48,7 @@ export const useTopProducts = () => {
 
 // <----------- Mutations ---------->
 
-const deleteProductById = async ({ id, token }) => {
+const deleteProductById = async ({ id, token, pageNumber = 1 }) => {
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -58,7 +58,48 @@ const deleteProductById = async ({ id, token }) => {
 };
 
 export const useDeleteProduct = () => {
-	const { mutateAsync, isLoading } = useMutation(deleteProductById);
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading } = useMutation(deleteProductById, {
+		// When mutate is called:
+		onMutate: async ({ id, pageNumber }) => {
+			console.log(id, pageNumber);
+			// Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+			await queryClient.cancelQueries(["listProducts", pageNumber]);
+
+			// Snapshot the previous value
+			const previousState = queryClient.getQueryData([
+				"listProducts",
+				pageNumber,
+			]);
+
+			// Optimistically update to the new value
+			queryClient.setQueryData(["listProducts", pageNumber], (old) => {
+				let newState = {
+					...old,
+					products: old.products.filter((f) => f._id !== id),
+					count: old.count - 1,
+				};
+				console.log(newState);
+				return newState;
+			});
+
+			// Return a context object with the snapshotted value
+			return { previousState };
+		},
+		// If the mutation fails, use the context returned from onMutate to roll back
+		onError: (err, { pageNumber }, context) => {
+			queryClient.setQueryData(
+				["listProducts", pageNumber],
+				context.previousState
+			);
+		},
+		// Always refetch after error or success:
+		onSettled: (data, error, { pageNumber }, context) => {
+			console.log(pageNumber);
+			queryClient.invalidateQueries(["listProducts", pageNumber]);
+		},
+	});
 
 	return [mutateAsync, isLoading];
 
