@@ -11,11 +11,15 @@ import {
 	CircularProgress,
 	Grid,
 	IconButton,
+	LinearProgress,
 	TextField,
 	Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Input from "../components/StyledInputFile";
+import ImageUpload from "../components/ImageUpload";
+import { useUploadProductImage } from "../Queries/UploadQueries";
+import { useCreateProduct } from "../Queries/ProductsQueries";
 
 const ProductCreateScreen = () => {
 	const history = useHistory();
@@ -31,21 +35,31 @@ const ProductCreateScreen = () => {
 			.typeError("Price must be a number")
 			.required("Required"),
 		// description: Yup.string().required("Required"),
-		image: Yup.string().required("Required"),
 	});
 
 	const { register, handleSubmit, errors, setValue } = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 	});
+
+	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
+	const [createProduct, createProductLoading, createProductSuccess] =
+		useCreateProduct();
 	// const [AdminEditUser, adminEditLoading, editSuccess, editIsError, editError] =
 	// 	useAdminUpdateUser();
 	const onSubmit = async (data) => {
+		console.log("hello World");
 		console.log(data);
-		// await AdminEditUser({ id, user: data, token: userInfo.token });
+		await createProduct({
+			product: { ...data, image: imageUrl },
+			token: userInfo.token,
+		});
 	};
 
-	useEffect(() => {}, [userInfo, history]);
+	useEffect(() => {
+		if (createProductSuccess) history.push("/admin/products");
+		if (!userInfo || !userInfo.isAdmin) history.push("/");
+	}, [userInfo, history, createProductSuccess]);
 
 	return (
 		<Box
@@ -164,15 +178,8 @@ const ProductCreateScreen = () => {
 							/>
 						</Grid>
 						<Grid item xs={10} align="left" md={10}>
-							<label htmlFor="icon-button-file">
+							{/* <label htmlFor="icon-button-file">
 								<Input accept="image/*" id="icon-button-file" type="file" />
-								{/* <IconButton
-									color="primary"
-									aria-label="upload picture"
-									component="span"
-								>
-									<PhotoCamera />
-								</IconButton> */}
 								<Button
 									startIcon={<PhotoCamera />}
 									variant="contained"
@@ -180,17 +187,22 @@ const ProductCreateScreen = () => {
 								>
 									Upload Image
 								</Button>
-							</label>
+							</label> */}
+							{isUploadLoading && (
+								<LinearProgress sx={{ marginBottom: "10px" }} />
+							)}
+							<ImageUpload uploadImage={uploadImage} token={userInfo.token} />
 						</Grid>
 
 						<Grid item xs={10} md={10}>
 							<Button variant="contained" type="submit">
-								Create
+								Create Product
 							</Button>
 						</Grid>
 					</Grid>
 				</form>
 			</Box>
+			{createProductLoading && <CircularProgress />}
 		</Box>
 	);
 };

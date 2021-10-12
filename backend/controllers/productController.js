@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
-
+import chalk from "chalk";
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
@@ -58,18 +58,21 @@ const deleteProduct = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
-	const product = new Product({
-		name: "Sample name",
-		price: 0,
-		user: req.user._id,
-		image: "/images/sample.jpg",
-		brand: "Sample brand",
-		category: "Sample category",
-		countInStock: 0,
-		numReviews: 0,
-		description: "Sample description",
-	});
+	console.log(chalk.red(req.body));
+	const { name, price, description, image, brand, category, countInStock } =
+		req.body;
 
+	const product = new Product({
+		user: req.user._id,
+		name,
+		price,
+		description,
+		image,
+		brand,
+		category,
+		countInStock,
+		numReviews: 0,
+	});
 	const createdProduct = await product.save();
 	res.status(201).json(createdProduct);
 });
@@ -78,6 +81,7 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
+	console.log(chalk.red(req.body));
 	const { name, price, description, image, brand, category, countInStock } =
 		req.body;
 

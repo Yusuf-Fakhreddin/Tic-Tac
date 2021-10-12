@@ -13,10 +13,6 @@ const ProductScreen = ({ match }) => {
 	const { id } = useParams();
 	const [product, isLoading] = useListProductDetailsById(id);
 
-	useEffect(() => {
-		console.log(product, isLoading);
-	}, [product]);
-
 	if (isLoading)
 		return (
 			<div className="flex">

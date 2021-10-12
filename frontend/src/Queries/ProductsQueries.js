@@ -117,8 +117,8 @@ const createNewProduct = async ({ product, token }) => {
 };
 
 export const useCreateProduct = () => {
-	const { mutateAsync, isLoading } = useMutation(createNewProduct);
-	return [mutateAsync, isLoading];
+	const { mutateAsync, isLoading,isSuccess } = useMutation(createNewProduct);
+	return [mutateAsync, isLoading,isSuccess];
 };
 
 const updateProduct = async ({ product, token }) => {
