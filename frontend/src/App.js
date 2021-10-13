@@ -24,6 +24,7 @@ import UsersListScreen from "./screens/UsersListScreen";
 import AdminEditUserScreen from "./screens/AdminEditUserScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductCreateScreen from "./screens/ProductCreateScreen";
+import OrdersListScreen from "./screens/OrdersListScreen";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -59,6 +60,7 @@ function App() {
 								<Route path="/createproduct" component={ProductCreateScreen} />
 								<Route path="/admin/users" component={UsersListScreen} />
 								<Route path="/admin/products" component={ProductListScreen} />
+								<Route path="/admin/orders" component={OrdersListScreen} />
 								<Route
 									path="/admin/edituser/:id"
 									component={AdminEditUserScreen}

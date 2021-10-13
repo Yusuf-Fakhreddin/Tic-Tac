@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
@@ -9,7 +8,6 @@ import {
 	Alert,
 	Button,
 	CircularProgress,
-	Divider,
 	Grid,
 	Paper,
 	Stack,
@@ -41,6 +39,7 @@ const ProfileScreen = () => {
 		if (!userInfo) {
 			history.push("/login?redirectTo=profile");
 		}
+		document.title = userInfo.name;
 	}, [userInfo, history, dispatch]);
 
 	const { register, handleSubmit, errors } = useForm({
@@ -63,12 +62,13 @@ const ProfileScreen = () => {
 	return (
 		<Box
 			mt={3}
-			component={Paper}
+			// component={Paper}
 			sx={{
-				border: "1.5px solid #e0e0e0",
+				// border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",
-				padding: "15px",
-				maxWidth: "60%",
+				padding: "15px 0",
+				width: "600px",
+				maxWidth: "100%",
 				textAlign: "center",
 				margin: "25px auto",
 			}}
@@ -86,7 +86,7 @@ const ProfileScreen = () => {
 					</Alert>
 				</Stack>
 			)}
-			<Typography variant="h4" component="h1" mt={3}>
+			<Typography variant="h4" align="left" component="h1" mt={3}>
 				Update Your Profile{" "}
 			</Typography>
 			<Box marginY={3}>
@@ -102,7 +102,7 @@ const ProfileScreen = () => {
 								id="name"
 								defaultValue={userInfo ? userInfo.name : null}
 								helperText={errors.name ? errors.name.message : null}
-								variant="standard"
+								variant="filled"
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
@@ -115,7 +115,7 @@ const ProfileScreen = () => {
 								id="email"
 								defaultValue={userInfo ? userInfo.email : null}
 								helperText={errors.email ? errors.email.message : null}
-								variant="standard"
+								variant="filled"
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
@@ -124,7 +124,7 @@ const ProfileScreen = () => {
 								inputRef={register}
 								id="password"
 								label="Password"
-								variant="standard"
+								variant="filled"
 								fullWidth
 								type="password"
 								error={errors.password ? true : false}
@@ -137,7 +137,7 @@ const ProfileScreen = () => {
 								inputRef={register}
 								id="confirmPassword"
 								label="Confirm Password"
-								variant="standard"
+								variant="filled"
 								fullWidth
 								type="password"
 								error={errors.confirmPassword ? true : false}

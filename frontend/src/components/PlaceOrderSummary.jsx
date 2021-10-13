@@ -2,31 +2,22 @@ import { Box } from "@mui/system";
 import {
 	Button,
 	Divider,
-	FormControl,
-	InputLabel,
 	List,
 	ListItem,
 	ListItemText,
-	MenuItem,
-	Select,
 	Typography,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { useCreateOrder } from "../Queries/OrderQueries";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 
-const OrderSummary = ({ cart, order, token }) => {
+const PlaceOrderSummary = ({ cart, token }) => {
 	let shippingAddress, paymentMethod, cartItems;
-	if (order) {
-		shippingAddress = order.shippingAddress;
-		paymentMethod = order.paymentMethod;
-		cartItems = order.orderItems;
-	} else if (cart) {
-		shippingAddress = cart.shippingAddress;
-		paymentMethod = cart.paymentMethod;
-		cartItems = cart.cartItems;
-	}
+
+	shippingAddress = cart.shippingAddress;
+	paymentMethod = cart.paymentMethod;
+	cartItems = cart.cartItems;
+
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(2);
 	};
@@ -129,4 +120,4 @@ const OrderSummary = ({ cart, order, token }) => {
 	);
 };
 
-export default OrderSummary;
+export default PlaceOrderSummary;

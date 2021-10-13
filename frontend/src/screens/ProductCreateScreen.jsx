@@ -59,6 +59,7 @@ const ProductCreateScreen = () => {
 	useEffect(() => {
 		if (createProductSuccess) history.push("/admin/products");
 		if (!userInfo || !userInfo.isAdmin) history.push("/");
+		document.title = "New Product";
 	}, [userInfo, history, createProductSuccess]);
 
 	return (
@@ -68,9 +69,9 @@ const ProductCreateScreen = () => {
 			sx={{
 				// border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",
-				padding: "15px",
+				padding: "15px 0",
 				width: "600px",
-				maxWidth: "80%",
+				maxWidth: "100%",
 				textAlign: "center",
 				margin: "25px auto",
 			}}
@@ -89,7 +90,7 @@ const ProductCreateScreen = () => {
 				</Stack>
 			)} */}
 			<Typography variant="h4" component="h1" textAlign="left" mt={3}>
-				Edit User{" "}
+				Create Product{" "}
 			</Typography>
 			<Box marginY={3}>
 				<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>

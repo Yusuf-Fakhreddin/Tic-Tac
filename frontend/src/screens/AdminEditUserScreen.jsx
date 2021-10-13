@@ -70,13 +70,14 @@ const AdminEditUserScreen = () => {
 	return (
 		<Box
 			mt={3}
-			component={Paper}
+			// component={Paper}
 			sx={{
-				border: "1.5px solid #e0e0e0",
+				// border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",
-				padding: "15px",
-				maxWidth: "60%",
-				textAlign: "center",
+				padding: "15px 0",
+				width: "600px",
+				maxWidth: "100%",
+				// textAlign: "center",
 				margin: "25px auto",
 			}}
 		>
@@ -108,7 +109,7 @@ const AdminEditUserScreen = () => {
 								name="name"
 								id="name"
 								helperText={errors.name ? errors.name.message : null}
-								variant="standard"
+								variant="filled"
 								defaultValue="Full Name"
 							/>
 						</Grid>
@@ -123,7 +124,7 @@ const AdminEditUserScreen = () => {
 								placeholder="Email"
 								defaultValue="Email"
 								helperText={errors.email ? errors.email.message : null}
-								variant="standard"
+								variant="filled"
 							/>
 						</Grid>
 						<Grid item xs={10} key={10}>
@@ -139,7 +140,7 @@ const AdminEditUserScreen = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={10} md={10}>
+						<Grid item xs={10} md={10} align="center">
 							<Button variant="contained" type="submit">
 								Edit
 							</Button>

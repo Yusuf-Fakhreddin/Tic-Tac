@@ -11,11 +11,11 @@ const getProductDetailsById = async (productId) => {
 
 export const useListProductDetailsById = (id) => {
 	console.log("id", id);
-	const { data, error, isLoading, isError } = useQuery(
+	const { data, error, isLoading, isError, isSuccess } = useQuery(
 		["productDetails", id],
 		() => getProductDetailsById(id)
 	);
-	return [data, isLoading];
+	return [data, isLoading, isSuccess];
 };
 
 const getListOfProducts = async (keyword = "", pageNumber = "") => {
@@ -117,8 +117,8 @@ const createNewProduct = async ({ product, token }) => {
 };
 
 export const useCreateProduct = () => {
-	const { mutateAsync, isLoading,isSuccess } = useMutation(createNewProduct);
-	return [mutateAsync, isLoading,isSuccess];
+	const { mutateAsync, isLoading, isSuccess } = useMutation(createNewProduct);
+	return [mutateAsync, isLoading, isSuccess];
 };
 
 const updateProduct = async ({ product, token }) => {
@@ -147,6 +147,12 @@ const createProductReview = async ({ productId, review, token }) => {
 };
 
 export const useCreateReview = () => {
-	const { mutateAsync, isLoading } = useMutation(createProductReview);
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading } = useMutation(createProductReview, {
+		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries(["productDetails", variables.productId]);
+		},
+	});
 	return [mutateAsync, isLoading];
 };

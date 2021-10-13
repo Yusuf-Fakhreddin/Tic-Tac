@@ -88,6 +88,9 @@ const HeaderMenu = ({ userInfo }) => {
 								<NavLink to="/admin/products">
 									<MenuItem onClick={handleClose}>Manage Products</MenuItem>
 								</NavLink>
+								<NavLink to="/admin/orders">
+									<MenuItem onClick={handleClose}>Manage Orders</MenuItem>
+								</NavLink>
 							</div>
 						)}
 					</Menu>

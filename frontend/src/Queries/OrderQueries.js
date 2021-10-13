@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
 import http from "../httpService";
@@ -25,19 +25,22 @@ export const useListOrderDetailsById = (orderId, token) => {
 	return [data, isLoading];
 };
 
-const getListOfOrders = async (token) => {
+const getListOfOrders = async (token, pageNumber = 1) => {
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	const { data } = await http.get(`/api/orders`, config);
+	const { data } = await http.get(
+		`/api/orders/?pageNumber=${pageNumber}`,
+		config
+	);
 	return data;
 };
 
-export const useListOfOrders = (token) => {
+export const useListOfOrders = (token, pageNumber = 1) => {
 	const { data, error, isLoading, isError } = useQuery("ordersList", () =>
-		getListOfOrders(token)
+		getListOfOrders(token, pageNumber)
 	);
 	return [data, isLoading];
 };
@@ -99,8 +102,14 @@ const deliverOrder = async ({ orderId, token }) => {
 };
 
 export const useDeliverOrder = () => {
-	const { mutateAsync, isLoading } = useMutation(deliverOrder);
-	return [mutateAsync, isLoading];
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading, isSuccess } = useMutation(deliverOrder, {
+		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries(["orderDetails", variables.orderId]);
+		},
+	});
+	return [mutateAsync, isLoading, isSuccess];
 };
 
 const payOrder = async ({ orderId, paymentResult, token }) => {

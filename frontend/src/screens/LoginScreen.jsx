@@ -51,10 +51,11 @@ const LoginScreen = () => {
 		<Box
 			mt={3}
 			sx={{
-				border: "1.5px solid #e0e0e0",
+				// border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",
-				padding: "15px",
-				maxWidth: "60%",
+				padding: "15px 0",
+				widtH: "600",
+				maxWidth: "100%",
 				textAlign: "center",
 				margin: "25px auto",
 			}}
@@ -79,6 +80,7 @@ const LoginScreen = () => {
 					>
 						<Grid item xs={10} md={10}>
 							<TextField
+								required
 								fullWidth
 								inputRef={register}
 								error={errors.email ? true : false}
@@ -87,16 +89,17 @@ const LoginScreen = () => {
 								id="email"
 								// defaultValue="Hello World"
 								helperText={errors.email && errors.email.message}
-								variant="standard"
+								variant="filled"
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
 							<TextField
+								required
 								name="password"
 								inputRef={register}
 								id="password"
 								label="Password"
-								variant="standard"
+								variant="filled"
 								fullWidth
 								type="password"
 								error={errors.password ? true : false}

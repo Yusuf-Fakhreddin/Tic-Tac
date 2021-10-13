@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CartItemsTable from "../components/CartItemsTable";
 import CheckoutSteps from "../components/CheckoutSteps";
-import OrderSummary from "../components/OrderSummary";
+import PlaceOrderSummary from "../components/PlaceOrderSummary";
 
 const PlaceOrderScreen = () => {
 	const history = useHistory();
@@ -68,7 +68,7 @@ const PlaceOrderScreen = () => {
 						<CartItemsTable cartItems={cartItems} />
 					</Grid>{" "}
 					<Grid item xs={10} md={3}>
-						<OrderSummary cart={cart} token={userInfo.token} />
+						<PlaceOrderSummary cart={cart} token={userInfo.token} />
 					</Grid>
 				</Grid>
 			</Box>{" "}

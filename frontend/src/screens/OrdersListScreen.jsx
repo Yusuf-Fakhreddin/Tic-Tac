@@ -13,40 +13,35 @@ import {
 	Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
-import CheckIcon from "@mui/icons-material/Check";
 import { useHistory } from "react-router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TablePaginationActions from "../components/TablePaginationActions";
-import {
-	useDeleteProduct,
-	useListOfProducts,
-} from "../Queries/ProductsQueries";
-const ProductListScreen = () => {
+import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
+
+import { useListOfOrders } from "../Queries/OrderQueries";
+const OrdersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const history = useHistory();
 
 	const [pageNumber, setpageNumber] = useState(1);
-	const [data, isLoadingProducts] = useListOfProducts("", pageNumber);
-	const [deleteProduct, isDeleteLoading] = useDeleteProduct();
+	const [data, isLoadingOrders] = useListOfOrders(userInfo.token, pageNumber);
+	// const [deleteProduct, isDeleteLoading] = useDeleteOrder();
 	useEffect(() => {
-		document.title = "All Products";
-
 		if (!userInfo || !userInfo.isAdmin) {
 			history.push("/");
 		}
 		if (data) console.log(data);
 	}, [history, userInfo, data]);
 
-	const DeleteProductHandler = async (id) => {
-		console.log(id);
-		await deleteProduct({ id: id, token: userInfo.token, pageNumber });
-	};
+	// const DeleteProductHandler = async (id) => {
+	// 	console.log(id);
+	// 	await deleteProduct({ id: id, token: userInfo.token, pageNumber });
+	// };
 
 	// Avoid a layout jump when reaching the last page with empty rows.
 	// const emptyRows = data.page > 0 ? Math.max(0, (1 + data.page) * 10 - data.count) : 0;
@@ -55,7 +50,7 @@ const ProductListScreen = () => {
 		setpageNumber(newPage + 1);
 	};
 
-	if (isLoadingProducts || !data.products)
+	if (isLoadingOrders || !data.orders)
 		return (
 			<div className="flex">
 				<CircularProgress
@@ -89,17 +84,17 @@ const ProductListScreen = () => {
 						<TableHead>
 							<TableRow sx={{ backgroundColor: "lightGray" }}>
 								<TableCell align="left">ID</TableCell>
-								<TableCell align="center">NAME</TableCell>
-								<TableCell align="center">PRICE</TableCell>
-								<TableCell align="center">CATEGORY</TableCell>
-								<TableCell align="center">BRAND</TableCell>
-								<TableCell align="center"></TableCell>
+								<TableCell align="center">USER</TableCell>
+								<TableCell align="center">DATE</TableCell>
+								<TableCell align="center">TOTAL (EGP)</TableCell>
+								<TableCell align="center">PAID</TableCell>
+								<TableCell align="center">DELIVERED</TableCell>
 								<TableCell align="center"></TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{React.Children.toArray(
-								data.products.map((row) => (
+								data.orders.map((row) => (
 									<TableRow
 										hover
 										sx={{
@@ -107,34 +102,36 @@ const ProductListScreen = () => {
 										}}
 									>
 										<TableCell component="th" scope="row">
-											<NavLink to={`/product/${row._id}`}>{row._id}</NavLink>
+											{row._id}
 										</TableCell>
 										<TableCell align="center" component="th" scope="row">
-											<NavLink to={`/product/${row._id}`}>{row.name}</NavLink>
+											{row.user && row.user.name}
 										</TableCell>
 										<TableCell align="center" component="th" scope="row">
-											{row.price}
+											{row.createdAt.substring(0, 10)}{" "}
 										</TableCell>
 										<TableCell align="center" component="th" scope="row">
-											{row.price}
+											{row.totalPrice}{" "}
 										</TableCell>
 
 										<TableCell align="center">
-											<NavLink to={`/admin/editproducts/${row._id}`}>
-												<Button color="info" variant="contained">
-													{" "}
-													<EditIcon />
-												</Button>
-											</NavLink>
+											{row.isPaid ? (
+												row.paidAt.substring(0, 10)
+											) : (
+												<ClearTwoToneIcon color="error" />
+											)}
 										</TableCell>
 										<TableCell align="center">
-											<Button
-												onClick={() => DeleteProductHandler(row._id)}
-												variant="contained"
-												color="error"
-											>
-												<DeleteIcon />
-											</Button>
+											{row.isDelivered ? (
+												row.deliveredAt.substring(0, 10)
+											) : (
+												<ClearTwoToneIcon color="error" />
+											)}
+										</TableCell>
+										<TableCell align="center">
+											<NavLink to={`/order/${row._id}`}>
+												<Button variant="contained">DETAILS</Button>
+											</NavLink>
 										</TableCell>
 									</TableRow>
 								))
@@ -148,7 +145,7 @@ const ProductListScreen = () => {
 									page={data.page - 1}
 									rowsPerPage={10}
 									labelDisplayedRows={({ from, to, count }) => {
-										return `Total Number of Users = ${count}`;
+										return `Total Number of Orders = ${count}`;
 									}}
 									labelRowsPerPage=""
 									rowsPerPageOptions={[]}
@@ -163,4 +160,4 @@ const ProductListScreen = () => {
 		);
 };
 
-export default ProductListScreen;
+export default OrdersListScreen;

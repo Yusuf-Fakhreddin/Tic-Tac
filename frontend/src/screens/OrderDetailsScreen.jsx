@@ -10,8 +10,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import CartItemsTable from "../components/CartItemsTable";
-import CheckoutSteps from "../components/CheckoutSteps";
-import OrderSummary from "../components/OrderSummary";
+import OrderDetailsSummary from "../components/OrderDetailsSummary";
 import { useListOrderDetailsById } from "../Queries/OrderQueries";
 
 const OrderDetailsScreen = () => {
@@ -25,7 +24,7 @@ const OrderDetailsScreen = () => {
 		userInfo.token
 	);
 	useEffect(() => {
-		document.title = "Place Order";
+		document.title = "Order";
 		if (!userInfo) history.push(`/login?redirect=orderdetails/${id}`);
 		console.log(orderDetails);
 	}, [userInfo, history, id, orderDetails]);
@@ -54,7 +53,6 @@ const OrderDetailsScreen = () => {
 		>
 			{" "}
 			<Box marginY={3}>
-				<CheckoutSteps Order />
 				<Grid
 					container
 					justifyContent="center"
@@ -67,12 +65,14 @@ const OrderDetailsScreen = () => {
 							Shipping
 						</Typography>
 						<Typography variant="subtitle1">
-							Name: {orderDetails.user.name}
+							Name: {orderDetails.user && orderDetails.user.name}
 						</Typography>
 						<Typography variant="subtitle1">
 							Email:{" "}
-							<a href={`mailto:${orderDetails.user.email}`}>
-								{orderDetails.user.email}
+							<a
+								href={`mailto:${orderDetails.user && orderDetails.user.email}`}
+							>
+								{orderDetails.user && orderDetails.user.email}
 							</a>
 						</Typography>
 						<Typography variant="subtitle1">
@@ -113,7 +113,7 @@ const OrderDetailsScreen = () => {
 						<CartItemsTable order cartItems={orderDetails.orderItems} />
 					</Grid>{" "}
 					<Grid item xs={10} md={3}>
-						<OrderSummary order={orderDetails} token={userInfo.token} />
+						<OrderDetailsSummary order={orderDetails} userInfo={userInfo} />
 					</Grid>
 				</Grid>
 			</Box>{" "}
