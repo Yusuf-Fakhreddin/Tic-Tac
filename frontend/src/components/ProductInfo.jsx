@@ -33,7 +33,7 @@ const ProductInfo = ({ product }) => {
 						name="size-medium"
 						precision={0.5}
 						readOnly
-						defaultValue={product.rating}
+						value={product.rating}
 					/>{" "}
 				</Typography>
 				<Typography variant="body2" component="div">

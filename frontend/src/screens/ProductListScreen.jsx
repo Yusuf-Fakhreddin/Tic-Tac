@@ -13,11 +13,9 @@ import {
 	Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
-import CheckIcon from "@mui/icons-material/Check";
 import { useHistory } from "react-router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -120,7 +118,7 @@ const ProductListScreen = () => {
 										</TableCell>
 
 										<TableCell align="center">
-											<NavLink to={`/admin/editproducts/${row._id}`}>
+											<NavLink to={`/admin/editproduct/${row._id}`}>
 												<Button color="info" variant="contained">
 													{" "}
 													<EditIcon />

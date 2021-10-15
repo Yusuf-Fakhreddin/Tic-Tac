@@ -1,20 +1,15 @@
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {
-	Button,
-	CircularProgress,
-	Divider,
-	Grid,
-	List,
-	ListItem,
-	ListItemText,
-	Rating,
-	Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Grid } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Box } from "@mui/system";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router";
 import React, { useEffect, useState } from "react";
-import { useListProductDetailsById } from "../Queries/ProductsQueries";
+import {
+	useDeleteProduct,
+	useListProductDetailsById,
+} from "../Queries/ProductsQueries";
 import ProductInfo from "../components/ProductInfo";
 import ProductImageBox from "../components/ProductImageBox";
 import AddToCartBox from "../components/AddToCartBox";
@@ -22,20 +17,13 @@ import ProductListReviews from "../components/ProductListReviews";
 import CreateReviewBox from "../components/CreateReviewBox";
 import { useSelector } from "react-redux";
 const ProductScreen = ({ match }) => {
-	// const product = products.find((p) => p._id === match.params.id);
 	const { id } = useParams();
 	const [product, isLoading, isSuccess] = useListProductDetailsById(id);
+	const [deleteProduct, isDeleteLoading] = useDeleteProduct();
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const [alreadyReviewed, setAlreadyReviewed] = useState(false);
-	const checkIfAlreadyReviewed = () => {
-		console.log("check");
-		if (product)
-			if (product.reviews.some((e) => e.user === userInfo._id)) {
-				return true;
-			} else return false;
-	};
 
 	useEffect(() => {
 		if (!isSuccess) document.title = "Product Details";
@@ -45,6 +33,11 @@ const ProductScreen = ({ match }) => {
 				setAlreadyReviewed(true);
 			} else setAlreadyReviewed(false);
 	}, [isSuccess]);
+
+	const DeleteProductHandler = async (id) => {
+		console.log(id);
+		await deleteProduct({ id: id, token: userInfo.token });
+	};
 
 	if (isLoading)
 		return (
@@ -60,11 +53,37 @@ const ProductScreen = ({ match }) => {
 	else
 		return (
 			<Box paddingTop={3}>
-				<NavLink to="/">
-					<Button variant="contained" startIcon={<ArrowBackIosIcon />}>
+				<Box sx={{ display: "flex", justifyContent: "space-between" }}>
+					<Button
+						component={NavLink}
+						to="/"
+						variant="contained"
+						startIcon={<ArrowBackIosIcon />}
+					>
 						Back
 					</Button>
-				</NavLink>
+					{userInfo.isAdmin && (
+						<Box sx={{ marginTop: "5px" }}>
+							<Button
+								sx={{ marginRight: "5px" }}
+								variant="contained"
+								// onClick={() => DeleteProductHandler(id)}
+								startIcon={<DeleteIcon />}
+							>
+								Delete Product
+							</Button>
+							<Button
+								component={NavLink}
+								to={`/admin/editproduct/${id}`}
+								variant="contained"
+								startIcon={<EditIcon />}
+							>
+								Edit Product
+							</Button>{" "}
+						</Box>
+					)}
+				</Box>
+
 				<Grid
 					container
 					justifyContent="center"

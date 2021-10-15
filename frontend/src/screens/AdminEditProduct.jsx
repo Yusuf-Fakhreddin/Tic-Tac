@@ -4,24 +4,43 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
+
 import {
+	Alert,
 	Button,
+	Checkbox,
 	CircularProgress,
+	FormControlLabel,
 	Grid,
 	LinearProgress,
+	Stack,
 	TextField,
 	Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import ImageUpload from "../components/ImageUpload";
-import { useUploadProductImage } from "../Queries/UploadQueries";
-import { useCreateProduct } from "../Queries/ProductsQueries";
 
-const ProductCreateScreen = () => {
+import { Box } from "@mui/system";
+import {
+	useAdminUpdateUser,
+	useListUserDetailsById,
+} from "../Queries/UserQueries";
+import {
+	useListProductDetailsById,
+	useUpdateProduct,
+} from "../Queries/ProductsQueries";
+import { useUploadProductImage } from "../Queries/UploadQueries";
+import ImageUpload from "../components/ImageUpload";
+
+const AdminEditProduct = () => {
 	const history = useHistory();
+	const { id } = useParams();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
+	const [product, productDetailsLoading, productDetailsSuccess] =
+		useListProductDetailsById(id, userInfo.token);
+	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
 
+	console.log(product);
 	const validationSchema = Yup.object({
 		name: Yup.string().required("Required"),
 		// brand: Yup.string().required("Required"),
@@ -32,31 +51,40 @@ const ProductCreateScreen = () => {
 			.required("Required"),
 		// description: Yup.string().required("Required"),
 	});
-
-	const { register, handleSubmit, errors, setValue } = useForm({
+	const { register, handleSubmit, errors, setValue, control } = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 	});
-
-	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
-	const [createProduct, createProductLoading, createProductSuccess] =
-		useCreateProduct();
-	// const [AdminEditUser, adminEditLoading, editSuccess, editIsError, editError] =
-	// 	useAdminUpdateUser();
+	const [
+		AdminEditProduct,
+		adminUpdateLoading,
+		adminUpdateSuccess,
+		editIsError,
+		editError,
+	] = useUpdateProduct();
 	const onSubmit = async (data) => {
-		console.log("hello World");
 		console.log(data);
-		await createProduct({
-			product: { ...data, image: imageUrl },
+		await AdminEditProduct({
+			id,
+			product: { ...data, image: imageUrl || (product && product.image) },
 			token: userInfo.token,
 		});
 	};
 
 	useEffect(() => {
-		if (createProductSuccess) history.push("/admin/products");
-		if (!userInfo || !userInfo.isAdmin) history.push("/");
-		document.title = "New Product";
-	}, [userInfo, history, createProductSuccess]);
+		if (adminUpdateSuccess) {
+			history.push("/admin/products");
+		} else if (product) {
+			if (product.name && product._id === id) {
+				setValue("name", product.name);
+				setValue("brand", product.brand);
+				setValue("category", product.category);
+				setValue("price", product.price);
+				setValue("countInStock", product.countInStock);
+				setValue("description", product.description);
+			}
+		}
+	}, [userInfo, history, id, adminUpdateSuccess, productDetailsSuccess]);
 
 	return (
 		<Box
@@ -68,25 +96,23 @@ const ProductCreateScreen = () => {
 				padding: "15px 0",
 				width: "600px",
 				maxWidth: "100%",
-				textAlign: "center",
+				// textAlign: "center",
 				margin: "25px auto",
 			}}
 		>
-			{/* {adminEditLoading && <CircularProgress />}
+			{adminUpdateLoading && <CircularProgress />}
 			{editIsError && (
 				<Stack sx={{ width: "100%" }} spacing={2}>
 					<Alert severity="error">{editError.message}</Alert>
 				</Stack>
 			)}
-			{editSuccess && (
+			{adminUpdateSuccess && (
 				<Stack sx={{ width: "100%" }} spacing={2}>
-					<Alert severity="success">
-						Your profile information was successfuly updated
-					</Alert>
+					<Alert severity="success">Product was successfuly updated</Alert>
 				</Stack>
-			)} */}
-			<Typography variant="h4" component="h1" textAlign="left" mt={3}>
-				Create Product{" "}
+			)}
+			<Typography variant="h4" component="h1" mt={3}>
+				Edit User{" "}
 			</Typography>
 			<Box marginY={3}>
 				<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -94,7 +120,6 @@ const ProductCreateScreen = () => {
 						<Grid item xs={10} md={10}>
 							<TextField
 								fullWidth
-								required
 								inputRef={register}
 								error={errors.name ? true : false}
 								label="Product Name"
@@ -102,6 +127,7 @@ const ProductCreateScreen = () => {
 								id="name"
 								helperText={errors.name ? errors.name.message : null}
 								variant="filled"
+								defaultValue="Product Name"
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
@@ -112,6 +138,7 @@ const ProductCreateScreen = () => {
 								label="Brand"
 								name="brand"
 								id="brand"
+								defaultValue="Brand"
 								// helperText={errors.price ? errors.price.message : null}
 								variant="filled"
 							/>
@@ -126,9 +153,9 @@ const ProductCreateScreen = () => {
 								id="category"
 								// helperText={errors.price ? errors.price.message : null}
 								variant="filled"
+								defaultValue="Category"
 							/>
 						</Grid>
-
 						<Grid item xs={10} md={10}>
 							<TextField
 								fullWidth
@@ -142,6 +169,7 @@ const ProductCreateScreen = () => {
 								onWheel={(e) => e.target.blur()}
 								helperText={errors.price ? errors.price.message : null}
 								variant="filled"
+								defaultValue={0}
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
@@ -159,6 +187,7 @@ const ProductCreateScreen = () => {
 									errors.countInStock ? errors.countInStock.message : null
 								}
 								variant="filled"
+								defaultValue={0}
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
@@ -172,6 +201,7 @@ const ProductCreateScreen = () => {
 								multiline
 								// helperText={errors.price ? errors.price.message : null}
 								variant="filled"
+								defaultValue="Description"
 							/>
 						</Grid>
 						<Grid item xs={10} align="left" md={10}>
@@ -188,20 +218,22 @@ const ProductCreateScreen = () => {
 							{isUploadLoading && (
 								<LinearProgress sx={{ marginBottom: "10px" }} />
 							)}
-							<ImageUpload uploadImage={uploadImage} token={userInfo.token} />
+							<ImageUpload
+								alreadyExistedImage={product && product.image}
+								uploadImage={uploadImage}
+								token={userInfo.token}
+							/>
 						</Grid>
-
-						<Grid item xs={10} md={10}>
+						<Grid item xs={10} md={10} align="center">
 							<Button variant="contained" type="submit">
-								Create Product
+								Update Product
 							</Button>
 						</Grid>
 					</Grid>
 				</form>
 			</Box>
-			{createProductLoading && <CircularProgress />}
 		</Box>
 	);
 };
 
-export default ProductCreateScreen;
+export default AdminEditProduct;

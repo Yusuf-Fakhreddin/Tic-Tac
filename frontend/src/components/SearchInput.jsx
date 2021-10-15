@@ -1,6 +1,9 @@
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { useForm } from "react-hook-form";
+import { keyword } from "chalk";
+import { useHistory } from "react-router";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -45,15 +48,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchInput = () => {
+	const history = useHistory();
+
+	const { register, handleSubmit, errors } = useForm({
+		mode: "onBlur",
+		defaultValues: {
+			keyword: "",
+		},
+	});
+
+	const onSubmit = (data) => {
+		console.log(data);
+		let { keyword } = data;
+		if (keyword.trim()) history.push(`/search/${keyword}`);
+		else history.push("/");
+	};
+
 	return (
 		<Search>
-			<SearchIconWrapper>
-				<SearchIcon />
-			</SearchIconWrapper>
-			<StyledInputBase
-				placeholder="Search…"
-				inputProps={{ "aria-label": "search" }}
-			/>
+			<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+				<SearchIconWrapper>
+					<SearchIcon />
+				</SearchIconWrapper>
+				<StyledInputBase
+					placeholder="Search…"
+					inputProps={{ "aria-label": "search" }}
+					name="keyword"
+					id="keyword"
+					inputRef={register}
+				/>
+			</form>
 		</Search>
 	);
 };

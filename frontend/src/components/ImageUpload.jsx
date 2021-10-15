@@ -3,14 +3,15 @@ import { Button, Grid } from "@mui/material";
 import React, { useState } from "react";
 import ImageUploading from "react-images-uploading";
 import ProductImageBox from "./ProductImageBox";
-import Input from "./StyledInputFile";
 
-const ImageUpload = ({ uploadImage, token }) => {
+const ImageUpload = ({ uploadImage, token, alreadyExistedImage }) => {
 	const [images, setImages] = React.useState([]);
 	const maxNumber = 1;
 	const acceptedTypes = ["jpg", "jpeg", "png"];
 
-	const [displayedImage, setDisplayedImage] = useState(null);
+	const [displayedImage, setDisplayedImage] = useState(
+		alreadyExistedImage || null
+	);
 	const onChange = async (imageList, addUpdateIndex) => {
 		// data for submit
 		console.log(imageList, addUpdateIndex);

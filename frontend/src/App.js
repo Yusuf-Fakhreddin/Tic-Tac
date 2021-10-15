@@ -25,6 +25,7 @@ import AdminEditUserScreen from "./screens/AdminEditUserScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductCreateScreen from "./screens/ProductCreateScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
+import AdminEditProduct from "./screens/AdminEditProduct";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -65,7 +66,15 @@ function App() {
 									path="/admin/edituser/:id"
 									component={AdminEditUserScreen}
 								/>
+								<Route
+									path="/admin/editproduct/:id"
+									component={AdminEditProduct}
+								/>
 
+								<Route
+									path="/search/:keyword/:pageNumber?"
+									component={HomeScreen}
+								/>
 								<Route path="/" component={HomeScreen} />
 							</Switch>
 						</Container>

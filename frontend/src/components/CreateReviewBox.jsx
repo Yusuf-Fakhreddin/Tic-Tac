@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/system";
 import { useCreateReview } from "../Queries/ProductsQueries";
+import { useEffect } from "react";
 
 const labels = {
 	1: "Poor",
@@ -15,7 +16,7 @@ const CreateReviewBox = ({ productId, token }) => {
 	const [ratingValue, setRatingValue] = React.useState(1);
 	const [hover, setHover] = React.useState(-1);
 
-	const { register, handleSubmit, errors } = useForm({
+	const { register, handleSubmit, errors, setValue } = useForm({
 		mode: "onBlur",
 	});
 	const [createReview, createReviewLoading] = useCreateReview();
@@ -27,7 +28,10 @@ const CreateReviewBox = ({ productId, token }) => {
 			token,
 		});
 	};
-
+	useEffect(() => {
+		setValue("comment", "");
+		setRatingValue(1);
+	}, [createReviewLoading]);
 	return (
 		<Box
 			sx={{

@@ -3,34 +3,37 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 // <----------- Queries ---------->
 
-const getProductDetailsById = async (productId) => {
+const getProductDetailsById = async (productId, token) => {
 	console.log(productId, "productId");
 	const { data } = await http.get(`/api/products/${productId}`);
 	return data;
 };
 
-export const useListProductDetailsById = (id) => {
+export const useListProductDetailsById = (id, token) => {
 	console.log("id", id);
 	const { data, error, isLoading, isError, isSuccess } = useQuery(
 		["productDetails", id],
-		() => getProductDetailsById(id)
+		() => getProductDetailsById(id, token)
 	);
 	return [data, isLoading, isSuccess];
 };
 
-const getListOfProducts = async (keyword = "", pageNumber = "") => {
+const getListOfProducts = async (keyword = "", pageNumber = 1) => {
+	console.log(keyword, pageNumber);
 	const { data } = await http.get(
 		`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
 	);
 	return data;
 };
 
-export const useListOfProducts = (keyword = "", pageNumber = "") => {
-	const { data, error, isLoading, isError } = useQuery(
+export const useListOfProducts = (keyword = "", pageNumber = 1) => {
+	console.log(keyword, pageNumber);
+
+	const { data, error, isLoading, isError, refetch, isFetching } = useQuery(
 		["listProducts", pageNumber],
 		() => getListOfProducts(keyword, pageNumber)
 	);
-	return [data, isLoading];
+	return [data, isLoading, refetch, isFetching];
 };
 
 const getTopProducts = async () => {
@@ -121,19 +124,29 @@ export const useCreateProduct = () => {
 	return [mutateAsync, isLoading, isSuccess];
 };
 
-const updateProduct = async ({ product, token }) => {
+const updateProduct = async ({ id, product, token }) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	await http.put(`/api/products/${product._id}`, product, config);
+	console.log(product, "product Update");
+	await http.put(`/api/products/${id}`, product, config);
 };
 
 export const useUpdateProduct = () => {
-	const { mutateAsync, isLoading } = useMutation(updateProduct);
-	return [mutateAsync, isLoading];
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading, isSuccess, isError, error } = useMutation(
+		updateProduct,
+		{
+			onSuccess: (data, variables, context) => {
+				queryClient.invalidateQueries(["productDetails", variables.id]);
+			},
+		}
+	);
+	return [mutateAsync, isLoading, isSuccess, isError, error];
 };
 
 const createProductReview = async ({ productId, review, token }) => {
