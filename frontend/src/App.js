@@ -26,7 +26,8 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductCreateScreen from "./screens/ProductCreateScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
 import AdminEditProduct from "./screens/AdminEditProduct";
-
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -36,6 +37,7 @@ const queryClient = new QueryClient({
 		},
 	},
 });
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 function App() {
 	// const theme = createTheme({});
@@ -45,39 +47,47 @@ function App() {
 			<Router>
 				<div>
 					<Header />
-					<main>
-						<Container>
-							<Switch>
-								<Route path="/product/:id" component={ProductScreen} />
-								<Route path="/cart" component={CartScreen} />
-								<Route path="/login" component={LoginScreen} />
-								<Route path="/register" component={RegisterScreen} />
-								<Route path="/profile" component={ProfileScreen} />
-								<Route path="/shipping" component={ShippingScreen} />
-								<Route path="/paymentmethod" component={PaymentMethodScreen} />
-								<Route path="/placeorder" component={PlaceOrderScreen} />
-								<Route path="/order/:id" component={OrderDetailsScreen} />
-								<Route path="/myorders" component={MyOrdersTable} />
-								<Route path="/createproduct" component={ProductCreateScreen} />
-								<Route path="/admin/users" component={UsersListScreen} />
-								<Route path="/admin/products" component={ProductListScreen} />
-								<Route path="/admin/orders" component={OrdersListScreen} />
-								<Route
-									path="/admin/edituser/:id"
-									component={AdminEditUserScreen}
-								/>
-								<Route
-									path="/admin/editproduct/:id"
-									component={AdminEditProduct}
-								/>
+					<Elements stripe={stripePromise}>
+						<main>
+							<Container>
+								<Switch>
+									<Route path="/product/:id" component={ProductScreen} />
+									<Route path="/cart" component={CartScreen} />
+									<Route path="/login" component={LoginScreen} />
+									<Route path="/register" component={RegisterScreen} />
+									<Route path="/profile" component={ProfileScreen} />
+									<Route path="/shipping" component={ShippingScreen} />
+									<Route
+										path="/paymentmethod"
+										component={PaymentMethodScreen}
+									/>
+									<Route path="/placeorder" component={PlaceOrderScreen} />
+									<Route path="/order/:id" component={OrderDetailsScreen} />
+									<Route path="/myorders" component={MyOrdersTable} />
+									<Route
+										path="/createproduct"
+										component={ProductCreateScreen}
+									/>
+									<Route path="/admin/users" component={UsersListScreen} />
+									<Route path="/admin/products" component={ProductListScreen} />
+									<Route path="/admin/orders" component={OrdersListScreen} />
+									<Route
+										path="/admin/edituser/:id"
+										component={AdminEditUserScreen}
+									/>
+									<Route
+										path="/admin/editproduct/:id"
+										component={AdminEditProduct}
+									/>
 
-								<Route
-									path="/search/:keyword/:pageNumber?"
-									component={HomeScreen}
-								/>
-								<Route path="/" component={HomeScreen} />
-							</Switch>
-						</Container>
+									<Route
+										path="/search/:keyword?/:pageNumber?"
+										component={HomeScreen}
+									/>
+									<Route path="/" component={HomeScreen} />
+								</Switch>
+							</Container>
+						</main>
 						<ScrollTop>
 							<Fab
 								color="secondary"
@@ -87,7 +97,7 @@ function App() {
 								<KeyboardArrowUpIcon />
 							</Fab>
 						</ScrollTop>
-					</main>
+					</Elements>
 					<Footer />
 				</div>
 			</Router>

@@ -112,7 +112,7 @@ export const useDeliverOrder = () => {
 	return [mutateAsync, isLoading, isSuccess];
 };
 
-const payOrder = async ({ orderId, paymentResult, token }) => {
+const payOrder = async ({ orderId, token }) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -123,6 +123,12 @@ const payOrder = async ({ orderId, paymentResult, token }) => {
 };
 
 export const usePayOrder = () => {
-	const { mutateAsync, isLoading } = useMutation(payOrder);
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading } = useMutation(payOrder, {
+		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries(["orderDetails", variables.orderId]);
+		},
+	});
 	return [mutateAsync, isLoading];
 };

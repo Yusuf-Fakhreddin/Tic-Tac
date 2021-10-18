@@ -17,8 +17,7 @@ import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import TablePaginationActions from "../components/TablePaginationActions";
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 
@@ -30,7 +29,6 @@ const OrdersListScreen = () => {
 
 	const [pageNumber, setpageNumber] = useState(1);
 	const [data, isLoadingOrders] = useListOfOrders(userInfo.token, pageNumber);
-	// const [deleteProduct, isDeleteLoading] = useDeleteOrder();
 	useEffect(() => {
 		if (!userInfo || !userInfo.isAdmin) {
 			history.push("/");

@@ -41,8 +41,7 @@ const ProductCreateScreen = () => {
 	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
 	const [createProduct, createProductLoading, createProductSuccess] =
 		useCreateProduct();
-	// const [AdminEditUser, adminEditLoading, editSuccess, editIsError, editError] =
-	// 	useAdminUpdateUser();
+
 	const onSubmit = async (data) => {
 		console.log("hello World");
 		console.log(data);

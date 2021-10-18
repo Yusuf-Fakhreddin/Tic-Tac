@@ -20,7 +20,8 @@ const HomeScreen = () => {
 	console.log(data);
 	useEffect(() => {
 		document.title = "Caribbean";
-		console.log(keyword, pageNumber);
+
+		console.log(keyword ? true : false, pageNumber);
 		fetchPrdoucts();
 	}, [keyword, pageNumber]);
 
@@ -38,7 +39,7 @@ const HomeScreen = () => {
 	else
 		return (
 			<>
-				{keyword && data.products.length === 0 && (
+				{keyword && data && data.products.length === 0 && (
 					<Typography variant="h3" marginY="10px">
 						Sorry no results for {keyword}
 					</Typography>
@@ -47,16 +48,17 @@ const HomeScreen = () => {
 					Latest Products
 				</Typography>
 				<Grid container rowSpacing={2} spacing={2} justifyContent="center">
-					{React.Children.toArray(
-						data.products.map((product) => (
-							<Grid item xs={10} sm="auto">
-								{" "}
-								<Product product={product} />
-							</Grid>
-						))
-					)}
+					{data &&
+						React.Children.toArray(
+							data.products.map((product) => (
+								<Grid item xs={10} sm="auto">
+									{" "}
+									<Product product={product} />
+								</Grid>
+							))
+						)}
 					<Grid item xs={10}>
-						{keyword && data.pages > 1 && (
+						{keyword && data && data.pages > 1 && (
 							<Pagination
 								count={data.pages}
 								page={data.page}

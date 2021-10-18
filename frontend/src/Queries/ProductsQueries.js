@@ -21,7 +21,7 @@ export const useListProductDetailsById = (id, token) => {
 const getListOfProducts = async (keyword = "", pageNumber = 1) => {
 	console.log(keyword, pageNumber);
 	const { data } = await http.get(
-		`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+		`http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
 	);
 	return data;
 };

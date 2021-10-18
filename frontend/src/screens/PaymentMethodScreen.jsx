@@ -11,10 +11,11 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useHistory } from "react-router-dom";
 import { savePaymentMethod } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import StripeCard from "../components/StripeCard";
 
 const PaymentMethodScreen = () => {
 	const dispatch = useDispatch();
@@ -34,19 +35,20 @@ const PaymentMethodScreen = () => {
 		paymentMethod: Yup.string().required("Required"),
 	});
 
-	const { register, handleSubmit, errors, control } = useForm({
+	const { register, handleSubmit, errors, control, getValues } = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
 			// address: shippingAddress.address ? shippingAddress.address : "",
-			paymentMethod: paymentMethod ? paymentMethod : "Cash On Delivery",
+			paymentMethod: paymentMethod ? paymentMethod : "card",
 		},
 	});
-
+	let values = getValues();
 	useEffect(() => {
 		document.title = "Payment Method";
 		if (!userInfo) history.push("/login?redirect=paymentmethod");
-	}, [userInfo, history]);
+		console.log(values.paymentMethod);
+	}, [userInfo, history, values.paymentMethod]);
 
 	const onSubmit = (data) => {
 		console.log(data);
@@ -93,15 +95,14 @@ const PaymentMethodScreen = () => {
 									>
 										<FormLabel component="legend">Select a Method</FormLabel>
 										<RadioGroup
-											defaultValue={
-												paymentMethod ? paymentMethod : "Cash On Delivery"
-											}
+											defaultValue={paymentMethod ? paymentMethod : "card"}
 										>
 											<FormControlLabel
-												value="PayPal"
+												value="Credit/Debit Card"
 												control={<Radio />}
-												label="PayPal"
+												label="Credit/Debit Card"
 											/>
+
 											<FormControlLabel
 												value="Fawry"
 												control={<Radio />}

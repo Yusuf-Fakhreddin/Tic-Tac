@@ -49,43 +49,44 @@ const MyOrdersTable = () => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{React.Children.toArray(
-								orders.map((row) => (
-									<TableRow
-										hover
-										sx={{
-											"&:last-child td, &:last-child th": { border: 0 },
-										}}
-									>
-										<TableCell component="th" scope="row">
-											{row._id}
-										</TableCell>
-										<TableCell align="center" component="th" scope="row">
-											{row.createdAt.substring(0, 10)}
-										</TableCell>
-										<TableCell align="center">{row.totalPrice}</TableCell>
-										<TableCell align="center">
-											{row.isPaid ? (
-												row.paidAt.substring(0, 10)
-											) : (
-												<ClearTwoToneIcon color="error" />
-											)}
-										</TableCell>
-										<TableCell align="center">
-											{row.isDelivered ? (
-												row.deliveredAt.substring(0, 10)
-											) : (
-												<ClearTwoToneIcon color="error" />
-											)}
-										</TableCell>
-										<TableCell align="center">
-											<NavLink to={`/order/${row._id}`}>
-												<Button variant="contained">Details</Button>
-											</NavLink>
-										</TableCell>
-									</TableRow>
-								))
-							)}
+							{orders &&
+								React.Children.toArray(
+									orders.map((row) => (
+										<TableRow
+											hover
+											sx={{
+												"&:last-child td, &:last-child th": { border: 0 },
+											}}
+										>
+											<TableCell component="th" scope="row">
+												{row._id}
+											</TableCell>
+											<TableCell align="center" component="th" scope="row">
+												{row.createdAt.substring(0, 10)}
+											</TableCell>
+											<TableCell align="center">{row.totalPrice}</TableCell>
+											<TableCell align="center">
+												{row.isPaid ? (
+													row.paidAt.substring(0, 10)
+												) : (
+													<ClearTwoToneIcon color="error" />
+												)}
+											</TableCell>
+											<TableCell align="center">
+												{row.isDelivered ? (
+													row.deliveredAt.substring(0, 10)
+												) : (
+													<ClearTwoToneIcon color="error" />
+												)}
+											</TableCell>
+											<TableCell align="center">
+												<NavLink to={`/order/${row._id}`}>
+													<Button variant="contained">Details</Button>
+												</NavLink>
+											</TableCell>
+										</TableRow>
+									))
+								)}
 						</TableBody>
 					</Table>
 				</TableContainer>
