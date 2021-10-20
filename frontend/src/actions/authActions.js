@@ -19,10 +19,7 @@ import {
 	RESET_PASSWORD_SUCCESS,
 	RESET_PASSWORD_FAIL,
 } from "../constants/authConstants";
-import {
-	USER_DETAILS_RESET,
-	USER_LIST_RESET,
-} from "../constants/userConstants";
+
 import http from "../httpService";
 
 export const googleOauth = (tokenId) => {
@@ -139,8 +136,6 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
 	localStorage.removeItem("UserInfo");
 	dispatch({ type: USER_LOGOUT });
-	dispatch({ type: USER_DETAILS_RESET });
-	dispatch({ type: USER_LIST_RESET });
 };
 
 export const register = (name, email, password) => async (dispatch) => {

@@ -82,6 +82,9 @@ const HeaderMenu = ({ userInfo }) => {
 						{userInfo.isAdmin && (
 							<div>
 								<Divider sx={{ my: 0.5 }} />
+								<NavLink to="/createproduct">
+									<MenuItem onClick={handleClose}>Create Product</MenuItem>
+								</NavLink>
 								<NavLink to="/admin/users">
 									<MenuItem onClick={handleClose}>Manage Users</MenuItem>
 								</NavLink>

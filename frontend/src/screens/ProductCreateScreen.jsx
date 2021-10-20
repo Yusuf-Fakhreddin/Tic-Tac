@@ -9,6 +9,7 @@ import {
 	CircularProgress,
 	Grid,
 	LinearProgress,
+	MenuItem,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -16,6 +17,7 @@ import { Box } from "@mui/system";
 import ImageUpload from "../components/ImageUpload";
 import { useUploadProductImage } from "../Queries/UploadQueries";
 import { useCreateProduct } from "../Queries/ProductsQueries";
+import ReactHookFormSelect from "../components/ReactHookFormSelect";
 
 const ProductCreateScreen = () => {
 	const history = useHistory();
@@ -33,7 +35,7 @@ const ProductCreateScreen = () => {
 		// description: Yup.string().required("Required"),
 	});
 
-	const { register, handleSubmit, errors, setValue } = useForm({
+	const { register, handleSubmit, errors, setValue, control } = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 	});
@@ -116,16 +118,19 @@ const ProductCreateScreen = () => {
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
-							<TextField
-								fullWidth
-								inputRef={register}
-								// error={errors.price ? true : false}
-								label="Category"
+							<ReactHookFormSelect
 								name="category"
-								id="category"
-								// helperText={errors.price ? errors.price.message : null}
+								label="Category"
+								control={control}
 								variant="filled"
-							/>
+							>
+								<MenuItem value="Technology">Technology</MenuItem>
+								<MenuItem value="Vehicles">Vehicles</MenuItem>
+								<MenuItem value="Home">Home</MenuItem>
+								<MenuItem value="Pets">Pets</MenuItem>
+								<MenuItem value="Fashion">Fashion</MenuItem>
+								<MenuItem value="Other">Other</MenuItem>
+							</ReactHookFormSelect>
 						</Grid>
 
 						<Grid item xs={10} md={10}>

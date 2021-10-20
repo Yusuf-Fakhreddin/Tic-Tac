@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -40,69 +40,81 @@ const queryClient = new QueryClient({
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 function App() {
-	// const theme = createTheme({});
+	const theme = createTheme({
+		palette: {
+			primary: {
+				light: "#fbfffc",
+				main: "#c8e6c9",
+				dark: "#97b498",
+				// contrastText: "#fff",
+			},
+		},
+	});
 	return (
-		// <ThemeProvider theme={theme}>
-		<QueryClientProvider client={queryClient}>
-			<Router>
-				<div>
-					<Header />
-					<Elements stripe={stripePromise}>
-						<main>
-							<Container>
-								<Switch>
-									<Route path="/product/:id" component={ProductScreen} />
-									<Route path="/cart" component={CartScreen} />
-									<Route path="/login" component={LoginScreen} />
-									<Route path="/register" component={RegisterScreen} />
-									<Route path="/profile" component={ProfileScreen} />
-									<Route path="/shipping" component={ShippingScreen} />
-									<Route
-										path="/paymentmethod"
-										component={PaymentMethodScreen}
-									/>
-									<Route path="/placeorder" component={PlaceOrderScreen} />
-									<Route path="/order/:id" component={OrderDetailsScreen} />
-									<Route path="/myorders" component={MyOrdersTable} />
-									<Route
-										path="/createproduct"
-										component={ProductCreateScreen}
-									/>
-									<Route path="/admin/users" component={UsersListScreen} />
-									<Route path="/admin/products" component={ProductListScreen} />
-									<Route path="/admin/orders" component={OrdersListScreen} />
-									<Route
-										path="/admin/edituser/:id"
-										component={AdminEditUserScreen}
-									/>
-									<Route
-										path="/admin/editproduct/:id"
-										component={AdminEditProduct}
-									/>
+		<ThemeProvider theme={theme}>
+			<QueryClientProvider client={queryClient}>
+				<Router>
+					<div>
+						<Header />
+						<Elements stripe={stripePromise}>
+							<main>
+								<Container>
+									<Switch>
+										<Route path="/product/:id" component={ProductScreen} />
+										<Route path="/cart" component={CartScreen} />
+										<Route path="/login" component={LoginScreen} />
+										<Route path="/register" component={RegisterScreen} />
+										<Route path="/profile" component={ProfileScreen} />
+										<Route path="/shipping" component={ShippingScreen} />
+										<Route
+											path="/paymentmethod"
+											component={PaymentMethodScreen}
+										/>
+										<Route path="/placeorder" component={PlaceOrderScreen} />
+										<Route path="/order/:id" component={OrderDetailsScreen} />
+										<Route path="/myorders" component={MyOrdersTable} />
+										<Route
+											path="/createproduct"
+											component={ProductCreateScreen}
+										/>
+										<Route path="/admin/users" component={UsersListScreen} />
+										<Route
+											path="/admin/products"
+											component={ProductListScreen}
+										/>
+										<Route path="/admin/orders" component={OrdersListScreen} />
+										<Route
+											path="/admin/edituser/:id"
+											component={AdminEditUserScreen}
+										/>
+										<Route
+											path="/admin/editproduct/:id"
+											component={AdminEditProduct}
+										/>
 
-									<Route
-										path="/search/:keyword?/:pageNumber?"
-										component={HomeScreen}
-									/>
-									<Route path="/" component={HomeScreen} />
-								</Switch>
-							</Container>
-						</main>
-						<ScrollTop>
-							<Fab
-								color="secondary"
-								size="small"
-								aria-label="scroll back to top"
-							>
-								<KeyboardArrowUpIcon />
-							</Fab>
-						</ScrollTop>
-					</Elements>
-					<Footer />
-				</div>
-			</Router>
-		</QueryClientProvider>
-		// </ThemeProvider>
+										<Route
+											path="/search/:keyword?/:pageNumber?"
+											component={HomeScreen}
+										/>
+										<Route path="/" component={HomeScreen} />
+									</Switch>
+								</Container>
+							</main>
+							<ScrollTop>
+								<Fab
+									color="secondary"
+									size="small"
+									aria-label="scroll back to top"
+								>
+									<KeyboardArrowUpIcon />
+								</Fab>
+							</ScrollTop>
+						</Elements>
+						<Footer />
+					</div>
+				</Router>
+			</QueryClientProvider>
+		</ThemeProvider>
 	);
 }
 

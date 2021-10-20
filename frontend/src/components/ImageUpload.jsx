@@ -38,7 +38,6 @@ const ImageUpload = ({ uploadImage, token, alreadyExistedImage }) => {
 				isDragging,
 				dragProps,
 			}) => (
-				// write your building UI
 				<Grid container>
 					<Grid item xs={10} md={5}>
 						<label htmlFor="icon-button-file">

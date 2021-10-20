@@ -79,7 +79,7 @@ const ProductListScreen = () => {
 					</Typography>
 
 					<NavLink to="/createproduct">
-						<Button variant="outlined">Create Product</Button>
+						<Button variant="contained">Create Product</Button>
 					</NavLink>
 				</Box>
 				<TableContainer component={Paper}>

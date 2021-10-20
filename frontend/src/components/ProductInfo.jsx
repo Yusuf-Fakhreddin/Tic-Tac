@@ -19,6 +19,7 @@ const ProductInfo = ({ product }) => {
 				</ListItemText>
 			</ListItem>
 			<Divider />
+
 			{/* <ListItem>
 				<ListItemText>
 					<Typography variant="h6" component="h3">
@@ -41,9 +42,17 @@ const ProductInfo = ({ product }) => {
 				</Typography>
 			</Box>
 			<Divider />
+			<ListItem>
+				<ListItemText>
+					<Typography variant="subtitle2">{product.category}</Typography>
+				</ListItemText>
+			</ListItem>
+			<Divider />
 
 			<ListItem>
-				<ListItemText primary={product.description} />
+				<ListItemText>
+					<Typography variant="body2">{product.description}</Typography>
+				</ListItemText>
 			</ListItem>
 		</List>
 	);

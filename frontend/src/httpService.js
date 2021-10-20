@@ -17,6 +17,7 @@ axios.interceptors.response.use(null, (error) => {
 			? error.response.data.message
 			: error.response.statusText + " " + error.response.status;
 	}
+	// Logout if the token expired or after a request with not allowed token
 	if (error.message === "Not authorized, token failed") {
 		const dispatch = useDispatch();
 		dispatch(logout());

@@ -64,10 +64,10 @@ const RegisterScreen = () => {
 		<Box
 			mt={3}
 			sx={{
-				border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",
-				padding: "15px",
-				maxWidth: "60%",
+				padding: "15px 0",
+				width: "600",
+				maxWidth: "100%",
 				textAlign: "left",
 				margin: "25px auto",
 			}}

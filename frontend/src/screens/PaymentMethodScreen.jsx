@@ -102,17 +102,6 @@ const PaymentMethodScreen = () => {
 												control={<Radio />}
 												label="Credit/Debit Card"
 											/>
-
-											<FormControlLabel
-												value="Fawry"
-												control={<Radio />}
-												label="Fawry"
-											/>
-											<FormControlLabel
-												value="Vodafone Cash"
-												control={<Radio />}
-												label="Vodafone Cash"
-											/>
 											<FormControlLabel
 												value="Cash On Delivery"
 												control={<Radio />}

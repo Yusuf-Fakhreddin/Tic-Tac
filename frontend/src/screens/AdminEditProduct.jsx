@@ -14,6 +14,7 @@ import {
 	FormControlLabel,
 	Grid,
 	LinearProgress,
+	MenuItem,
 	Stack,
 	TextField,
 	Typography,
@@ -30,6 +31,7 @@ import {
 } from "../Queries/ProductsQueries";
 import { useUploadProductImage } from "../Queries/UploadQueries";
 import ImageUpload from "../components/ImageUpload";
+import ReactHookFormSelect from "../components/ReactHookFormSelect";
 
 const AdminEditProduct = () => {
 	const history = useHistory();
@@ -144,17 +146,19 @@ const AdminEditProduct = () => {
 							/>
 						</Grid>
 						<Grid item xs={10} md={10}>
-							<TextField
-								fullWidth
-								inputRef={register}
-								// error={errors.price ? true : false}
-								label="Category"
+							<ReactHookFormSelect
 								name="category"
-								id="category"
-								// helperText={errors.price ? errors.price.message : null}
+								label="Category"
+								control={control}
 								variant="filled"
-								defaultValue="Category"
-							/>
+							>
+								<MenuItem value="Technology">Technology</MenuItem>
+								<MenuItem value="Vehicles">Vehicles</MenuItem>
+								<MenuItem value="Home">Home</MenuItem>
+								<MenuItem value="Pets">Pets</MenuItem>
+								<MenuItem value="Fashion">Fashion</MenuItem>
+								<MenuItem value="Other">Other</MenuItem>
+							</ReactHookFormSelect>
 						</Grid>
 						<Grid item xs={10} md={10}>
 							<TextField
@@ -205,16 +209,6 @@ const AdminEditProduct = () => {
 							/>
 						</Grid>
 						<Grid item xs={10} align="left" md={10}>
-							{/* <label htmlFor="icon-button-file">
-								<Input accept="image/*" id="icon-button-file" type="file" />
-								<Button
-									startIcon={<PhotoCamera />}
-									variant="contained"
-									component="span"
-								>
-									Upload Image
-								</Button>
-							</label> */}
 							{isUploadLoading && (
 								<LinearProgress sx={{ marginBottom: "10px" }} />
 							)}

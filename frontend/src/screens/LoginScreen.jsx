@@ -54,7 +54,7 @@ const LoginScreen = () => {
 				// border: "1.5px solid #e0e0e0",
 				borderRadius: "5px",
 				padding: "15px 0",
-				widtH: "600",
+				width: "600",
 				maxWidth: "100%",
 				textAlign: "center",
 				margin: "25px auto",
