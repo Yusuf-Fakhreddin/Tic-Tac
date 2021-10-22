@@ -3,19 +3,21 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 // <----------- Queries ---------->
 
-const getProductDetailsById = async (productId, token) => {
+const getProductDetailsById = async (productId) => {
 	console.log(productId, "productId");
+	if (!productId) return;
+
 	const { data } = await http.get(`/api/products/${productId}`);
 	return data;
 };
 
-export const useListProductDetailsById = (id, token) => {
+export const useListProductDetailsById = (id) => {
 	console.log("id", id);
-	const { data, error, isLoading, isError, isSuccess } = useQuery(
+	const { data, error, isLoading, isError, isSuccess, refetch } = useQuery(
 		["productDetails", id],
-		() => getProductDetailsById(id, token)
+		() => getProductDetailsById(id)
 	);
-	return [data, isLoading, isSuccess];
+	return [data, isLoading, isSuccess, refetch];
 };
 
 const getListOfProducts = async (keyword = "", pageNumber = 1) => {

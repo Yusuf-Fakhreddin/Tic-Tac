@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Button,
 	Divider,
 	Grid,
@@ -8,15 +9,41 @@ import {
 	Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CartItemsTable from "../components/CartItemsTable";
-
+import { removeFromCart } from "../actions/cartActions";
+import { useListProductDetailsById } from "../Queries/ProductsQueries";
 const CartScreen = () => {
 	const cart = useSelector((state) => state.cartState);
 	const { cartItems } = cart;
+	console.log(cartItems);
+	const [currentID, setcurrentID] = useState();
+	const [product, isLoading, isSuccess, refetch] =
+		useListProductDetailsById(currentID);
+	const dispatch = useDispatch();
+
+	const [removedItems, setremovedItems] = useState([]);
+
+	useEffect(() => {
+		const check = async () => {
+			console.log("executing");
+			for (let i = 0; i < cartItems.length; i++) {
+				setcurrentID(cartItems[i].product);
+				await refetch();
+				while (isLoading) {
+					return;
+				}
+				if (product && product.countInStock === 0) {
+					dispatch(removeFromCart(cartItems[i].product));
+					setremovedItems([...removedItems, cartItems[i].name]);
+				}
+			}
+		};
+		check();
+	}, []);
 
 	return (
 		<Box paddingTop={3}>
@@ -28,6 +55,12 @@ const CartScreen = () => {
 			<Typography variant="h4" component="h1" mt={3}>
 				Your Shopping Cart
 			</Typography>
+			{removedItems.length > 0 && (
+				<Alert severity="warning">
+					One or more products were removed from your cart as they went out of
+					stock
+				</Alert>
+			)}
 			<Grid
 				container
 				justifyContent="center"

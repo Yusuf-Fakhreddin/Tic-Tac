@@ -1,12 +1,13 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import ImageMagnify from "./ImageMagnify";
 
 const ProductImageBox = ({ productImage, dragProps, ...props }) => {
 	if (productImage)
 		return (
 			<Box
 				{...props}
-				component="img"
+				// component="img"
 				sx={{
 					// maxWidth: "100%",
 					// maxHegiht: "100%",
@@ -18,8 +19,10 @@ const ProductImageBox = ({ productImage, dragProps, ...props }) => {
 					// maxWidth: { xs: 350, md: 250 },
 				}}
 				alt="Product"
-				src={productImage}
-			/>
+				// src={productImage}
+			>
+				<ImageMagnify image={productImage} />
+			</Box>
 		);
 	else
 		return (

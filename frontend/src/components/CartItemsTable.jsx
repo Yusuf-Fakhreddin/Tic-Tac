@@ -16,6 +16,7 @@ import ProductImageBox from "./ProductImageBox";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import { NavLink } from "react-router-dom";
 const CartItemsTable = ({ cartItems, order }) => {
 	const dispatch = useDispatch();
 
@@ -64,7 +65,7 @@ const CartItemsTable = ({ cartItems, order }) => {
 									<ProductImageBox productImage={row.image} />
 								</TableCell>
 								<TableCell align="center" component="th" scope="row">
-									{row.name}
+									<NavLink to={`/product/${row.product}`}>{row.name}</NavLink>
 								</TableCell>
 								<TableCell align="center">{row.price}</TableCell>
 								<TableCell align="center">

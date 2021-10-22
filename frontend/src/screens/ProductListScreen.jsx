@@ -24,6 +24,10 @@ import {
 	useDeleteProduct,
 	useListOfProducts,
 } from "../Queries/ProductsQueries";
+import ProductImageBox from "../components/ProductImageBox";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+
 const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -87,6 +91,7 @@ const ProductListScreen = () => {
 						<TableHead>
 							<TableRow sx={{ backgroundColor: "lightGray" }}>
 								<TableCell align="left">ID</TableCell>
+								<TableCell align="left">ProductImage</TableCell>
 								<TableCell align="center">NAME</TableCell>
 								<TableCell align="center">PRICE</TableCell>
 								<TableCell align="center">CATEGORY</TableCell>
@@ -104,6 +109,16 @@ const ProductListScreen = () => {
 											"&:last-child td, &:last-child th": { border: 0 },
 										}}
 									>
+										{" "}
+										<TableCell
+											sx={{ maxHeight: "50px", maxWidth: "50px" }}
+											component="th"
+											scope="row"
+										>
+											<Zoom>
+												<ProductImageBox productImage={row.image} />{" "}
+											</Zoom>
+										</TableCell>
 										<TableCell component="th" scope="row">
 											<NavLink to={`/product/${row._id}`}>{row._id}</NavLink>
 										</TableCell>
@@ -116,7 +131,6 @@ const ProductListScreen = () => {
 										<TableCell align="center" component="th" scope="row">
 											{row.price}
 										</TableCell>
-
 										<TableCell align="center">
 											<NavLink to={`/admin/editproduct/${row._id}`}>
 												<Button color="info" variant="contained">
