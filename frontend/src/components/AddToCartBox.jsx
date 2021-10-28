@@ -16,10 +16,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { addToCart } from "../actions/cartActions";
+import { useTranslation } from "react-i18next";
 
 const AddToCartBox = ({ product }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 
 	const [qty, setQty] = useState(1);
 
@@ -32,18 +34,18 @@ const AddToCartBox = ({ product }) => {
 			<List>
 				<ListItem>
 					<ListItemText>
-						Price:
+						{t("price")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + product.price} EGP
+							{" " + product.price} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
 				<Divider />
 				<ListItem>
 					<ListItemText>
-						Status:
+						{t("status")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{product.countInStock > 0 ? " In Stock" : " Out Of Stock"}
+							{product.countInStock > 0 ? t("inStock") : t("outOfStock")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
@@ -52,10 +54,10 @@ const AddToCartBox = ({ product }) => {
 						<Divider />
 						<ListItem>
 							<FormControl sx={{ m: 1, minWidth: 120, marginX: "0" }}>
-								<InputLabel>Quantity</InputLabel>
+								<InputLabel>{t("quantity")}</InputLabel>
 
 								<Select
-									label="Quantity"
+									label={t("quantity")}
 									value={qty}
 									onChange={(e) => setQty(e.target.value)}
 									displayEmpty
@@ -78,7 +80,7 @@ const AddToCartBox = ({ product }) => {
 								disabled={product.countInStock === 0}
 								startIcon={<AddShoppingCartIcon />}
 							>
-								Add To Cart
+								{t("addToCart")}
 							</Button>
 						</ListItem>
 					</>

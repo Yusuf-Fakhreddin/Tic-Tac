@@ -9,16 +9,15 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const ProductListReviews = ({ reviews }) => {
+	const { t } = useTranslation();
+
 	return (
 		<div>
-			<Typography variant="h5">CUSTOMER REVIEWS</Typography>
-			{reviews.length === 0 && (
-				<Alert severity="info">
-					This Prdouct does not have any reviews yet
-				</Alert>
-			)}
+			<Typography variant="h5">{t("CUSTOMERREVIEWS")}</Typography>
+			{reviews.length === 0 && <Alert severity="info">{t("noReviews")}</Alert>}
 
 			{React.Children.toArray(
 				reviews.map((review) => (

@@ -4,15 +4,18 @@ import { useForm } from "react-hook-form";
 import { Box } from "@mui/system";
 import { useCreateReview } from "../Queries/ProductsQueries";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-const labels = {
-	1: "Poor",
-	2: "Fair",
-	3: "Good",
-	4: "Very Good",
-	5: "Excellent",
-};
 const CreateReviewBox = ({ productId, token }) => {
+	const { t } = useTranslation();
+	const labels = {
+		1: t("poor"),
+		2: t("fair"),
+		3: t("good"),
+		4: t("veryGood"),
+		5: t("excellent"),
+	};
+
 	const [ratingValue, setRatingValue] = React.useState(1);
 	const [hover, setHover] = React.useState(-1);
 
@@ -31,7 +34,7 @@ const CreateReviewBox = ({ productId, token }) => {
 	useEffect(() => {
 		setValue("comment", "");
 		setRatingValue(1);
-	}, [createReviewLoading]);
+	}, [createReviewLoading, setValue]);
 	return (
 		<Box
 			sx={{
@@ -41,7 +44,9 @@ const CreateReviewBox = ({ productId, token }) => {
 				// marginTop: "15px",
 			}}
 		>
-			<Typography variant="h5">REVIEW THIS PRODUCT</Typography>
+			<Typography variant="h5" textTransform>
+				{t("REVIEWTHISPRODUCT")}
+			</Typography>
 			<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
 				<Box
 					sx={{
@@ -79,7 +84,7 @@ const CreateReviewBox = ({ productId, token }) => {
 					minRows={2}
 				/>
 				<Button variant="contained" type="submit" sx={{ marginTop: "15px" }}>
-					Submit Review
+					{t("submitReview")}
 				</Button>
 			</form>
 		</Box>

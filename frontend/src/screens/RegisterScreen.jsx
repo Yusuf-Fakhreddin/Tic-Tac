@@ -18,11 +18,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { register as signUp } from "../actions/authActions";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const RegisterScreen = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const redirect = location.search ? location.search.split("=")[1] : "/";
+
+	const { t } = useTranslation();
 
 	const history = useHistory();
 	const userLogin = useSelector((state) => state.userLogin);
@@ -50,7 +53,7 @@ const RegisterScreen = () => {
 	useEffect(() => {
 		document.title = "Sign Up";
 		if (userInfo) {
-			history.push(redirect);
+			history.replace(redirect);
 		}
 	}, [userInfo, history, redirect]);
 
@@ -80,7 +83,7 @@ const RegisterScreen = () => {
 			)}
 			<Box marginY={3}>
 				<Typography variant="h4" component="h1" mt={3}>
-					Sign Up
+					{t("register")}
 				</Typography>
 				<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
 					<Grid
@@ -146,7 +149,7 @@ const RegisterScreen = () => {
 						</Grid>
 						<Grid item xs={10} md={10}>
 							<Button variant="contained" type="submit">
-								Register
+								{t("register")}
 							</Button>
 						</Grid>
 					</Grid>
@@ -154,10 +157,10 @@ const RegisterScreen = () => {
 			</Box>
 			<Divider />
 			<Box marginY={3}>
-				<Typography variant="h5">Already have an account ?</Typography>
+				<Typography variant="h5">{t("alreadyHaveAccount")}</Typography>
 				<NavLink to="/login">
 					<Button sx={{ marginTop: "15px" }} variant="outlined">
-						Login
+						{t("login")}
 					</Button>
 				</NavLink>
 			</Box>

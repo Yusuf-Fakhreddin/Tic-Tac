@@ -25,9 +25,11 @@ import React from "react";
 import HeaderMenu from "./HeaderMenu";
 import { logout } from "../actions/authActions";
 import LanguageMenu from "./LanguageMenu";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 
 	const [displayDrawer, setdisplayDrawer] = useState(false);
 	const userLogin = useSelector((state) => state.userLogin);
@@ -36,22 +38,22 @@ const Header = () => {
 	useEffect(() => {
 		if (!userInfo) {
 			setList([
-				{ label: "Cart", href: "/cart", icon: <ShoppingCartIcon /> },
-				{ label: "Login", href: "/login", icon: <LoginIcon /> },
+				{ label: t("cart"), href: "/cart", icon: <ShoppingCartIcon /> },
+				{ label: t("login"), href: "/login", icon: <LoginIcon /> },
 			]);
 		} else {
 			setList([
-				{ label: "Profile", href: "/profile", icon: <AccountCircleIcon /> },
-				{ label: "Cart", href: "/cart", icon: <ShoppingCartIcon /> },
+				{ label: t("profile"), href: "/profile", icon: <AccountCircleIcon /> },
+				{ label: t("cart"), href: "/cart", icon: <ShoppingCartIcon /> },
 				{
-					label: "My Orders",
+					label: t("myOrders"),
 					href: "/myorders",
 					icon: <LocalShippingTwoToneIcon />,
 				},
-				{ label: "Logout", href: "/", icon: <LogoutIcon /> },
+				{ label: t("logout"), href: "/", icon: <LogoutIcon /> },
 			]);
 		}
-	}, [userInfo]);
+	}, [userInfo, t]);
 
 	return (
 		<header>

@@ -2,7 +2,6 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useForm } from "react-hook-form";
-import { keyword } from "chalk";
 import { useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
 

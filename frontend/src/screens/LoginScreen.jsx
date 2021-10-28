@@ -18,12 +18,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { login } from "../actions/authActions";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const LoginScreen = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const redirect = location.search ? location.search.split("=")[1] : "/";
 	const history = useHistory();
+	const { t } = useTranslation();
+
 	const userLogin = useSelector((state) => state.userLogin);
 	const { loading, error, userInfo } = userLogin;
 
@@ -39,7 +42,7 @@ const LoginScreen = () => {
 	useEffect(() => {
 		document.title = "Login";
 		if (userInfo) {
-			history.push(redirect);
+			history.replace(redirect);
 		}
 	}, [userInfo, history, redirect]);
 	const onSubmit = (data) => {
@@ -68,7 +71,7 @@ const LoginScreen = () => {
 			)}
 			<Box marginY={3}>
 				<Typography variant="h4" component="h1" mt={3}>
-					Sign In
+					{t("login")}
 				</Typography>
 				<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
 					<Grid
@@ -108,7 +111,7 @@ const LoginScreen = () => {
 						</Grid>
 						<Grid item xs={10} md={10}>
 							<Button variant="contained" type="submit">
-								Login
+								{t("login")}
 							</Button>
 						</Grid>
 					</Grid>
@@ -116,10 +119,10 @@ const LoginScreen = () => {
 			</Box>
 			<Divider />
 			<Box marginY={3}>
-				<Typography variant="h5">Does not have an account ?</Typography>
+				<Typography variant="h5">{t("doesn'tHaveAccount")}</Typography>
 				<NavLink to={`/register` + location.search}>
 					<Button sx={{ marginTop: "15px" }} variant="outlined">
-						Register
+						{t("register")}
 					</Button>
 				</NavLink>
 			</Box>

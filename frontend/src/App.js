@@ -27,12 +27,10 @@ import ProductCreateScreen from "./screens/ProductCreateScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
 import AdminEditProduct from "./screens/AdminEditProduct";
 import languages from "./languages";
-import i18next from "i18next";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import RTL from "./components/RTL";
-import { useEffect } from "react";
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {

@@ -10,8 +10,11 @@ import {
 import { useCreateOrder } from "../Queries/OrderQueries";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const PlaceOrderSummary = ({ cart, token }) => {
+	const { t } = useTranslation();
+
 	let shippingAddress, paymentMethod, cartItems;
 
 	shippingAddress = cart.shippingAddress;
@@ -68,34 +71,34 @@ const PlaceOrderSummary = ({ cart, token }) => {
 				<ListItem>
 					<ListItemText>
 						<Typography variant="h6" component="h3">
-							Order Summary
+							{t("orderSummary")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
 				<Divider />
 				<ListItem>
 					<ListItemText>
-						Items Cost:
+						{t("itemsCost")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + itemsPrice} EGP
+							{" " + itemsPrice} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
 				<Divider />
 				<ListItem>
 					<ListItemText>
-						Shipping Cost:
+						{t("shippingCost")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + shippingPrice} EGP
+							{" " + shippingPrice} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
 				<Divider />
 				<ListItem>
 					<ListItemText>
-						Total Cost:
+						{t("totalCost")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + totalPrice} EGP
+							{" " + totalPrice} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
@@ -110,7 +113,7 @@ const PlaceOrderSummary = ({ cart, token }) => {
 								onClick={placeOrderHandler}
 								disabled={cartItems === 0}
 							>
-								Place Order
+								{t("placeOrder")}
 							</Button>
 						</ListItem>
 					</>

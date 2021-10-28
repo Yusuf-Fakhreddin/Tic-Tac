@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
 							</Typography>
 						</div>
 						<Typography gutterBottom variant="h6" component="div">
-							{product.price} EGP
+							{product.price} {t("egp")}
 						</Typography>
 					</CardContent>
 				</CardActionArea>

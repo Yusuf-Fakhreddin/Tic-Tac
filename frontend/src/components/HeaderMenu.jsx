@@ -15,7 +15,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Box } from "@mui/system";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useTranslation } from "react-i18next";
+
 const HeaderMenu = ({ userInfo }) => {
+	const { t } = useTranslation();
+
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	let open = Boolean(anchorEl);
 	const handleClick = (event) => {
@@ -62,7 +66,7 @@ const HeaderMenu = ({ userInfo }) => {
 								<ListItemIcon>
 									<AccountCircleIcon />{" "}
 								</ListItemIcon>
-								Profile
+								{t("profile")}
 							</MenuItem>
 						</NavLink>
 						<NavLink to="/myorders">
@@ -70,14 +74,14 @@ const HeaderMenu = ({ userInfo }) => {
 								<ListItemIcon>
 									<LocalShippingTwoToneIcon />{" "}
 								</ListItemIcon>
-								My Orders
+								{t("myOrders")}
 							</MenuItem>
 						</NavLink>
 						<MenuItem sx={{ width: "180px" }} onClick={logoutHandler}>
 							<ListItemIcon>
 								<LogoutIcon />{" "}
 							</ListItemIcon>
-							Logout
+							{t("logout")}
 						</MenuItem>
 						{userInfo.isAdmin && (
 							<div>
@@ -102,13 +106,13 @@ const HeaderMenu = ({ userInfo }) => {
 			{!userInfo && (
 				<NavLink to="/login">
 					<Button color="inherit" startIcon={<LoginIcon />}>
-						Login
+						{t("login")}
 					</Button>
 				</NavLink>
 			)}
 			<NavLink to="/cart">
 				<Button color="inherit" startIcon={<ShoppingCartIcon />}>
-					Cart
+					{t("cart")}
 				</Button>
 			</NavLink>
 		</Box>

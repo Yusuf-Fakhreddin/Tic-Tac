@@ -4,12 +4,17 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { NavLink } from "react-router-dom";
 import React from "react";
-const steps = [
-	{ label: "Shipping", link: "/shipping" },
-	{ label: "Payment Method", link: "/paymentmethod" },
-	{ label: "Place Order", link: "/placeorder" },
-];
+import { useTranslation } from "react-i18next";
+
 const CheckoutSteps = ({ Shipping, Payment, Order }) => {
+	const { t } = useTranslation();
+
+	const steps = [
+		{ label: t("shipping"), link: "/shipping" },
+		{ label: t("paymentMethod"), link: "/paymentmethod" },
+		{ label: t("placeOrder"), link: "/placeorder" },
+	];
+
 	let activeStep = 0;
 	if (Payment) activeStep = 1;
 	else if (Order) activeStep = 2;

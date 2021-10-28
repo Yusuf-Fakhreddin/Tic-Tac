@@ -9,7 +9,6 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 
 function TablePaginationActions(props) {
-	const theme = useTheme();
 	const { count, page, rowsPerPage, onPageChange, pages } = props;
 	const handleFirstPageButtonClick = (event) => {
 		onPageChange(event, 0);

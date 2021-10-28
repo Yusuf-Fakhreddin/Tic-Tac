@@ -17,8 +17,11 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 const CartItemsTable = ({ cartItems, order }) => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 
 	const removeFromCartHandler = (id) => {
 		dispatch(removeFromCart(id));
@@ -30,20 +33,20 @@ const CartItemsTable = ({ cartItems, order }) => {
 				<TableHead>
 					<TableRow sx={{ backgroundColor: "primary.dark" }}>
 						<TableCell sx={{ color: "white" }} align="center">
-							Product Image
+							{t("productImage")}
 						</TableCell>
 						<TableCell sx={{ color: "white" }} align="center">
-							Product Name
+							{t("productName")}
 						</TableCell>
 						<TableCell sx={{ color: "white" }} align="center">
-							Price (EGP)
+							{t("price(egp)")}
 						</TableCell>
 						<TableCell sx={{ color: "white" }} align="center">
-							Quantity
+							{t("quantity")}
 						</TableCell>
 						{!order && (
 							<TableCell sx={{ color: "white" }} align="center">
-								Remove
+								{t("remove")}
 							</TableCell>
 						)}
 					</TableRow>
