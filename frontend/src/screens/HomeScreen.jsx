@@ -6,12 +6,15 @@ import {
 	PaginationItem,
 	Typography,
 } from "@mui/material";
-import Product from "../components/Product";
+import ProductCard from "../components/ProductCard";
 import { useListOfProducts } from "../Queries/ProductsQueries";
 import { useParams } from "react-router";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HomeScreen = () => {
+	const { t } = useTranslation();
+
 	const { keyword, pageNumber } = useParams();
 	const [data, isLoading, fetchPrdoucts, isFetching] = useListOfProducts(
 		keyword,
@@ -45,7 +48,7 @@ const HomeScreen = () => {
 					</Typography>
 				)}
 				<Typography variant="h3" marginY="10px">
-					Latest Products
+					{t("latest_products")}
 				</Typography>
 				<Grid container rowSpacing={2} spacing={2} justifyContent="center">
 					{data &&
@@ -53,7 +56,7 @@ const HomeScreen = () => {
 							data.products.map((product) => (
 								<Grid item xs={10} sm="auto">
 									{" "}
-									<Product product={product} />
+									<ProductCard product={product} />
 								</Grid>
 							))
 						)}

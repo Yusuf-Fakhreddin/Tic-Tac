@@ -24,6 +24,7 @@ import {
 import React from "react";
 import HeaderMenu from "./HeaderMenu";
 import { logout } from "../actions/authActions";
+import LanguageMenu from "./LanguageMenu";
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -98,7 +99,7 @@ const Header = () => {
 						</NavLink>
 						<SearchInput />
 						<Box sx={{ flexGrow: 1 }} />
-
+						<LanguageMenu />
 						<HeaderMenu userInfo={userInfo} />
 					</Toolbar>
 				</AppBar>

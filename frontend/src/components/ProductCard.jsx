@@ -4,8 +4,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Rating } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const Product = ({ product }) => {
+const ProductCard = ({ product }) => {
+	const { t } = useTranslation();
+
 	return (
 		<NavLink to={`/product/${product._id}`}>
 			<Card variant="outlined" sx={{ maxWidth: 345 }}>
@@ -35,7 +38,7 @@ const Product = ({ product }) => {
 								/>{" "}
 							</Typography>
 							<Typography variant="body2" component="div">
-								{product.numReviews} Reviews{" "}
+								{product.numReviews} {t("reviews")}{" "}
 							</Typography>
 						</div>
 						<Typography gutterBottom variant="h6" component="div">
@@ -48,4 +51,4 @@ const Product = ({ product }) => {
 	);
 };
 
-export default Product;
+export default ProductCard;

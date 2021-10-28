@@ -7,8 +7,11 @@ import {
 	Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { useTranslation } from "react-i18next";
 
 const ProductInfo = ({ product }) => {
+	const { t } = useTranslation();
+
 	return (
 		<List>
 			<ListItem>
@@ -38,7 +41,7 @@ const ProductInfo = ({ product }) => {
 					/>{" "}
 				</Typography>
 				<Typography variant="body2" component="div">
-					{product.numReviews} Reviews{" "}
+					{product.numReviews} {t("reviews")}{" "}
 				</Typography>
 			</Box>
 			<Divider />

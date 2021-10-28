@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useForm } from "react-hook-form";
 import { keyword } from "chalk";
 import { useHistory } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -49,6 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchInput = () => {
 	const history = useHistory();
+	const { t } = useTranslation();
 
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
@@ -71,7 +73,7 @@ const SearchInput = () => {
 					<SearchIcon />
 				</SearchIconWrapper>
 				<StyledInputBase
-					placeholder="Search…"
+					placeholder={t("search")}
 					inputProps={{ "aria-label": "search" }}
 					name="keyword"
 					id="keyword"

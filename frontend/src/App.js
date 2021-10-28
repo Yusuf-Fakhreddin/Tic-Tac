@@ -26,8 +26,13 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductCreateScreen from "./screens/ProductCreateScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
 import AdminEditProduct from "./screens/AdminEditProduct";
+import languages from "./languages";
+import i18next from "i18next";
+
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import RTL from "./components/RTL";
+import { useEffect } from "react";
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -40,6 +45,9 @@ const queryClient = new QueryClient({
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 function App() {
+	const currentLanguageCode = localStorage.getItem("i18nextLng") || "en";
+	const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
+
 	const theme = createTheme({
 		palette: {
 			primary: {
@@ -53,66 +61,71 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<QueryClientProvider client={queryClient}>
-				<Router>
-					<div>
-						<Header />
-						<Elements stripe={stripePromise}>
-							<main>
-								<Container>
-									<Switch>
-										<Route path="/product/:id" component={ProductScreen} />
-										<Route path="/cart" component={CartScreen} />
-										<Route path="/login" component={LoginScreen} />
-										<Route path="/register" component={RegisterScreen} />
-										<Route path="/profile" component={ProfileScreen} />
-										<Route path="/shipping" component={ShippingScreen} />
-										<Route
-											path="/paymentmethod"
-											component={PaymentMethodScreen}
-										/>
-										<Route path="/placeorder" component={PlaceOrderScreen} />
-										<Route path="/order/:id" component={OrderDetailsScreen} />
-										<Route path="/myorders" component={MyOrdersTable} />
-										<Route
-											path="/createproduct"
-											component={ProductCreateScreen}
-										/>
-										<Route path="/admin/users" component={UsersListScreen} />
-										<Route
-											path="/admin/products"
-											component={ProductListScreen}
-										/>
-										<Route path="/admin/orders" component={OrdersListScreen} />
-										<Route
-											path="/admin/edituser/:id"
-											component={AdminEditUserScreen}
-										/>
-										<Route
-											path="/admin/editproduct/:id"
-											component={AdminEditProduct}
-										/>
+				<RTL rtl={currentLanguage.dir === "rtl" ? true : false}>
+					<Router>
+						<div>
+							<Header />
+							<Elements stripe={stripePromise}>
+								<main>
+									<Container>
+										<Switch>
+											<Route path="/product/:id" component={ProductScreen} />
+											<Route path="/cart" component={CartScreen} />
+											<Route path="/login" component={LoginScreen} />
+											<Route path="/register" component={RegisterScreen} />
+											<Route path="/profile" component={ProfileScreen} />
+											<Route path="/shipping" component={ShippingScreen} />
+											<Route
+												path="/paymentmethod"
+												component={PaymentMethodScreen}
+											/>
+											<Route path="/placeorder" component={PlaceOrderScreen} />
+											<Route path="/order/:id" component={OrderDetailsScreen} />
+											<Route path="/myorders" component={MyOrdersTable} />
+											<Route
+												path="/createproduct"
+												component={ProductCreateScreen}
+											/>
+											<Route path="/admin/users" component={UsersListScreen} />
+											<Route
+												path="/admin/products"
+												component={ProductListScreen}
+											/>
+											<Route
+												path="/admin/orders"
+												component={OrdersListScreen}
+											/>
+											<Route
+												path="/admin/edituser/:id"
+												component={AdminEditUserScreen}
+											/>
+											<Route
+												path="/admin/editproduct/:id"
+												component={AdminEditProduct}
+											/>
 
-										<Route
-											path="/search/:keyword?/:pageNumber?"
-											component={HomeScreen}
-										/>
-										<Route path="/" component={HomeScreen} />
-									</Switch>
-								</Container>
-							</main>
-							<ScrollTop>
-								<Fab
-									color="secondary"
-									size="small"
-									aria-label="scroll back to top"
-								>
-									<KeyboardArrowUpIcon />
-								</Fab>
-							</ScrollTop>
-						</Elements>
-						<Footer />
-					</div>
-				</Router>
+											<Route
+												path="/search/:keyword?/:pageNumber?"
+												component={HomeScreen}
+											/>
+											<Route path="/" component={HomeScreen} />
+										</Switch>
+									</Container>
+								</main>
+								<ScrollTop>
+									<Fab
+										color="secondary"
+										size="small"
+										aria-label="scroll back to top"
+									>
+										<KeyboardArrowUpIcon />
+									</Fab>
+								</ScrollTop>
+							</Elements>
+							<Footer />
+						</div>
+					</Router>
+				</RTL>
 			</QueryClientProvider>
 		</ThemeProvider>
 	);
