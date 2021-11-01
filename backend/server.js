@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import stripeRoutes from "./routes/stripeRoutes.js";
 dotenv.config();
@@ -28,6 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/payment_intents", stripeRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // handling not Found URLs
 app.use(notFound);

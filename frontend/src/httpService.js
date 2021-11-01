@@ -18,9 +18,13 @@ axios.interceptors.response.use(null, (error) => {
 			: error.response.statusText + " " + error.response.status;
 	}
 	// Logout if the token expired or after a request with not allowed token
-	if (error.message === "Not authorized, token failed") {
-		const dispatch = useDispatch();
-		dispatch(logout());
+	console.log(error.response.status);
+	if (error.response.status === 401) {
+		// const dispatch = useDispatch();
+		// dispatch(logout());
+		// console.log("here");
+		localStorage.removeItem("UserInfo");
+		window.location.reload();
 	}
 	// to pass the control to the catch block and resume the function we return a rejected promise
 	return Promise.reject(error);

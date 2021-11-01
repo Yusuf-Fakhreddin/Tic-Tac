@@ -55,8 +55,9 @@ const ProductScreen = ({ match }) => {
 			<Box paddingTop={3}>
 				<Box sx={{ display: "flex", justifyContent: "space-between" }}>
 					<Button
-						component={NavLink}
-						to="/"
+						// component={NavLink}
+						// to="/"
+						onClick="history.back()"
 						variant="contained"
 						startIcon={<ArrowBackIosIcon />}
 					>
