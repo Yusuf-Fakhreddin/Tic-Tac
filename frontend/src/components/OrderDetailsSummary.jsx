@@ -8,7 +8,7 @@ import {
 	ListItemText,
 	Typography,
 } from "@mui/material";
-import { useDeliverOrder } from "../Queries/OrderQueries";
+import { useDeliverOrder, usePayOrder } from "../Queries/OrderQueries";
 import { useTranslation } from "react-i18next";
 
 const OrderDetailsSummary = ({ order, userInfo }) => {
@@ -30,6 +30,8 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 	let totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);
 
 	const [deliverOrder, deliverOrderLoading] = useDeliverOrder();
+	const [payOrder, isPayOrderLoading] = usePayOrder();
+
 	const deliverOrderHandler = async () => {
 		console.log(
 			cartItems,
@@ -39,6 +41,9 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 			shippingPrice,
 			totalPrice
 		);
+		if (paymentMethod === "Cash On Delivery") {
+			await payOrder({ orderId: order._id, token: userInfo.token });
+		}
 		await deliverOrder({
 			orderId: order._id,
 			token: userInfo.token,

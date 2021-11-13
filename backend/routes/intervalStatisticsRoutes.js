@@ -4,7 +4,7 @@ import {
 	getMonthStatistics,
 	getWeekStatistics,
 	getYearStatistics,
-} from "../controllers/dashboardController.js";
+} from "../controllers/intervalStatisticsController.js";
 const router = express.Router();
 
 import { protect, admin } from "../middleware/authMiddleware.js";

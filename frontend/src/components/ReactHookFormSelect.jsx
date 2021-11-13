@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, Select } from "@mui/material";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 
 const ReactHookFormSelect = ({
@@ -7,6 +8,7 @@ const ReactHookFormSelect = ({
 	control,
 	defaultValue,
 	children,
+
 	...props
 }) => {
 	const labelId = `${name}-label`;
@@ -14,14 +16,9 @@ const ReactHookFormSelect = ({
 		<FormControl fullWidth {...props}>
 			<InputLabel id={labelId}>{label}</InputLabel>
 			<Controller
-				as={
-					<Select labelId={labelId} label={label}>
-						{children}
-					</Select>
-				}
+				as={<Select>{children}</Select>}
 				name={name}
 				control={control}
-				defaultValue={defaultValue}
 			/>
 		</FormControl>
 	);

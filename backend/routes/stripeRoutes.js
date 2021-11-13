@@ -1,9 +1,13 @@
 import Stripe from "stripe";
 import express from "express";
+import dotenv from "dotenv";
 import { protect } from "../middleware/authMiddleware.js";
+
+dotenv.config();
 const stripe = new Stripe(process.env.SECRET_KEY);
 
 const router = express.Router();
+
 export default router.post("/", async (req, res) => {
 	console.log(req.body);
 	try {

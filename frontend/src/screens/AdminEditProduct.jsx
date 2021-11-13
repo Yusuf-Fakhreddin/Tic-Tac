@@ -53,10 +53,11 @@ const AdminEditProduct = () => {
 			.required("Required"),
 		// description: Yup.string().required("Required"),
 	});
-	const { register, handleSubmit, errors, setValue, control } = useForm({
-		mode: "onBlur",
-		resolver: yupResolver(validationSchema),
-	});
+	const { register, handleSubmit, errors, setValue, control, getValues } =
+		useForm({
+			mode: "onBlur",
+			resolver: yupResolver(validationSchema),
+		});
 	const [
 		AdminEditProduct,
 		adminUpdateLoading,
@@ -110,7 +111,7 @@ const AdminEditProduct = () => {
 			)}
 			{adminUpdateSuccess && (
 				<Stack sx={{ width: "100%" }} spacing={2}>
-					<Alert severity="success">Product was successfuly updated</Alert>
+					<Alert severity="success">Product was successfully updated</Alert>
 				</Stack>
 			)}
 			<Typography variant="h4" component="h1" mt={3}>

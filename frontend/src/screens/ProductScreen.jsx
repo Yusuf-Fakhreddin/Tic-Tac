@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box } from "@mui/system";
 import { NavLink } from "react-router-dom";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import React, { useEffect, useState } from "react";
 import {
 	useDeleteProduct,
@@ -38,7 +38,7 @@ const ProductScreen = ({ match }) => {
 		console.log(id);
 		await deleteProduct({ id: id, token: userInfo.token });
 	};
-
+	const history = useHistory();
 	if (isLoading)
 		return (
 			<div className="flex">
@@ -57,7 +57,7 @@ const ProductScreen = ({ match }) => {
 					<Button
 						// component={NavLink}
 						// to="/"
-						onClick="history.back()"
+						onClick={() => history.goBack()}
 						variant="contained"
 						startIcon={<ArrowBackIosIcon />}
 					>
