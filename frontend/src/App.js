@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -27,10 +27,18 @@ import ProductCreateScreen from "./screens/ProductCreateScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
 import AdminEditProduct from "./screens/AdminEditProduct";
 import languages from "./languages";
+import { logout } from "./actions/authActions.js";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import RTL from "./components/RTL";
+import TodayStatistics from "./screens/TodayStatistics";
+import WeekStatistics from "./screens/WeekStatistics";
+import MonthStatistics from "./screens/MonthStatistics";
+import YearStatistics from "./screens/YearStatistics";
+import { useDispatch } from "react-redux";
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -38,13 +46,21 @@ const queryClient = new QueryClient({
 			retry: false,
 			staleTime: 30000,
 		},
+		// queryCache: new QueryCache({
+		// 	onError: (error) => {
+		// 		if (error.message === "Not authorized, token failed") {
+		// 			dispatch(logout());
+		// 		}
+		// 	},
+		// }),
 	},
 });
-const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 function App() {
 	const currentLanguageCode = localStorage.getItem("i18nextLng") || "en";
 	const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
+
+	const dispatch = useDispatch();
 
 	const theme = createTheme({
 		palette: {
@@ -81,6 +97,10 @@ function App() {
 											<Route path="/order/:id" component={OrderDetailsScreen} />
 											<Route path="/myorders" component={MyOrdersTable} />
 											<Route
+												path="/search/:keyword?/:pageNumber?"
+												component={HomeScreen}
+											/>
+											<Route
 												path="/createproduct"
 												component={ProductCreateScreen}
 											/>
@@ -103,9 +123,22 @@ function App() {
 											/>
 
 											<Route
-												path="/search/:keyword?/:pageNumber?"
-												component={HomeScreen}
+												path="/admin/dashboard/today"
+												component={TodayStatistics}
 											/>
+											<Route
+												path="/admin/dashboard/week"
+												component={WeekStatistics}
+											/>
+											<Route
+												path="/admin/dashboard/month"
+												component={MonthStatistics}
+											/>
+											<Route
+												path="/admin/dashboard/year"
+												component={YearStatistics}
+											/>
+
 											<Route path="/" component={HomeScreen} />
 										</Switch>
 									</Container>

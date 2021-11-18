@@ -5,6 +5,6 @@ const router = express.Router();
 
 import { protect, admin } from "../middleware/authMiddleware.js";
 
-router.route("/").get(getYearGraphStatistics);
+router.route("/").get(protect, admin, getYearGraphStatistics);
 
 export default router;

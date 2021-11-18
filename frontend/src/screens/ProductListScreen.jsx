@@ -1,6 +1,7 @@
 import {
 	Button,
 	CircularProgress,
+	Grid,
 	Paper,
 	Table,
 	TableBody,
@@ -27,6 +28,7 @@ import {
 import ProductImageBox from "../components/ProductImageBox";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import DashboardNavigationBox from "../components/DashboardNavigationBox";
 
 const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -57,122 +59,132 @@ const ProductListScreen = () => {
 		setpageNumber(newPage + 1);
 	};
 
-	if (isLoadingProducts || !data.products)
-		return (
-			<div className="flex">
-				<CircularProgress
-					size="3.2em"
-					sx={{
-						margin: "15px auto",
-					}}
-				/>
-			</div>
-		);
-	else
-		return (
-			<Box mt={3}>
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "space-between",
-					}}
-				>
-					<Typography variant="h3" sx={{ display: "inline" }}>
-						All Products
-					</Typography>
+	return (
+		<Grid container spacing={2}>
+			<Grid item md={2}>
+				<DashboardNavigationBox />
+			</Grid>
+			<Grid item md={10}>
+				{isLoadingProducts || !data.products ? (
+					<div className="flex">
+						<CircularProgress
+							size="3.2em"
+							sx={{
+								margin: "15px auto",
+							}}
+						/>
+					</div>
+				) : (
+					<Box mt={3}>
+						<Box
+							sx={{
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "space-between",
+							}}
+						>
+							<Typography variant="h3" sx={{ display: "inline" }}>
+								All Products
+							</Typography>
 
-					<NavLink to="/createproduct">
-						<Button variant="contained">Create Product</Button>
-					</NavLink>
-				</Box>
-				<TableContainer component={Paper}>
-					<Table sx={{ minWidth: "100%" }} aria-label="simple table">
-						<TableHead>
-							<TableRow sx={{ backgroundColor: "lightGray" }}>
-								<TableCell align="left">ID</TableCell>
-								<TableCell align="left">ProductImage</TableCell>
-								<TableCell align="center">NAME</TableCell>
-								<TableCell align="center">PRICE</TableCell>
-								<TableCell align="center">CATEGORY</TableCell>
-								<TableCell align="center">BRAND</TableCell>
-								<TableCell align="center"></TableCell>
-								<TableCell align="center"></TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{React.Children.toArray(
-								data.products.map((row) => (
-									<TableRow
-										hover
-										sx={{
-											"&:last-child td, &:last-child th": { border: 0 },
-										}}
-									>
-										{" "}
-										<TableCell
-											sx={{ maxHeight: "50px", maxWidth: "50px" }}
-											component="th"
-											scope="row"
-										>
-											<Zoom>
-												<ProductImageBox productImage={row.image} />{" "}
-											</Zoom>
-										</TableCell>
-										<TableCell component="th" scope="row">
-											<NavLink to={`/product/${row._id}`}>{row._id}</NavLink>
-										</TableCell>
-										<TableCell align="center" component="th" scope="row">
-											<NavLink to={`/product/${row._id}`}>{row.name}</NavLink>
-										</TableCell>
-										<TableCell align="center" component="th" scope="row">
-											{row.price}
-										</TableCell>
-										<TableCell align="center" component="th" scope="row">
-											{row.price}
-										</TableCell>
-										<TableCell align="center">
-											<NavLink to={`/admin/editproduct/${row._id}`}>
-												<Button color="info" variant="contained">
-													{" "}
-													<EditIcon />
-												</Button>
-											</NavLink>
-										</TableCell>
-										<TableCell align="center">
-											<Button
-												onClick={() => DeleteProductHandler(row._id)}
-												variant="contained"
-												color="error"
-											>
-												<DeleteIcon />
-											</Button>
-										</TableCell>
+							<NavLink to="/createproduct">
+								<Button variant="contained">Create Product</Button>
+							</NavLink>
+						</Box>
+						<TableContainer component={Paper}>
+							<Table sx={{ minWidth: "100%" }} aria-label="simple table">
+								<TableHead>
+									<TableRow sx={{ backgroundColor: "lightGray" }}>
+										<TableCell align="left">ID</TableCell>
+										<TableCell align="left">ProductImage</TableCell>
+										<TableCell align="center">NAME</TableCell>
+										<TableCell align="center">PRICE</TableCell>
+										<TableCell align="center">CATEGORY</TableCell>
+										<TableCell align="center">BRAND</TableCell>
+										<TableCell align="center"></TableCell>
+										<TableCell align="center"></TableCell>
 									</TableRow>
-								))
-							)}
-						</TableBody>
-						<TableFooter>
-							<TableRow>
-								<TablePagination
-									colSpan={5}
-									count={data.count}
-									page={data.page - 1}
-									rowsPerPage={10}
-									labelDisplayedRows={({ from, to, count }) => {
-										return `Total Number of Users = ${count}`;
-									}}
-									labelRowsPerPage=""
-									rowsPerPageOptions={[]}
-									onPageChange={handleChangePage}
-									ActionsComponent={TablePaginationActions}
-								/>
-							</TableRow>
-						</TableFooter>
-					</Table>
-				</TableContainer>
-			</Box>
-		);
+								</TableHead>
+								<TableBody>
+									{React.Children.toArray(
+										data.products.map((row) => (
+											<TableRow
+												hover
+												sx={{
+													"&:last-child td, &:last-child th": { border: 0 },
+												}}
+											>
+												{" "}
+												<TableCell
+													sx={{ maxHeight: "50px", maxWidth: "50px" }}
+													component="th"
+													scope="row"
+												>
+													<Zoom>
+														<ProductImageBox productImage={row.image} />{" "}
+													</Zoom>
+												</TableCell>
+												<TableCell component="th" scope="row">
+													<NavLink to={`/product/${row._id}`}>
+														{row._id}
+													</NavLink>
+												</TableCell>
+												<TableCell align="center" component="th" scope="row">
+													<NavLink to={`/product/${row._id}`}>
+														{row.name}
+													</NavLink>
+												</TableCell>
+												<TableCell align="center" component="th" scope="row">
+													{row.price}
+												</TableCell>
+												<TableCell align="center" component="th" scope="row">
+													{row.price}
+												</TableCell>
+												<TableCell align="center">
+													<NavLink to={`/admin/editproduct/${row._id}`}>
+														<Button color="info" variant="contained">
+															{" "}
+															<EditIcon />
+														</Button>
+													</NavLink>
+												</TableCell>
+												<TableCell align="center">
+													<Button
+														onClick={() => DeleteProductHandler(row._id)}
+														variant="contained"
+														color="error"
+													>
+														<DeleteIcon />
+													</Button>
+												</TableCell>
+											</TableRow>
+										))
+									)}
+								</TableBody>
+								<TableFooter>
+									<TableRow>
+										<TablePagination
+											colSpan={5}
+											count={data.count}
+											page={data.page - 1}
+											rowsPerPage={10}
+											labelDisplayedRows={({ from, to, count }) => {
+												return `Total Number of Users = ${count}`;
+											}}
+											labelRowsPerPage=""
+											rowsPerPageOptions={[]}
+											onPageChange={handleChangePage}
+											ActionsComponent={TablePaginationActions}
+										/>
+									</TableRow>
+								</TableFooter>
+							</Table>
+						</TableContainer>
+					</Box>
+				)}
+			</Grid>
+		</Grid>
+	);
 };
 
 export default ProductListScreen;

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { logout } from "./actions/authActions";
+import store from "./store";
+const { dispatch } = store; // direct access to redux store.
 
 axios.interceptors.response.use(null, (error) => {
 	const expectedError =
@@ -20,11 +21,7 @@ axios.interceptors.response.use(null, (error) => {
 	// Logout if the token expired or after a request with not allowed token
 	console.log(error.response.status);
 	if (error.response.status === 401) {
-		// const dispatch = useDispatch();
-		// dispatch(logout());
-		// console.log("here");
-		localStorage.removeItem("UserInfo");
-		window.location.reload();
+		dispatch(logout());
 	}
 	// to pass the control to the catch block and resume the function we return a rejected promise
 	return Promise.reject(error);
