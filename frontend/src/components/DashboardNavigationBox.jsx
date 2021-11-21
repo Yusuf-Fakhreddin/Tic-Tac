@@ -42,6 +42,22 @@ const DashboardNavigationBox = () => {
 					</ListItem>
 				</NavLink>
 				<Divider />
+				<NavLink to="/admin/charts">
+					<ListItem fullWidth sx={{ width: "100%" }}>
+						<ListItemIcon
+							sx={{
+								marginRight: "15px",
+								minWidth: "0px",
+							}}
+						>
+							<QueryStatsIcon />
+						</ListItemIcon>
+						<ListItemText sx={{ display: "inline-block" }}>
+							<Typography variant="body1">Charts</Typography>
+						</ListItemText>
+					</ListItem>
+				</NavLink>
+				<Divider />
 				<NavLink to="/admin/products">
 					<ListItem>
 						<ListItemIcon sx={{ marginRight: "15px", minWidth: "0px" }}>

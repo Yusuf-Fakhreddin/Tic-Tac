@@ -7,16 +7,16 @@ import startOfYear from "date-fns/startOfYear/index.js";
 import endOfYear from "date-fns/endOfYear/index.js";
 import subMonths from "date-fns/subMonths/index.js";
 
-// @desc    Fetch last 6 months statistics
+// @desc    Fetch last 12 months statistics
 // @route   GET /api/graph_statistics
 // @access  Admin
 const getYearGraphStatistics = asyncHandler(async (req, res) => {
 	let date = new Date();
-	let firstDay = subMonths(date, 6);
+	let firstDay = subMonths(date, 11);
 	let lastDay = date;
 	console.log(firstDay, lastDay);
 
-	let newUsersCount = await User.aggregate([
+	let users = await User.aggregate([
 		{
 			$match: {
 				createdAt: {
@@ -80,7 +80,7 @@ const getYearGraphStatistics = asyncHandler(async (req, res) => {
 			},
 		},
 	]);
-	res.json({ newUsersCount, orders, products });
+	res.json({ users, orders, products });
 });
 
 export { getYearGraphStatistics };

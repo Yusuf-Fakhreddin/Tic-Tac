@@ -27,7 +27,6 @@ import ProductCreateScreen from "./screens/ProductCreateScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
 import AdminEditProduct from "./screens/AdminEditProduct";
 import languages from "./languages";
-import { logout } from "./actions/authActions.js";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -36,7 +35,7 @@ import TodayStatistics from "./screens/TodayStatistics";
 import WeekStatistics from "./screens/WeekStatistics";
 import MonthStatistics from "./screens/MonthStatistics";
 import YearStatistics from "./screens/YearStatistics";
-import { useDispatch } from "react-redux";
+import DashboardCharts from "./screens/DashboardCharts";
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 const queryClient = new QueryClient({
@@ -59,8 +58,6 @@ const queryClient = new QueryClient({
 function App() {
 	const currentLanguageCode = localStorage.getItem("i18nextLng") || "en";
 	const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
-
-	const dispatch = useDispatch();
 
 	const theme = createTheme({
 		palette: {
@@ -138,6 +135,7 @@ function App() {
 												path="/admin/dashboard/year"
 												component={YearStatistics}
 											/>
+											<Route path="/admin/charts" component={DashboardCharts} />
 
 											<Route path="/" component={HomeScreen} />
 										</Switch>
