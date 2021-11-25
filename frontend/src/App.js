@@ -35,7 +35,7 @@ import TodayStatistics from "./screens/TodayStatistics";
 import WeekStatistics from "./screens/WeekStatistics";
 import MonthStatistics from "./screens/MonthStatistics";
 import YearStatistics from "./screens/YearStatistics";
-import DashboardCharts from "./screens/DashboardCharts";
+import Dashboard from "./screens/Dashboard";
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 const queryClient = new QueryClient({
@@ -135,7 +135,7 @@ function App() {
 												path="/admin/dashboard/year"
 												component={YearStatistics}
 											/>
-											<Route path="/admin/charts" component={DashboardCharts} />
+											<Route path="/admin/dashboard" component={Dashboard} />
 
 											<Route path="/" component={HomeScreen} />
 										</Switch>

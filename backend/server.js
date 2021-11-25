@@ -10,7 +10,7 @@ import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import intervalStatisticsRoutes from "./routes/intervalStatisticsRoutes.js";
-import graphStatisticsRoutes from "./routes/graphStatisticsRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import stripeRoutes from "./routes/stripeRoutes.js";
 dotenv.config();
@@ -31,7 +31,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/payment_intents", stripeRoutes);
 app.use("/api/interval_statistics", intervalStatisticsRoutes);
-app.use("/api/graph_statistics", graphStatisticsRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // handling not Found URLs
 app.use(notFound);

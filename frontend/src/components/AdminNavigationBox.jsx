@@ -15,7 +15,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import StoreIcon from "@mui/icons-material/Store";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-const DashboardNavigationBox = () => {
+const AdminNavigationBox = () => {
 	return (
 		<Box
 			sx={{
@@ -26,7 +26,7 @@ const DashboardNavigationBox = () => {
 			}}
 		>
 			<List>
-				<NavLink to="/admin/dashboard/today">
+				<NavLink to="/admin/dashboard">
 					<ListItem fullWidth sx={{ width: "100%" }}>
 						<ListItemIcon
 							sx={{
@@ -42,7 +42,7 @@ const DashboardNavigationBox = () => {
 					</ListItem>
 				</NavLink>
 				<Divider />
-				<NavLink to="/admin/charts">
+				<NavLink to="/admin/dashboard/today">
 					<ListItem fullWidth sx={{ width: "100%" }}>
 						<ListItemIcon
 							sx={{
@@ -53,7 +53,7 @@ const DashboardNavigationBox = () => {
 							<QueryStatsIcon />
 						</ListItemIcon>
 						<ListItemText sx={{ display: "inline-block" }}>
-							<Typography variant="body1">Charts</Typography>
+							<Typography variant="body1">Interval Statistics</Typography>
 						</ListItemText>
 					</ListItem>
 				</NavLink>
@@ -95,4 +95,4 @@ const DashboardNavigationBox = () => {
 	);
 };
 
-export default DashboardNavigationBox;
+export default AdminNavigationBox;

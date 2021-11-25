@@ -21,7 +21,7 @@ import { useHistory } from "react-router";
 
 import TablePaginationActions from "../components/TablePaginationActions";
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
-import DashboardNavigationBox from "../components/DashboardNavigationBox";
+import AdminNavigationBox from "../components/AdminNavigationBox";
 
 import { useListOfOrders } from "../Queries/OrderQueries";
 const OrdersListScreen = () => {
@@ -53,7 +53,7 @@ const OrdersListScreen = () => {
 	return (
 		<Grid container spacing={2}>
 			<Grid item md={2}>
-				<DashboardNavigationBox />
+				<AdminNavigationBox />
 			</Grid>
 			<Grid item md={10}>
 				{isLoadingOrders || !data.orders ? (

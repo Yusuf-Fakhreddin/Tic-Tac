@@ -78,21 +78,21 @@ export const useYearStatistics = (token) => {
 	return [data, isLoading, refetch];
 };
 
-const getGraphStatistics = async (token) => {
+const getDashboardStatistics = async (token) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	const { data } = await http.get(`/api/graph_statistics`, config);
+	const { data } = await http.get(`/api/dashboard`, config);
 	return data;
 };
 
-export const useGraphStatistics = (token) => {
+export const useDashboardStatistics = (token) => {
 	const { data, error, isLoading, isError } = useQuery(
-		["GraphStatistics"],
-		() => getGraphStatistics(token)
+		["dashboardStatistics"],
+		() => getDashboardStatistics(token)
 	);
 	return [data, isLoading];
 };

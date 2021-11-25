@@ -28,7 +28,7 @@ import {
 import ProductImageBox from "../components/ProductImageBox";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import DashboardNavigationBox from "../components/DashboardNavigationBox";
+import AdminNavigationBox from "../components/AdminNavigationBox";
 
 const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -62,7 +62,7 @@ const ProductListScreen = () => {
 	return (
 		<Grid container spacing={2}>
 			<Grid item md={2}>
-				<DashboardNavigationBox />
+				<AdminNavigationBox />
 			</Grid>
 			<Grid item md={10}>
 				{isLoadingProducts || !data.products ? (

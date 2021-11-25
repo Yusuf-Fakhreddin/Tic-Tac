@@ -7,14 +7,18 @@ import startOfYear from "date-fns/startOfYear/index.js";
 import endOfYear from "date-fns/endOfYear/index.js";
 import subMonths from "date-fns/subMonths/index.js";
 
-// @desc    Fetch last 12 months statistics
-// @route   GET /api/graph_statistics
+// @desc    Fetch last 12 months statistics and total Numbers
+// @route   GET /api/dashboard
 // @access  Admin
-const getYearGraphStatistics = asyncHandler(async (req, res) => {
+const getDashboardStatistics = asyncHandler(async (req, res) => {
 	let date = new Date();
 	let firstDay = subMonths(date, 11);
 	let lastDay = date;
 	console.log(firstDay, lastDay);
+
+	let totalUsersCount = await User.countDocuments();
+	let totalOrdersCount = await Order.countDocuments();
+	let totalProductsCount = await Product.countDocuments();
 
 	let users = await User.aggregate([
 		{
@@ -80,7 +84,14 @@ const getYearGraphStatistics = asyncHandler(async (req, res) => {
 			},
 		},
 	]);
-	res.json({ users, orders, products });
+	res.json({
+		users,
+		orders,
+		products,
+		totalUsersCount,
+		totalOrdersCount,
+		totalProductsCount,
+	});
 });
 
-export { getYearGraphStatistics };
+export { getDashboardStatistics };

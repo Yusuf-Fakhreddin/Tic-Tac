@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import DashboardIntervalButtons from "../components/DashboardIntervalButtons";
-import DashboardNavigationBox from "../components/DashboardNavigationBox";
+import AdminNavigationBox from "../components/AdminNavigationBox";
 import IntervalStatisticsBoxes from "../components/IntervalStatisticsBoxes";
 import { useMonthStatistics } from "../Queries/DashboardQueries";
 
@@ -25,7 +25,7 @@ const MonthStatistics = () => {
 	return (
 		<Grid container spacing={2}>
 			<Grid item md={2}>
-				<DashboardNavigationBox />
+				<AdminNavigationBox />
 			</Grid>
 			<Grid item md={8}>
 				<DashboardIntervalButtons />

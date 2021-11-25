@@ -24,7 +24,7 @@ import { useHistory } from "react-router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TablePaginationActions from "../components/TablePaginationActions";
-import DashboardNavigationBox from "../components/DashboardNavigationBox";
+import AdminNavigationBox from "../components/AdminNavigationBox";
 const UsersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -55,7 +55,7 @@ const UsersListScreen = () => {
 	return (
 		<Grid container spacing={2}>
 			<Grid item md={2}>
-				<DashboardNavigationBox />
+				<AdminNavigationBox />
 			</Grid>
 			<Grid item md={10}>
 				{isLoadingUsers || !data.users ? (
