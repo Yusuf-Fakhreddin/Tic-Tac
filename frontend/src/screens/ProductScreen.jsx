@@ -16,6 +16,7 @@ import AddToCartBox from "../components/AddToCartBox";
 import ProductListReviews from "../components/ProductListReviews";
 import CreateReviewBox from "../components/CreateReviewBox";
 import { useSelector } from "react-redux";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
 const ProductScreen = ({ match }) => {
 	const { id } = useParams();
 	const [product, isLoading, isSuccess] = useListProductDetailsById(id);
@@ -39,17 +40,7 @@ const ProductScreen = ({ match }) => {
 		await deleteProduct({ id: id, token: userInfo.token });
 	};
 	const history = useHistory();
-	if (isLoading)
-		return (
-			<div className="flex">
-				<CircularProgress
-					size="3.2em"
-					sx={{
-						margin: "15px auto",
-					}}
-				/>
-			</div>
-		);
+	if (isLoading) return <CenteredCircularProgress />;
 	else
 		return (
 			<Box paddingTop={3}>

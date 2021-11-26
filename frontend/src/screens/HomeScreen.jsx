@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
-import {
-	CircularProgress,
-	Grid,
-	Pagination,
-	PaginationItem,
-	Typography,
-} from "@mui/material";
+import { Grid, Pagination, PaginationItem, Typography } from "@mui/material";
 import ProductCard from "../components/ProductCard";
 import { useListOfProducts } from "../Queries/ProductsQueries";
 import { useParams } from "react-router";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
 
 const HomeScreen = () => {
 	const { t } = useTranslation();
@@ -28,17 +23,7 @@ const HomeScreen = () => {
 		fetchPrdoucts();
 	}, [keyword, pageNumber]);
 
-	if (isLoading || isFetching)
-		return (
-			<div className="flex">
-				<CircularProgress
-					size="3.2em"
-					sx={{
-						margin: "15px auto",
-					}}
-				/>
-			</div>
-		);
+	if (isLoading || isFetching) return <CenteredCircularProgress />;
 	else
 		return (
 			<>

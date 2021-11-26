@@ -1,6 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import CategoriesPieChart from "./Charts/CategoriesPieChart";
+import OrdersPieChart from "./Charts/OrdersPieChart";
 
 const IntervalStatisticsBoxes = ({ data }) => {
 	return (
@@ -57,6 +59,11 @@ const IntervalStatisticsBoxes = ({ data }) => {
 						</Grid>
 					))
 				)}{" "}
+				{data.products.length > 0 && (
+					<Grid item md={10}>
+						<CategoriesPieChart products={data.products} />
+					</Grid>
+				)}
 			</Grid>
 
 			{
@@ -90,6 +97,11 @@ const IntervalStatisticsBoxes = ({ data }) => {
 							</Box>
 						</Grid>
 					))
+				)}
+				{data.orders.length > 0 && (
+					<Grid item md={10}>
+						<OrdersPieChart orders={data.orders} />
+					</Grid>
 				)}
 			</Grid>
 		</Box>

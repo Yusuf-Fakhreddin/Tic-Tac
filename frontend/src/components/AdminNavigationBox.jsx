@@ -53,7 +53,7 @@ const AdminNavigationBox = () => {
 							<QueryStatsIcon />
 						</ListItemIcon>
 						<ListItemText sx={{ display: "inline-block" }}>
-							<Typography variant="body1">Interval Statistics</Typography>
+							<Typography variant="body1">Statistics</Typography>
 						</ListItemText>
 					</ListItem>
 				</NavLink>

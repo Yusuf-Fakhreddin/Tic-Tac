@@ -1,6 +1,5 @@
 import {
 	Button,
-	CircularProgress,
 	Paper,
 	Table,
 	TableBody,
@@ -16,22 +15,13 @@ import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useListOfUserOrders } from "../Queries/OrderQueries";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
 const MyOrdersTable = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const [orders, isLoadingMyOrders] = useListOfUserOrders(userInfo.token);
 
-	if (isLoadingMyOrders)
-		return (
-			<div className="flex">
-				<CircularProgress
-					size="3.2em"
-					sx={{
-						margin: "15px auto",
-					}}
-				/>
-			</div>
-		);
+	if (isLoadingMyOrders) return <CenteredCircularProgress />;
 	else
 		return (
 			<Box mt={3}>

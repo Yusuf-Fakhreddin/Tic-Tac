@@ -1,6 +1,5 @@
 import {
 	Button,
-	CircularProgress,
 	Grid,
 	Paper,
 	Table,
@@ -25,6 +24,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TablePaginationActions from "../components/TablePaginationActions";
 import AdminNavigationBox from "../components/AdminNavigationBox";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
 const UsersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -59,14 +59,7 @@ const UsersListScreen = () => {
 			</Grid>
 			<Grid item md={10}>
 				{isLoadingUsers || !data.users ? (
-					<div className="flex">
-						<CircularProgress
-							size="3.2em"
-							sx={{
-								margin: "15px auto",
-							}}
-						/>
-					</div>
+					<CenteredCircularProgress />
 				) : (
 					<Box mt={3}>
 						<Typography variant="h3">All Users</Typography>

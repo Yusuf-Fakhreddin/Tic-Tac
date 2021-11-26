@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import YearCountChart from "../components/Charts/YearCountChart";
 import { Box } from "@mui/system";
 import DashboardCountBox from "../components/DashboardCountBox";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
 
 const Dashboard = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -28,7 +29,7 @@ const Dashboard = () => {
 			</Grid>
 			<Grid item md={10}>
 				{!data ? (
-					<CircularProgress />
+					<CenteredCircularProgress />
 				) : (
 					<Box>
 						<Grid container spacing={2} my={2} rowSpacing={2}>

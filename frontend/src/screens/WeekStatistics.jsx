@@ -1,4 +1,4 @@
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import DashboardIntervalButtons from "../components/DashboardIntervalButtons";
 import AdminNavigationBox from "../components/AdminNavigationBox";
 import IntervalStatisticsBoxes from "../components/IntervalStatisticsBoxes";
 import { useWeekStatistics } from "../Queries/DashboardQueries";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
 
 const WeekStatistics = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -33,14 +34,7 @@ const WeekStatistics = () => {
 				{weekData ? (
 					<IntervalStatisticsBoxes data={weekData} />
 				) : (
-					<div className="flex">
-						<CircularProgress
-							size="3.2em"
-							sx={{
-								margin: "15px auto",
-							}}
-						/>
-					</div>
+					<CenteredCircularProgress />
 				)}
 			</Grid>
 		</Grid>
