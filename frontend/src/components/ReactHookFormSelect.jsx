@@ -8,7 +8,6 @@ const ReactHookFormSelect = ({
 	control,
 	defaultValue,
 	children,
-
 	...props
 }) => {
 	const labelId = `${name}-label`;
