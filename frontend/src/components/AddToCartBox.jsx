@@ -43,7 +43,7 @@ const AddToCartBox = ({ product }) => {
 				<Divider />
 				<ListItem>
 					<ListItemText>
-						{t("status")}:
+						{t("status")}:&nbsp;
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
 							{product.countInStock > 0 ? t("inStock") : t("outOfStock")}
 						</Typography>

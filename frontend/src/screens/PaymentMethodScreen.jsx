@@ -16,6 +16,7 @@ import { savePaymentMethod } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import StripeCard from "../components/StripeCard";
+import PaymentAnimation from "../components/Animations/PaymentAnimation";
 
 const PaymentMethodScreen = () => {
 	const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const PaymentMethodScreen = () => {
 						rowSpacing={3}
 						spacing={2}
 					>
-						<Grid item xs={10} md={10}>
+						<Grid item xs={10} md={6}>
 							<Controller
 								control={control}
 								name="paymentMethod"
@@ -114,12 +115,16 @@ const PaymentMethodScreen = () => {
 									</FormControl>
 								}
 							/>
-						</Grid>
-
-						<Grid item xs={10} md={10}>
-							<Button variant="contained" type="submit">
+							<Button
+								variant="contained"
+								type="submit"
+								sx={{ display: "block" }}
+							>
 								Continue
 							</Button>{" "}
+						</Grid>
+						<Grid item xs={10} md={6}>
+							<PaymentAnimation />
 						</Grid>
 					</Grid>
 				</form>

@@ -65,7 +65,7 @@ const deleteProductById = async ({ id, token, pageNumber = 1 }) => {
 export const useDeleteProduct = () => {
 	const queryClient = useQueryClient();
 
-	const { mutateAsync, isLoading } = useMutation(deleteProductById, {
+	const { mutateAsync, isLoading, isSuccess } = useMutation(deleteProductById, {
 		// When mutate is called:
 		onMutate: async ({ id, pageNumber }) => {
 			console.log(id, pageNumber);
@@ -77,27 +77,29 @@ export const useDeleteProduct = () => {
 				"listProducts",
 				pageNumber,
 			]);
+			if (previousState) {
+				// Optimistically update to the new value
+				queryClient.setQueryData(["listProducts", pageNumber], (old) => {
+					let newState = {
+						...old,
+						products: old.products.filter((f) => f._id !== id),
+						count: old.count - 1,
+					};
+					console.log(newState);
+					return newState;
+				});
 
-			// Optimistically update to the new value
-			queryClient.setQueryData(["listProducts", pageNumber], (old) => {
-				let newState = {
-					...old,
-					products: old.products.filter((f) => f._id !== id),
-					count: old.count - 1,
-				};
-				console.log(newState);
-				return newState;
-			});
-
-			// Return a context object with the snapshotted value
-			return { previousState };
+				// Return a context object with the snapshotted value
+				return { previousState };
+			}
 		},
 		// If the mutation fails, use the context returned from onMutate to roll back
 		onError: (err, { pageNumber }, context) => {
-			queryClient.setQueryData(
-				["listProducts", pageNumber],
-				context.previousState
-			);
+			if (context)
+				queryClient.setQueryData(
+					["listProducts", pageNumber],
+					context.previousState
+				);
 		},
 		// Always refetch after error or success:
 		onSettled: (data, error, { pageNumber }, context) => {
@@ -106,7 +108,7 @@ export const useDeleteProduct = () => {
 		},
 	});
 
-	return [mutateAsync, isLoading];
+	return [mutateAsync, isLoading, isSuccess];
 
 	// on the page to call the action : destruct mutateAsync and call it: await mutateAsync(id,token)
 };

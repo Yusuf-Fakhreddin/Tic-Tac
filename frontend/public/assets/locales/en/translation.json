@@ -39,5 +39,8 @@
 	"logout": "Logout",
 	"register": "Register",
 	"alreadyHaveAccount": "Already have an account ?",
-	"doesn'tHaveAccount": "Does not have an account ?"
+	"doesn'tHaveAccount": "Does not have an account ?",
+	"deleteProduct": "Delete Product",
+	"editProduct": "Edit Product",
+	"back": "Back"
 }

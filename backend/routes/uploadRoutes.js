@@ -8,10 +8,8 @@ const storage = multer.diskStorage({
 		cb(null, "uploads/");
 	},
 	filename(req, file, cb) {
-		cb(
-			null,
-			`${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-		);
+		// Temporary Solution for development but names should be change in deployment
+		cb(null, `${file.originalname}${path.extname(file.originalname)}`);
 	},
 });
 

@@ -63,8 +63,8 @@ function App() {
 		palette: {
 			primary: {
 				light: "#fbfffc",
-				main: "#c8e6c9",
-				dark: "#97b498",
+				main: "#3C85FC",
+				dark: "#223862",
 				// contrastText: "#fff",
 			},
 		},

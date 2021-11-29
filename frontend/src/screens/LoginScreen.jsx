@@ -19,6 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "../actions/authActions";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import LoginCartAnimation from "../components/Animations/LoginCartAnimation";
 
 const LoginScreen = () => {
 	const dispatch = useDispatch();
@@ -69,63 +70,79 @@ const LoginScreen = () => {
 					<Alert severity="error">{error}</Alert>
 				</Stack>
 			)}
-			<Box marginY={3}>
-				<Typography variant="h4" component="h1" mt={3}>
-					{t("login")}
-				</Typography>
-				<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-					<Grid
-						container
-						justifyContent="center"
-						textAlign="left"
-						rowSpacing={3}
-						spacing={2}
-					>
-						<Grid item xs={10} md={10}>
-							<TextField
-								required
-								fullWidth
-								inputRef={register}
-								error={errors.email ? true : false}
-								label="Email"
-								name="email"
-								id="email"
-								// defaultValue="Hello World"
-								helperText={errors.email && errors.email.message}
-								variant="filled"
-							/>
-						</Grid>
-						<Grid item xs={10} md={10}>
-							<TextField
-								required
-								name="password"
-								inputRef={register}
-								id="password"
-								label="Password"
-								variant="filled"
-								fullWidth
-								type="password"
-								error={errors.password ? true : false}
-								helperText={errors.password && errors.password.message}
-							/>
-						</Grid>
-						<Grid item xs={10} md={10}>
-							<Button variant="contained" type="submit">
-								{t("login")}
+			<Grid
+				container
+				justifyContent="center"
+				textAlign="left"
+				rowSpacing={3}
+				spacing={2}
+			>
+				{" "}
+				<Grid item md={6}>
+					<LoginCartAnimation />
+				</Grid>
+				<Grid item align="center" xs={11} md={6}>
+					<Box marginY={3}>
+						<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+							<Grid
+								container
+								justifyContent="center"
+								textAlign="left"
+								rowSpacing={3}
+								spacing={2}
+							>
+								<Grid item xs={11} md={10}>
+									<Typography variant="h4" align="left" component="h1" mt={3}>
+										{t("login")}
+									</Typography>
+								</Grid>
+								<Grid item xs={11} md={10}>
+									<TextField
+										required
+										fullWidth
+										inputRef={register}
+										error={errors.email ? true : false}
+										label="Email"
+										name="email"
+										id="email"
+										// defaultValue="Hello World"
+										helperText={errors.email && errors.email.message}
+										variant="filled"
+									/>
+								</Grid>
+								<Grid item xs={11} md={10}>
+									<TextField
+										required
+										name="password"
+										inputRef={register}
+										id="password"
+										label="Password"
+										variant="filled"
+										fullWidth
+										type="password"
+										error={errors.password ? true : false}
+										helperText={errors.password && errors.password.message}
+									/>
+								</Grid>
+								<Grid item xs={11} md={10}>
+									<Button variant="contained" type="submit">
+										{t("login")}
+									</Button>
+								</Grid>
+							</Grid>
+						</form>
+					</Box>
+					<Divider />
+					<Box marginY={3}>
+						<Typography variant="h5">{t("doesn'tHaveAccount")}</Typography>
+						<NavLink to={`/register` + location.search}>
+							<Button sx={{ marginTop: "15px" }} variant="outlined">
+								{t("register")}
 							</Button>
-						</Grid>
-					</Grid>
-				</form>
-			</Box>
-			<Divider />
-			<Box marginY={3}>
-				<Typography variant="h5">{t("doesn'tHaveAccount")}</Typography>
-				<NavLink to={`/register` + location.search}>
-					<Button sx={{ marginTop: "15px" }} variant="outlined">
-						{t("register")}
-					</Button>
-				</NavLink>
-			</Box>
+						</NavLink>
+					</Box>
+				</Grid>
+			</Grid>{" "}
 		</Box>
 	);
 };

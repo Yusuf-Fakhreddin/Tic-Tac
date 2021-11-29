@@ -17,6 +17,7 @@ const ProductListReviews = ({ reviews }) => {
 	return (
 		<div>
 			<Typography variant="h5">{t("CUSTOMERREVIEWS")}</Typography>
+
 			{reviews.length === 0 && <Alert severity="info">{t("noReviews")}</Alert>}
 
 			{React.Children.toArray(

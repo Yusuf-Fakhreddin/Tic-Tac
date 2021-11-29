@@ -9,7 +9,6 @@ import {
 	Button,
 	CircularProgress,
 	Grid,
-	Paper,
 	Stack,
 	TextField,
 	Typography,
@@ -17,6 +16,7 @@ import {
 
 import { Box } from "@mui/system";
 import { useUpdateUserProfile } from "../Queries/UserQueries";
+import ProfileAnimation from "../components/Animations/ProfileAnimation";
 
 const ProfileScreen = () => {
 	const dispatch = useDispatch();
@@ -86,13 +86,16 @@ const ProfileScreen = () => {
 					</Alert>
 				</Stack>
 			)}
-			<Typography variant="h4" align="left" component="h1" mt={3}>
-				Update Your Profile{" "}
-			</Typography>
+			<ProfileAnimation />
 			<Box marginY={3}>
 				<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
 					<Grid container justifyContent="center" rowSpacing={3} spacing={2}>
-						<Grid item xs={10} md={10}>
+						<Grid item xs={11} md={10}>
+							<Typography variant="h4" align="left" component="h1" mt={3}>
+								Update Your Profile{" "}
+							</Typography>
+						</Grid>
+						<Grid item xs={11} md={10}>
 							<TextField
 								fullWidth
 								inputRef={register}
@@ -105,7 +108,7 @@ const ProfileScreen = () => {
 								variant="filled"
 							/>
 						</Grid>
-						<Grid item xs={10} md={10}>
+						<Grid item xs={11} md={10}>
 							<TextField
 								fullWidth
 								inputRef={register}
@@ -118,7 +121,7 @@ const ProfileScreen = () => {
 								variant="filled"
 							/>
 						</Grid>
-						<Grid item xs={10} md={10}>
+						<Grid item xs={11} md={10}>
 							<TextField
 								name="password"
 								inputRef={register}
@@ -131,7 +134,7 @@ const ProfileScreen = () => {
 								helperText={errors.password ? errors.password.message : ""}
 							/>
 						</Grid>
-						<Grid item xs={10} md={10}>
+						<Grid item xs={11} md={10}>
 							<TextField
 								name="confirmPassword"
 								inputRef={register}
@@ -146,7 +149,7 @@ const ProfileScreen = () => {
 								}
 							/>
 						</Grid>
-						<Grid item xs={10} md={10}>
+						<Grid item xs={11} md={10}>
 							<Button variant="contained" type="submit">
 								Update
 							</Button>

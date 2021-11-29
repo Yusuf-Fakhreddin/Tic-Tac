@@ -39,5 +39,8 @@
 	"logout": "تسجيل الخروج",
 	"register": "إنشاء حساب",
 	"alreadyHaveAccount": "لديك حساب مسبقاً ؟",
-	"doesn'tHaveAccount": "ليس لديك حساب مسبقاً ؟"
+	"doesn'tHaveAccount": "ليس لديك حساب مسبقاً ؟",
+	"deleteProduct": "حذف المنتج",
+	"editProduct": "تعديل المنتج",
+	"back": "رجوع"
 }

@@ -17,14 +17,19 @@ import ProductListReviews from "../components/ProductListReviews";
 import CreateReviewBox from "../components/CreateReviewBox";
 import { useSelector } from "react-redux";
 import CenteredCircularProgress from "../components/CenteredCircularProgress";
+import { useTranslation } from "react-i18next";
+import PendingIcon from "@mui/icons-material/Pending";
+
 const ProductScreen = ({ match }) => {
 	const { id } = useParams();
 	const [product, isLoading, isSuccess] = useListProductDetailsById(id);
-	const [deleteProduct, isDeleteLoading] = useDeleteProduct();
-
+	const [deleteProduct, isDeleteLoading, isDeleteSuccess] = useDeleteProduct();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const [alreadyReviewed, setAlreadyReviewed] = useState(false);
+
+	const { t } = useTranslation();
+	const history = useHistory();
 
 	useEffect(() => {
 		if (!isSuccess) document.title = "Product Details";
@@ -33,13 +38,14 @@ const ProductScreen = ({ match }) => {
 			if (product.reviews.some((e) => e.user === userInfo._id)) {
 				setAlreadyReviewed(true);
 			} else setAlreadyReviewed(false);
-	}, [isSuccess]);
+		if (isDeleteSuccess) history.goBack();
+	}, [isSuccess, isDeleteSuccess]);
 
 	const DeleteProductHandler = async (id) => {
 		console.log(id);
 		await deleteProduct({ id: id, token: userInfo.token });
 	};
-	const history = useHistory();
+
 	if (isLoading) return <CenteredCircularProgress />;
 	else
 		return (
@@ -52,17 +58,17 @@ const ProductScreen = ({ match }) => {
 						variant="contained"
 						startIcon={<ArrowBackIosIcon />}
 					>
-						Back
+						{t("back")}
 					</Button>
-					{userInfo.isAdmin && (
+					{userInfo && userInfo.isAdmin && (
 						<Box sx={{ marginTop: "5px" }}>
 							<Button
 								sx={{ marginRight: "5px" }}
 								variant="contained"
-								// onClick={() => DeleteProductHandler(id)}
-								startIcon={<DeleteIcon />}
+								onClick={() => DeleteProductHandler(id)}
+								startIcon={isDeleteLoading ? <PendingIcon /> : <DeleteIcon />}
 							>
-								Delete Product
+								{t("deleteProduct")}
 							</Button>
 							<Button
 								component={NavLink}
@@ -70,7 +76,7 @@ const ProductScreen = ({ match }) => {
 								variant="contained"
 								startIcon={<EditIcon />}
 							>
-								Edit Product
+								{t("editProduct")}
 							</Button>{" "}
 						</Box>
 					)}
@@ -105,7 +111,7 @@ const ProductScreen = ({ match }) => {
 						<ProductListReviews reviews={product.reviews} />
 					</Grid>
 					<Grid item xs={10} md={6}>
-						{!alreadyReviewed && (
+						{userInfo && !alreadyReviewed && (
 							<CreateReviewBox productId={id} token={userInfo.token} />
 						)}
 					</Grid>

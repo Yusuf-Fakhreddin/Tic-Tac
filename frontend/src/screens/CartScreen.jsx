@@ -96,8 +96,15 @@ const CartScreen = () => {
 							</ListItem>
 							<Divider />
 
-							<ListItem component={NavLink} to="/login?redirect=shipping">
-								<Button fullWidth variant="contained" disableElevation>
+							<ListItem>
+								<Button
+									component={NavLink}
+									to="/login?redirect=shipping"
+									disabled={cartItems === 0}
+									fullWidth
+									variant="contained"
+									disableElevation
+								>
 									Proceed To Checkout
 								</Button>
 							</ListItem>

@@ -23,7 +23,7 @@ const HomeScreen = () => {
 		fetchPrdoucts();
 	}, [keyword, pageNumber]);
 
-	if (isLoading || isFetching) return <CenteredCircularProgress />;
+	if (!data) return <CenteredCircularProgress />;
 	else
 		return (
 			<>
