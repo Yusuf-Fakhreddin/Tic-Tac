@@ -17,7 +17,7 @@ const CategoriesPieChart = ({ products }) => {
 			loader={<CircularProgress />}
 			data={array}
 			options={{
-				title: "New Products Categories",
+				title: "Products Categories",
 			}}
 			rootProps={{ "data-testid": "1" }}
 		/>

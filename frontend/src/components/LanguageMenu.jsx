@@ -29,7 +29,6 @@ const LanguageMenu = () => {
 	const { t } = useTranslation();
 
 	useEffect(() => {
-		console.log(currentLanguage);
 		document.body.dir = currentLanguage.dir || "ltr";
 	}, [currentLanguage, t]);
 

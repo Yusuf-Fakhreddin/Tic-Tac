@@ -16,6 +16,7 @@ import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useListOfUserOrders } from "../Queries/OrderQueries";
 import CenteredCircularProgress from "../components/CenteredCircularProgress";
+import OrdersAnimation from "../components/Animations/OrdersAnimation";
 const MyOrdersTable = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -26,6 +27,7 @@ const MyOrdersTable = () => {
 		return (
 			<Box mt={3}>
 				<Typography variant="h3">Your Orders</Typography>
+				<OrdersAnimation />
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: "100%" }} aria-label="simple table">
 						<TableHead>

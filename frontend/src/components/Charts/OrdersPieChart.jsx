@@ -20,7 +20,7 @@ const OrdersPieChart = ({ orders }) => {
 			loader={<CircularProgress />}
 			data={array}
 			options={{
-				title: "New Orders Status",
+				title: "Orders Status",
 			}}
 			rootProps={{ "data-testid": "1" }}
 		/>

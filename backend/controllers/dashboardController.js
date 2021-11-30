@@ -7,7 +7,7 @@ import startOfYear from "date-fns/startOfYear/index.js";
 import endOfYear from "date-fns/endOfYear/index.js";
 import subMonths from "date-fns/subMonths/index.js";
 
-// @desc    Fetch last 12 months statistics and total Numbers
+// @desc    Fetch total Numbers and last 12 months statistics
 // @route   GET /api/dashboard
 // @access  Admin
 const getDashboardStatistics = asyncHandler(async (req, res) => {
@@ -84,10 +84,30 @@ const getDashboardStatistics = asyncHandler(async (req, res) => {
 			},
 		},
 	]);
+	let productsPie = await Product.aggregate([
+		{
+			$group: {
+				_id: "$category",
+				productsCount: { $sum: 1 },
+			},
+		},
+	]);
+
+	let ordersPie = await Order.aggregate([
+		{
+			$group: {
+				_id: { isPaid: "$isPaid", isDelivered: "$isDelivered" },
+				ordersCount: { $sum: 1 },
+				totalPriceSum: { $sum: "$totalPrice" },
+			},
+		},
+	]);
 	res.json({
 		users,
 		orders,
 		products,
+		ordersPie,
+		productsPie,
 		totalUsersCount,
 		totalOrdersCount,
 		totalProductsCount,
