@@ -15,8 +15,8 @@ import {
 } from "@mui/material";
 
 import { Box } from "@mui/system";
-import { useUpdateUserProfile } from "../Queries/UserQueries";
-import ProfileAnimation from "../components/Animations/ProfileAnimation";
+import { useUpdateUserProfile } from "../../Queries/UserQueries";
+import ProfileAnimation from "../../components/Animations/ProfileAnimation";
 
 const ProfileScreen = () => {
 	const dispatch = useDispatch();

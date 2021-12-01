@@ -3,9 +3,9 @@ import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import CartItemsTable from "../components/CartItemsTable";
-import CheckoutSteps from "../components/CheckoutSteps";
-import PlaceOrderSummary from "../components/PlaceOrderSummary";
+import CartItemsTable from "../../components/Order/CartItemsTable";
+import CheckoutSteps from "../../components/Order/CheckoutSteps";
+import PlaceOrderSummary from "../../components/Order/PlaceOrderSummary";
 
 const PlaceOrderScreen = () => {
 	const history = useHistory();

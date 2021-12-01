@@ -15,7 +15,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { addToCart } from "../actions/cartActions";
+import { addToCart } from "../../actions/cartActions";
 import { useTranslation } from "react-i18next";
 
 const AddToCartBox = ({ product }) => {

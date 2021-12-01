@@ -2,7 +2,7 @@ import { Button, Rating, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/system";
-import { useCreateReview } from "../Queries/ProductsQueries";
+import { useCreateReview } from "../../Queries/ProductsQueries";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 

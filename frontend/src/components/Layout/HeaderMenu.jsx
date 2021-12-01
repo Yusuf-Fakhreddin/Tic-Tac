@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import { NavLink } from "react-router-dom";
-import { logout } from "../actions/authActions";
+import { logout } from "../../actions/authActions";
 import { Divider } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginIcon from "@mui/icons-material/Login";

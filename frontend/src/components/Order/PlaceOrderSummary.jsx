@@ -1,23 +1,25 @@
 import { Box } from "@mui/system";
 import {
 	Button,
-	CircularProgress,
 	Divider,
 	List,
 	ListItem,
 	ListItemText,
 	Typography,
 } from "@mui/material";
-import { useDeliverOrder, usePayOrder } from "../Queries/OrderQueries";
+import { useCreateOrder } from "../../Queries/OrderQueries";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
 
-const OrderDetailsSummary = ({ order, userInfo }) => {
+const PlaceOrderSummary = ({ cart, token }) => {
 	const { t } = useTranslation();
 
 	let shippingAddress, paymentMethod, cartItems;
-	shippingAddress = order.shippingAddress;
-	paymentMethod = order.paymentMethod;
-	cartItems = order.orderItems;
+
+	shippingAddress = cart.shippingAddress;
+	paymentMethod = cart.paymentMethod;
+	cartItems = cart.cartItems;
 
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(2);
@@ -29,10 +31,9 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 	let shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 20);
 	let totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);
 
-	const [deliverOrder, deliverOrderLoading] = useDeliverOrder();
-	const [payOrder, isPayOrderLoading] = usePayOrder();
-
-	const deliverOrderHandler = async () => {
+	const [createOrder, createOrderLoading, createOrderSuccess, createdOrder] =
+		useCreateOrder();
+	const placeOrderHandler = async () => {
 		console.log(
 			cartItems,
 			shippingAddress,
@@ -41,15 +42,23 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 			shippingPrice,
 			totalPrice
 		);
-		if (paymentMethod === "Cash On Delivery") {
-			await payOrder({ orderId: order._id, token: userInfo.token });
-		}
-		await deliverOrder({
-			orderId: order._id,
-			token: userInfo.token,
+		await createOrder({
+			order: {
+				orderItems: cartItems,
+				shippingAddress: shippingAddress,
+				paymentMethod: paymentMethod,
+				itemsPrice: itemsPrice,
+				shippingPrice: shippingPrice,
+				totalPrice: totalPrice,
+			},
+			token: token,
 		});
 	};
+	const history = useHistory();
 
+	useEffect(() => {
+		if (createOrderSuccess) history.push(`/order/${createdOrder._id}`);
+	}, [createOrderSuccess, history]);
 	return (
 		<Box
 			sx={{
@@ -93,7 +102,7 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 						</Typography>
 					</ListItemText>
 				</ListItem>
-				{order && userInfo && userInfo.isAdmin && (
+				{cart && (
 					<>
 						<Divider />
 						<ListItem>
@@ -101,18 +110,17 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 								fullWidth
 								variant="contained"
 								disableElevation
-								onClick={deliverOrderHandler}
-								disabled={order.isDelivered}
+								onClick={placeOrderHandler}
+								disabled={cartItems === 0}
 							>
-								{order.isDelivered ? "Delivered" : "Mark As Delivered"}
+								{t("placeOrder")}
 							</Button>
 						</ListItem>
 					</>
 				)}
-				{deliverOrderLoading && <CircularProgress />}
 			</List>
 		</Box>
 	);
 };
 
-export default OrderDetailsSummary;
+export default PlaceOrderSummary;

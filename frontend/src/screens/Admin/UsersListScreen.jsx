@@ -17,14 +17,14 @@ import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
-import { useDeleteUser, useListOfUsers } from "../Queries/UserQueries";
+import { useDeleteUser, useListOfUsers } from "../../Queries/UserQueries";
 import CheckIcon from "@mui/icons-material/Check";
 import { useHistory } from "react-router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import TablePaginationActions from "../components/TablePaginationActions";
-import AdminNavigationBox from "../components/AdminNavigationBox";
-import CenteredCircularProgress from "../components/CenteredCircularProgress";
+import TablePaginationActions from "../../components/TablePaginationActions";
+import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
+import CenteredCircularProgress from "../../components/CenteredCircularProgress";
 const UsersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;

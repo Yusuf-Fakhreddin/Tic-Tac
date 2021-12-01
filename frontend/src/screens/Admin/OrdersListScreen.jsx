@@ -19,11 +19,11 @@ import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
-import TablePaginationActions from "../components/TablePaginationActions";
+import TablePaginationActions from "../../components/TablePaginationActions";
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
-import AdminNavigationBox from "../components/AdminNavigationBox";
+import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
 
-import { useListOfOrders } from "../Queries/OrderQueries";
+import { useListOfOrders } from "../../Queries/OrderQueries";
 const OrdersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;

@@ -3,10 +3,11 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import DashboardIntervalButtons from "../components/DashboardIntervalButtons";
-import AdminNavigationBox from "../components/AdminNavigationBox";
-import IntervalStatisticsBoxes from "../components/IntervalStatisticsBoxes";
-import { useMonthStatistics } from "../Queries/DashboardQueries";
+import { useMonthStatistics } from "../../Queries/DashboardQueries";
+
+import DashboardIntervalButtons from "../../components/Admin/DashboardIntervalButtons";
+import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
+import IntervalStatisticsBoxes from "../../components/Admin/IntervalStatisticsBoxes";
 
 const MonthStatistics = () => {
 	const userLogin = useSelector((state) => state.userLogin);

@@ -3,11 +3,14 @@ import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import CartItemsTable from "../components/CartItemsTable";
-import OrderDetailsSummary from "../components/OrderDetailsSummary";
-import { useListOrderDetailsById, usePayOrder } from "../Queries/OrderQueries";
-import StripeCard from "../components/StripeCard";
-import CenteredCircularProgress from "../components/CenteredCircularProgress";
+import {
+	useListOrderDetailsById,
+	usePayOrder,
+} from "../../Queries/OrderQueries";
+import CartItemsTable from "../../components/Order/CartItemsTable";
+import OrderDetailsSummary from "../../components/Order/OrderDetailsSummary";
+import StripeCard from "../../components/Form/StripeCard";
+import CenteredCircularProgress from "../../components/CenteredCircularProgress";
 
 const OrderDetailsScreen = () => {
 	const history = useHistory();

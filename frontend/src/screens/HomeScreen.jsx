@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Grid, Pagination, PaginationItem, Typography } from "@mui/material";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/Product/ProductCard";
 import { useListOfProducts } from "../Queries/ProductsQueries";
 import { useParams } from "react-router";
 import { NavLink } from "react-router-dom";

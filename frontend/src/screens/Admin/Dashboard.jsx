@@ -1,16 +1,17 @@
-import { CircularProgress, Grid } from "@mui/material";
-import AdminNavigationBox from "../components/AdminNavigationBox";
-import { useDashboardStatistics } from "../Queries/DashboardQueries";
+import { Grid } from "@mui/material";
+import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import YearCountChart from "../components/Charts/YearCountChart";
-import { Box } from "@mui/system";
-import DashboardCountBox from "../components/DashboardCountBox";
-import CenteredCircularProgress from "../components/CenteredCircularProgress";
-import OrdersPieChart from "../components/Charts/OrdersPieChart";
-import CategoriesPieChart from "../components/Charts/CategoriesPieChart";
+import { useDashboardStatistics } from "../../Queries/DashboardQueries";
+
+import YearCountChart from "../../components/Charts/YearCountChart";
+import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
+import DashboardCountBox from "../../components/Admin/DashboardCountBox";
+import CenteredCircularProgress from "../../components/CenteredCircularProgress";
+import OrdersPieChart from "../../components/Charts/OrdersPieChart";
+import CategoriesPieChart from "../../components/Charts/CategoriesPieChart";
 
 const Dashboard = () => {
 	const userLogin = useSelector((state) => state.userLogin);

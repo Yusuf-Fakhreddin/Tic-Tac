@@ -13,22 +13,22 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import TablePaginationActions from "../components/TablePaginationActions";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 import {
 	useDeleteProduct,
 	useListOfProducts,
-} from "../Queries/ProductsQueries";
-import ProductImageBox from "../components/ProductImageBox";
-import Zoom from "react-medium-image-zoom";
-import "react-medium-image-zoom/dist/styles.css";
-import AdminNavigationBox from "../components/AdminNavigationBox";
+} from "../../Queries/ProductsQueries";
+import TablePaginationActions from "../../components/TablePaginationActions";
+import ProductImageBox from "../../components/Product/ProductImageBox";
+import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
 
 const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);

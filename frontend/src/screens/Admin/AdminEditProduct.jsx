@@ -23,11 +23,12 @@ import { Box } from "@mui/system";
 import {
 	useListProductDetailsById,
 	useUpdateProduct,
-} from "../Queries/ProductsQueries";
-import { useUploadProductImage } from "../Queries/UploadQueries";
-import ImageUpload from "../components/ImageUpload";
-import ReactHookFormSelect from "../components/ReactHookFormSelect";
-import CenteredCircularProgress from "../components/CenteredCircularProgress";
+} from "../../Queries/ProductsQueries";
+import { useUploadProductImage } from "../../Queries/UploadQueries";
+
+import ImageUpload from "../../components/Product/ImageUpload";
+import ReactHookFormSelect from "../../components/Form/ReactHookFormSelect";
+import CenteredCircularProgress from "../../components/CenteredCircularProgress";
 
 const AdminEditProduct = () => {
 	const history = useHistory();

@@ -2,7 +2,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
-import http from "../httpService";
+import http from "../../httpService";
 
 const StripeCard = ({ price, user, shippingAddress, onSuccessfulCheckout }) => {
 	const [isProcessing, setProcessingTo] = useState(false);

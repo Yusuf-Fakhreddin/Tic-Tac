@@ -14,8 +14,8 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useHistory } from "react-router-dom";
-import { saveShippingAddress } from "../actions/cartActions";
-import CheckoutSteps from "../components/CheckoutSteps";
+import { saveShippingAddress } from "../../actions/cartActions";
+import CheckoutSteps from "../../components/Order/CheckoutSteps";
 
 const ShippingScreen = () => {
 	const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, CircularProgress, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box } from "@mui/system";
@@ -10,15 +10,15 @@ import {
 	useDeleteProduct,
 	useListProductDetailsById,
 } from "../Queries/ProductsQueries";
-import ProductInfo from "../components/ProductInfo";
-import ProductImageBox from "../components/ProductImageBox";
-import AddToCartBox from "../components/AddToCartBox";
-import ProductListReviews from "../components/ProductListReviews";
-import CreateReviewBox from "../components/CreateReviewBox";
 import { useSelector } from "react-redux";
-import CenteredCircularProgress from "../components/CenteredCircularProgress";
 import { useTranslation } from "react-i18next";
 import PendingIcon from "@mui/icons-material/Pending";
+import CenteredCircularProgress from "../components/CenteredCircularProgress";
+import ProductInfo from "../components/Product/ProductInfo";
+import ProductImageBox from "../components/Product/ProductImageBox";
+import AddToCartBox from "../components/Order/AddToCartBox";
+import ProductListReviews from "../components/Product/ProductListReviews";
+import CreateReviewBox from "../components/Product/CreateReviewBox";
 
 const ProductScreen = ({ match }) => {
 	const { id } = useParams();

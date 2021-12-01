@@ -12,10 +12,10 @@ import {
 	TableRow,
 } from "@mui/material";
 import React from "react";
-import ProductImageBox from "./ProductImageBox";
+import ProductImageBox from "../Product/ProductImageBox";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 

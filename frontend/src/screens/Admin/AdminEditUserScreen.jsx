@@ -22,7 +22,7 @@ import { Box } from "@mui/system";
 import {
 	useAdminUpdateUser,
 	useListUserDetailsById,
-} from "../Queries/UserQueries";
+} from "../../Queries/UserQueries";
 
 const AdminEditUserScreen = () => {
 	const history = useHistory();

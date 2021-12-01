@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import i18next from "i18next";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import languages from "../languages";
+import languages from "../../languages.js";
 
 const LanguageMenu = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);

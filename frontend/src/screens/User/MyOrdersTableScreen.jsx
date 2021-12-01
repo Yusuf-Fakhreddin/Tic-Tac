@@ -14,9 +14,10 @@ import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
-import { useListOfUserOrders } from "../Queries/OrderQueries";
-import CenteredCircularProgress from "../components/CenteredCircularProgress";
-import OrdersAnimation from "../components/Animations/OrdersAnimation";
+import { useListOfUserOrders } from "../../Queries/OrderQueries";
+import CenteredCircularProgress from "../../components/CenteredCircularProgress";
+import OrdersAnimation from "../../components/Animations/OrdersAnimation";
+
 const MyOrdersTable = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;

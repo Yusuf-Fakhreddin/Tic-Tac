@@ -10,7 +10,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { NavLink } from "react-router-dom";
-import SearchInput from "./SearchInput";
+import SearchInput from "../Form/SearchInput";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import HeaderMenu from "./HeaderMenu";
-import { logout } from "../actions/authActions";
+import { logout } from "../../actions/authActions";
 import LanguageMenu from "./LanguageMenu";
 import { useTranslation } from "react-i18next";
 

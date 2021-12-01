@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import CategoriesPieChart from "./Charts/CategoriesPieChart";
-import OrdersPieChart from "./Charts/OrdersPieChart";
+import CategoriesPieChart from "../Charts/CategoriesPieChart";
+import OrdersPieChart from "../Charts/OrdersPieChart";
 
 const IntervalStatisticsBoxes = ({ data }) => {
 	return (

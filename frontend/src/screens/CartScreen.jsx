@@ -13,9 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import React, { useEffect, useState } from "react";
-import CartItemsTable from "../components/CartItemsTable";
 import { removeFromCart } from "../actions/cartActions";
 import { useListProductDetailsById } from "../Queries/ProductsQueries";
+import CartItemsTable from "../components/Order/CartItemsTable";
 const CartScreen = () => {
 	const cart = useSelector((state) => state.cartState);
 	const { cartItems } = cart;

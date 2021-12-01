@@ -14,10 +14,11 @@ import {
 	Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import ImageUpload from "../components/ImageUpload";
-import { useUploadProductImage } from "../Queries/UploadQueries";
-import { useCreateProduct } from "../Queries/ProductsQueries";
-import ReactHookFormSelect from "../components/ReactHookFormSelect";
+import { useUploadProductImage } from "../../Queries/UploadQueries";
+import { useCreateProduct } from "../../Queries/ProductsQueries";
+
+import ImageUpload from "../../components/Product/ImageUpload";
+import ReactHookFormSelect from "../../components/Form/ReactHookFormSelect";
 
 const ProductCreateScreen = () => {
 	const history = useHistory();

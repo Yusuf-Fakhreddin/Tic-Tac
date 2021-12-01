@@ -12,11 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
-import { savePaymentMethod } from "../actions/cartActions";
-import CheckoutSteps from "../components/CheckoutSteps";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import StripeCard from "../components/StripeCard";
-import PaymentAnimation from "../components/Animations/PaymentAnimation";
+import { savePaymentMethod } from "../../actions/cartActions";
+import CheckoutSteps from "../../components/Order/CheckoutSteps";
+import PaymentAnimation from "../../components/Animations/PaymentAnimation";
 
 const PaymentMethodScreen = () => {
 	const dispatch = useDispatch();
