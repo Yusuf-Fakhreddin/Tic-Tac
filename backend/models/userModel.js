@@ -28,6 +28,19 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			default: false,
 		},
+		cart: {
+			type: [
+				{
+					product: {
+						type: mongoose.Schema.Types.ObjectId,
+						ref: "Product",
+						required: true,
+					},
+					qty: { type: Number, default: 1 },
+				},
+			],
+			default: [],
+		},
 		googleId: String,
 		picture: String,
 		resetPasswordToken: String,
