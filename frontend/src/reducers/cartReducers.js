@@ -4,6 +4,7 @@ import {
 	CART_SAVE_SHIPPING_ADDRESS,
 	CART_SAVE_PAYMENT_METHOD,
 	CART_CLEAR_ITEMS,
+	CART_FROM_SERVER,
 } from "../constants/cartConstants";
 
 export const cartReducer = (
@@ -15,8 +16,14 @@ export const cartReducer = (
 			// check if the item already exist in the cart
 
 			const item = action.payload;
-			const existItem = state.cartItems.find((x) => x.product === item.product);
-
+			console.log(item);
+			const existItem = state.cartItems.find(
+				(x) => x.product._id === item.product._id
+			);
+			// const idx = state.cartItems.findIndex(
+			// 	(x) => x.product._id == action.payload.product
+			// );
+			console.log(existItem);
 			if (existItem) {
 				return {
 					...state,
@@ -30,11 +37,20 @@ export const cartReducer = (
 					cartItems: [...state.cartItems, item],
 				};
 			}
+
 		case CART_REMOVE_ITEM:
 			return {
 				...state,
-				cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+				cartItems: state.cartItems.filter(
+					(x) => x.product._id !== action.payload
+				),
 			};
+		case CART_FROM_SERVER:
+			return {
+				...state,
+				cartItems: action.payload,
+			};
+
 		case CART_SAVE_SHIPPING_ADDRESS:
 			return {
 				...state,

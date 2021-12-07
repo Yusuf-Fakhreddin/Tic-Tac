@@ -26,7 +26,7 @@ const PlaceOrderSummary = ({ cart, token }) => {
 	};
 
 	let itemsPrice = addDecimals(
-		cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+		cartItems.reduce((acc, item) => acc + item.product.price * item.qty, 0)
 	);
 	let shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 20);
 	let totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);

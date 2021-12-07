@@ -1,8 +1,9 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { getCartFromBackend } from "../../actions/cartActions";
 import CartItemsTable from "../../components/Order/CartItemsTable";
 import CheckoutSteps from "../../components/Order/CheckoutSteps";
 import PlaceOrderSummary from "../../components/Order/PlaceOrderSummary";
@@ -13,19 +14,21 @@ const PlaceOrderScreen = () => {
 	const cart = useSelector((state) => state.cartState);
 	const { shippingAddress, paymentMethod, cartItems } = cart;
 
-	if (!shippingAddress) {
-		history.push("/shipping");
-	} else if (!paymentMethod) {
-		history.push("/paymentmethod");
-	}
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	if (!userInfo) history.push("/login");
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		document.title = "Place Order";
-		if (!userInfo) history.push("/login");
-	}, [userInfo, history]);
+		if (!userInfo) history.push("/login?redirect=placeorder");
+		else dispatch(getCartFromBackend());
+
+		if (!shippingAddress) {
+			history.push("/shipping");
+		} else if (!paymentMethod) {
+			history.push("/paymentmethod");
+		}
+	}, [userInfo, history, shippingAddress, paymentMethod]);
 	return (
 		<Box
 			mt={3}

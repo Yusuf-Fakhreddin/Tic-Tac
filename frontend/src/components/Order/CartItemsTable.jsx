@@ -23,7 +23,7 @@ const CartItemsTable = ({ cartItems, order }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 
-	const removeFromCartHandler = (id) => {
+	const removeFromCartHandler = async (id) => {
 		dispatch(removeFromCart(id));
 	};
 
@@ -65,24 +65,28 @@ const CartItemsTable = ({ cartItems, order }) => {
 									component="th"
 									scope="row"
 								>
-									<ProductImageBox productImage={row.image} />
+									<ProductImageBox productImage={row.product.image} />
 								</TableCell>
 								<TableCell align="center" component="th" scope="row">
-									<NavLink to={`/product/${row.product}`}>{row.name}</NavLink>
+									<NavLink to={`/product/${row.product._id}`}>
+										{row.product.name}
+									</NavLink>
 								</TableCell>
-								<TableCell align="center">{row.price}</TableCell>
+								<TableCell align="center">{row.product.price}</TableCell>
 								<TableCell align="center">
 									{" "}
 									<FormControl>
 										<Select
 											value={row.qty}
 											onChange={(e) =>
-												dispatch(addToCart(row.product, Number(e.target.value)))
+												dispatch(
+													addToCart(row.product._id, Number(e.target.value))
+												)
 											}
 											displayEmpty
 										>
 											{React.Children.toArray(
-												[...Array(row.countInStock).keys()].map((x) => (
+												[...Array(row.product.countInStock).keys()].map((x) => (
 													<MenuItem value={x + 1}>{x + 1}</MenuItem>
 												))
 											)}
@@ -95,7 +99,7 @@ const CartItemsTable = ({ cartItems, order }) => {
 										<Button
 											sx={{ padding: "0", margin: "0" }}
 											color="error"
-											onClick={() => removeFromCartHandler(row.product)}
+											onClick={() => removeFromCartHandler(row.product._id)}
 										>
 											<RemoveShoppingCartIcon />{" "}
 										</Button>

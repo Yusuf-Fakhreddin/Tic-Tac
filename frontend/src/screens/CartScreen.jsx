@@ -1,5 +1,6 @@
 import {
 	Alert,
+	AlertTitle,
 	Button,
 	Divider,
 	Grid,
@@ -12,38 +13,25 @@ import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import React, { useEffect, useState } from "react";
-import { removeFromCart } from "../actions/cartActions";
-import { useListProductDetailsById } from "../Queries/ProductsQueries";
+import React, { useEffect } from "react";
+
 import CartItemsTable from "../components/Order/CartItemsTable";
+import { getCartFromBackend } from "../actions/cartActions";
+
 const CartScreen = () => {
 	const cart = useSelector((state) => state.cartState);
 	const { cartItems } = cart;
 	console.log(cartItems);
-	const [currentID, setcurrentID] = useState();
-	const [product, isLoading, isSuccess, refetch] =
-		useListProductDetailsById(currentID);
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	const dispatch = useDispatch();
-
-	const [removedItems, setremovedItems] = useState([]);
-
 	useEffect(() => {
-		const check = async () => {
-			console.log("executing");
-			for (let i = 0; i < cartItems.length; i++) {
-				setcurrentID(cartItems[i].product);
-				await refetch();
-				while (isLoading) {
-					return;
-				}
-				if (product && product.countInStock === 0) {
-					dispatch(removeFromCart(cartItems[i].product));
-					setremovedItems([...removedItems, cartItems[i].name]);
-				}
-			}
-		};
-		check();
-	}, []);
+		document.title = "Cart";
+		if (userInfo) {
+			dispatch(getCartFromBackend());
+		}
+	}, [userInfo]);
 
 	return (
 		<Box paddingTop={3}>
@@ -55,10 +43,14 @@ const CartScreen = () => {
 			<Typography variant="h4" component="h1" mt={3}>
 				Your Shopping Cart
 			</Typography>
-			{removedItems.length > 0 && (
-				<Alert severity="warning">
-					One or more products were removed from your cart as they went out of
-					stock
+			{!userInfo && (
+				<Alert severity="info">
+					<AlertTitle>Login Required</AlertTitle>
+					Please login to proceed to checkout —{" "}
+					<strong>
+						{" "}
+						<NavLink to="/login?redirect=cart">Login Now</NavLink>
+					</strong>
 				</Alert>
 			)}
 			<Grid
@@ -88,19 +80,23 @@ const CartScreen = () => {
 										{":"}
 										{" " +
 											cartItems
-												.reduce((acc, item) => acc + item.qty * item.price, 0)
+												.reduce(
+													(acc, item) => acc + item.qty * item.product.price,
+													0
+												)
 												.toFixed(2)}{" "}
 										EGP
 									</Typography>
 								</ListItemText>
 							</ListItem>
+
 							<Divider />
 
 							<ListItem>
 								<Button
 									component={NavLink}
 									to="/login?redirect=shipping"
-									disabled={cartItems === 0}
+									disabled={cartItems.length === 0 || !userInfo}
 									fullWidth
 									variant="contained"
 									disableElevation

@@ -20,7 +20,7 @@ import { login } from "../actions/authActions";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LoginCartAnimation from "../components/Animations/LoginCartAnimation";
-
+import { addItemsToBackendCart } from "../actions/cartActions.js";
 const LoginScreen = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -40,12 +40,19 @@ const LoginScreen = () => {
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
 	});
+
+	const cart = useSelector((state) => state.cartState);
+	const { cartItems } = cart;
+
 	useEffect(() => {
 		document.title = "Login";
 		if (userInfo) {
+			//  mutate adding LS items to backend
+			dispatch(addItemsToBackendCart(cartItems));
 			history.replace(redirect);
 		}
 	}, [userInfo, history, redirect]);
+
 	const onSubmit = (data) => {
 		let { email, password } = data;
 		dispatch(login(email, password));

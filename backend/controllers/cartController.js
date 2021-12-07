@@ -7,16 +7,22 @@ import chalk from "chalk";
 const addCartItems = asyncHandler(async (req, res) => {
 	// receiving [{ proudctId, qty}] as cart items
 	const { items } = req.body;
-	const user = await User.findById(req.user._id);
+	const user = await User.findById(req.user._id).populate(
+		"cart.product",
+		"id name image price countInStock"
+	);
 	console.log(chalk.red(items));
 	if (user) {
 		for (let i = 0; i < items.length; i++) {
+			console.log(items[i]);
 			// if item already exists in cart assign its quantity to the new added value
 			// if not add the item
-			const idx = user.cart.findIndex((x) => x.product === items[i].product);
+			const idx = user.cart.findIndex(
+				(x) => x.product._id == items[i].product._id
+			);
 			console.log(chalk.yellow(idx));
 
-			if (idx <= -1) {
+			if (idx === -1) {
 				user.cart.push({ product: items[i].product, qty: items[i].qty });
 			} else {
 				user.cart[idx].qty = items[i].qty;
@@ -25,9 +31,7 @@ const addCartItems = asyncHandler(async (req, res) => {
 
 		const updatedUser = await user.save();
 
-		res.json({
-			cart: updatedUser.cart,
-		});
+		res.json(updatedUser.cart);
 	} else {
 		res.status(404);
 		throw new Error("User not found");
@@ -36,12 +40,15 @@ const addCartItems = asyncHandler(async (req, res) => {
 
 const removeCartItem = asyncHandler(async (req, res) => {
 	// receives id in the url parameters
-	const user = await User.findById(req.user._id);
+	const user = await User.findById(req.user._id).populate(
+		"cart.product",
+		"id name image price countInStock"
+	);
 	console.log(chalk.yellow(req.params.id));
 	if (user) {
 		const delIdx = user.cart.findIndex((x) => {
 			console.log(x.product);
-			return x.product == req.params.id;
+			return x.product._id == req.params.id;
 		});
 		console.log(delIdx);
 		if (delIdx > -1) {
@@ -53,9 +60,7 @@ const removeCartItem = asyncHandler(async (req, res) => {
 
 		const updatedUser = await user.save();
 
-		res.json({
-			cart: updatedUser.cart,
-		});
+		res.json(updatedUser.cart);
 	} else {
 		res.status(404);
 		throw new Error("User not found");
