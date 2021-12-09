@@ -85,7 +85,7 @@ const LoginScreen = () => {
 				spacing={2}
 			>
 				{" "}
-				<Grid item md={6}>
+				<Grid item display={{ xs: "none", lg: "block" }} md={6}>
 					<LoginCartAnimation />
 				</Grid>
 				<Grid item align="center" xs={11} md={6}>

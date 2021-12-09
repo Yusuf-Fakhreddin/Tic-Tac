@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
 							Lizards are a widespread group of squamate reptiles, with over
 							6,000 species, ranging across all continents except Antarctica
 						</Typography> */}
-						<div className="flex">
+						{/* <div className="flex">
 							<Typography variant="body2" component="div">
 								<Rating
 									name="size-medium"
@@ -40,7 +40,7 @@ const ProductCard = ({ product }) => {
 							<Typography variant="body2" component="div">
 								{product.numReviews} {t("reviews")}{" "}
 							</Typography>
-						</div>
+						</div> */}
 						<Typography gutterBottom variant="h6" component="div">
 							{product.price} {t("egp")}
 						</Typography>

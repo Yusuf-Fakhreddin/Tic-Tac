@@ -1,7 +1,7 @@
 {
-	"name": "caribbean",
+	"name": "tic-tac",
 	"version": "1.0.0",
-	"description": "MERN E-Commerce",
+	"description": "Watches online shop",
 	"main": "server.js",
 	"type": "module",
 	"scripts": {

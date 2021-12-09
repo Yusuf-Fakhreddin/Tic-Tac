@@ -42,5 +42,8 @@
 	"doesn'tHaveAccount": "ليس لديك حساب مسبقاً ؟",
 	"deleteProduct": "حذف المنتج",
 	"editProduct": "تعديل المنتج",
-	"back": "رجوع"
+	"back": "رجوع",
+	"topProducts": "أعلى المنتجات تقييماً",
+	"noResults": " نعتذر لا يوجد نتائج للبحث عن",
+	"searchResults": " نتائج البحث عن"
 }

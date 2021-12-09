@@ -121,7 +121,7 @@ const PaymentMethodScreen = () => {
 								Continue
 							</Button>{" "}
 						</Grid>
-						<Grid item xs={10} md={6}>
+						<Grid item display={{ xs: "none", lg: "block" }} md={6}>
 							<PaymentAnimation />
 						</Grid>
 					</Grid>

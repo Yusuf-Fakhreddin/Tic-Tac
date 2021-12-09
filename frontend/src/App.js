@@ -40,6 +40,8 @@ import WeekStatistics from "./screens/Admin/WeekStatistics";
 import MonthStatistics from "./screens/Admin/MonthStatistics";
 import YearStatistics from "./screens/Admin/YearStatistics";
 import Dashboard from "./screens/Admin/Dashboard";
+import MyBottomNavigation from "./components/Layout/MyBottomNavigation";
+import SearchResults from "./screens/SearchResults";
 
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
@@ -83,6 +85,8 @@ function App() {
 					<Router>
 						<div>
 							<Header />
+							<MyBottomNavigation />
+
 							<Elements stripe={stripePromise}>
 								<main>
 									<Container>
@@ -102,7 +106,7 @@ function App() {
 											<Route path="/myorders" component={MyOrdersTable} />
 											<Route
 												path="/search/:keyword?/:pageNumber?"
-												component={HomeScreen}
+												component={SearchResults}
 											/>
 											<Route
 												path="/createproduct"

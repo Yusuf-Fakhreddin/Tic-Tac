@@ -42,5 +42,8 @@
 	"doesn'tHaveAccount": "Does not have an account ?",
 	"deleteProduct": "Delete Product",
 	"editProduct": "Edit Product",
-	"back": "Back"
+	"back": "Back",
+	"topProducts": "Top Rated",
+	"noResults": "Sorry no results for ",
+	"searchResults": "Search Results for "
 }

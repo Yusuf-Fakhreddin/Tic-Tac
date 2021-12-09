@@ -95,8 +95,12 @@ const Header = () => {
 							<MenuIcon />
 						</IconButton>
 						<NavLink to="/">
-							<Typography variant="h6" component="div" sx={{ mr: 2 }}>
-								Caribbean
+							<Typography
+								variant="h6"
+								component="div"
+								sx={{ width: "67px", mr: 3 }}
+							>
+								Tic, tac
 							</Typography>
 						</NavLink>
 						<SearchInput />

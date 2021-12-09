@@ -36,7 +36,7 @@ const HeaderMenu = ({ userInfo }) => {
 	};
 
 	return (
-		<Box className="flex" sx={{ display: { xs: "none", md: "flex" } }}>
+		<Box className="flex" sx={{ display: { xs: "none", lg: "flex" } }}>
 			{userInfo && (
 				<div>
 					<Button
