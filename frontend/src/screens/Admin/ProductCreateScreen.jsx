@@ -19,6 +19,7 @@ const ProductCreateScreen = () => {
 	const onSubmit = async (data) => {
 		console.log("hello World");
 		console.log(data);
+		console.log(imageUrl);
 		await createProduct({
 			product: { ...data, image: imageUrl },
 			token: userInfo.token,
@@ -39,15 +40,20 @@ const ProductCreateScreen = () => {
 				padding: "15px 0",
 				width: "600px",
 				maxWidth: "100%",
-				textAlign: "center",
+				textAlign: "left",
 				margin: "25px auto",
 			}}
 		>
-			<Typography variant="h4" component="h1" textAlign="left" mt={3}>
+			<Typography variant="h4" component="h1" mt={3}>
 				Create Product{" "}
 			</Typography>
 			<Box marginY={3}>
-				<ProductForm onSubmit={onSubmit} userInfo={userInfo} />
+				<ProductForm
+					onSubmit={onSubmit}
+					userInfo={userInfo}
+					isUploadLoading={isUploadLoading}
+					uploadImage={uploadImage}
+				/>
 			</Box>
 			{createProductLoading && <CircularProgress />}
 		</Box>

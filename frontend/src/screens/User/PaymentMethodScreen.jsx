@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import { savePaymentMethod } from "../../actions/cartActions";
 import CheckoutSteps from "../../components/Order/CheckoutSteps";
 import PaymentAnimation from "../../components/Animations/PaymentAnimation";
+import ReactHookFormRadio from "../../components/Form/ReactHookFormRadio";
 
 const PaymentMethodScreen = () => {
 	const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const PaymentMethodScreen = () => {
 		resolver: yupResolver(validationSchema),
 		defaultValues: {
 			// address: shippingAddress.address ? shippingAddress.address : "",
-			paymentMethod: paymentMethod ? paymentMethod : "card",
+			paymentMethod: paymentMethod ? paymentMethod : "Credit/Debit Card",
 		},
 	});
 	let values = getValues();
@@ -82,36 +83,15 @@ const PaymentMethodScreen = () => {
 						spacing={2}
 					>
 						<Grid item xs={10} md={6}>
-							<Controller
-								control={control}
-								name="paymentMethod"
-								as={
-									<FormControl
-										// sx={{ m: 3 }}
-										component="fieldset"
-										error={errors.paymentMethod ? true : false}
-										variant="standard"
-									>
-										<FormLabel component="legend">Select a Method</FormLabel>
-										<RadioGroup
-											defaultValue={paymentMethod ? paymentMethod : "card"}
-										>
-											<FormControlLabel
-												value="Credit/Debit Card"
-												control={<Radio />}
-												label="Credit/Debit Card"
-											/>
-											<FormControlLabel
-												value="Cash On Delivery"
-												control={<Radio />}
-												label="Cash On Delivery"
-											/>
-										</RadioGroup>
-										<FormHelperText>
-											{errors.paymentMethod ? errors.paymentMethod.message : ""}
-										</FormHelperText>
-									</FormControl>
+							<ReactHookFormRadio
+								initialValue={
+									paymentMethod ? paymentMethod : "Credit/Debit Card"
 								}
+								error={errors.paymentMethod}
+								name="paymentMethod"
+								control={control}
+								radioLabel="Select a method"
+								options={["Credit/Debit Card", "Cash On Delivery"]}
 							/>
 							<Button
 								variant="contained"

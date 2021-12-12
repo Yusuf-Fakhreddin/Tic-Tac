@@ -1,23 +1,18 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import {
-	Button,
-	Grid,
-	LinearProgress,
-	MenuItem,
-	TextField,
-} from "@mui/material";
+import { Button, Grid, LinearProgress, TextField } from "@mui/material";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ReactHookFormSelect from "../Form/ReactHookFormSelect";
-import { useUploadProductImage } from "../../Queries/UploadQueries";
 import ImageUpload from "./ImageUpload";
+import ReactHookFormRadio from "../Form/ReactHookFormRadio";
 
 const ProductForm = ({
 	onSubmit,
 	userInfo,
 	initialValues,
 	alreadyExistedImage,
+	uploadImage,
+	isUploadLoading,
 }) => {
 	const validationSchema = Yup.object({
 		name: Yup.string().required("Required"),
@@ -30,20 +25,21 @@ const ProductForm = ({
 		// description: Yup.string().required("Required"),
 	});
 
-	const { register, handleSubmit, errors, setValue, control } = useForm({
+	const { register, handleSubmit, errors, control } = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(validationSchema),
-		defaultValues: {
-			name: initialValues.name,
-			category: initialValues.category,
-			brand: initialValues.brand,
-			price: initialValues.price,
-			description: initialValues.description,
-			countInStock: initialValues.countInStock,
-		},
+		defaultValues: initialValues
+			? {
+					name: initialValues.name,
+					category: initialValues.category,
+					brand: initialValues.brand,
+					price: initialValues.price,
+					description: initialValues.description,
+					countInStock: initialValues.countInStock,
+			  }
+			: { category: "Men" },
 	});
 	console.log(initialValues);
-	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
 
 	return (
 		<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -66,7 +62,7 @@ const ProductForm = ({
 						fullWidth
 						inputRef={register}
 						error={errors.brand ? true : false}
-						label="Brand"
+						label="Brand*"
 						name="brand"
 						id="brand"
 						helperText={errors.brand ? errors.brand.message : null}
@@ -74,15 +70,14 @@ const ProductForm = ({
 					/>
 				</Grid>
 				<Grid item xs={10} md={10}>
-					<ReactHookFormSelect
+					<ReactHookFormRadio
+						initialValue={initialValues ? initialValues.category : "Men"}
+						Horizontal={true}
+						error={errors.category}
 						name="category"
-						label="Category"
 						control={control}
-						variant="filled"
-					>
-						<MenuItem value="Men">Men</MenuItem>
-						<MenuItem value="Women">Women</MenuItem>
-					</ReactHookFormSelect>
+						options={["Men", "Women"]}
+					/>
 				</Grid>
 
 				<Grid item xs={10} md={10}>
@@ -95,7 +90,6 @@ const ProductForm = ({
 						name="price"
 						id="price"
 						type="numeric"
-						// onWheel={(e) => e.target.blur()}
 						helperText={errors.price ? errors.price.message : null}
 						variant="filled"
 					/>
@@ -110,7 +104,6 @@ const ProductForm = ({
 						name="countInStock"
 						id="countInStock"
 						type="numeric"
-						// onWheel={(e) => e.target.blur()}
 						helperText={
 							errors.countInStock ? errors.countInStock.message : null
 						}

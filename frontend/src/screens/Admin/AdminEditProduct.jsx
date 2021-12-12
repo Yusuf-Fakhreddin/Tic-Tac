@@ -88,6 +88,8 @@ const AdminEditProduct = () => {
 						onSubmit={onSubmit}
 						initialValues={product}
 						userInfo={userInfo}
+						uploadImage={uploadImage}
+						isUploadLoading={isUploadLoading}
 					/>
 				</Box>
 			)}
