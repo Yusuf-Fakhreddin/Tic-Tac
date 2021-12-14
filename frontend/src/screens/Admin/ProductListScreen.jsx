@@ -29,6 +29,7 @@ import {
 import TablePaginationActions from "../../components/TablePaginationActions";
 import ProductImageBox from "../../components/Product/ProductImageBox";
 import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 
 const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -44,8 +45,7 @@ const ProductListScreen = () => {
 		if (!userInfo || !userInfo.isAdmin) {
 			history.push("/");
 		}
-		if (data) console.log(data);
-	}, [history, userInfo, data]);
+	}, [history, userInfo]);
 
 	const DeleteProductHandler = async (id) => {
 		console.log(id);
@@ -149,13 +149,18 @@ const ProductListScreen = () => {
 													</NavLink>
 												</TableCell>
 												<TableCell align="center">
-													<Button
+													{/* <Button
 														onClick={() => DeleteProductHandler(row._id)}
 														variant="contained"
 														color="error"
 													>
 														<DeleteIcon />
-													</Button>
+													</Button> */}
+													<ConfirmationDialog
+														buttonLabel={<DeleteIcon />}
+														action={DeleteProductHandler}
+														id={row._id}
+													/>
 												</TableCell>
 											</TableRow>
 										))
@@ -169,7 +174,7 @@ const ProductListScreen = () => {
 											page={data.page - 1}
 											rowsPerPage={10}
 											labelDisplayedRows={({ from, to, count }) => {
-												return `Total Number of Users = ${count}`;
+												return `Total Number of Products = ${count}`;
 											}}
 											labelRowsPerPage=""
 											rowsPerPageOptions={[]}

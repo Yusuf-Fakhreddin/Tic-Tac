@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import CenteredCircularProgress from "../components/CenteredCircularProgress";
-import { useListOfProducts } from "../Queries/ProductsQueries";
+import { useSearchProducts } from "../Queries/ProductsQueries";
 import { Grid, Pagination, PaginationItem, Typography } from "@mui/material";
 import ProductCard from "../components/Product/ProductCard";
 import { useTranslation } from "react-i18next";
@@ -10,7 +10,7 @@ const SearchResults = () => {
 	const { t } = useTranslation();
 
 	const { keyword, pageNumber } = useParams();
-	const [data, isLoading, fetchPrdoucts, isFetching] = useListOfProducts(
+	const [data, isLoading, fetchPrdoucts, isFetching] = useSearchProducts(
 		keyword,
 		pageNumber
 	);

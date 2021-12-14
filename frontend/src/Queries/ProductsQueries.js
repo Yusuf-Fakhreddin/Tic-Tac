@@ -35,6 +35,24 @@ export const useListOfProducts = (keyword = "", pageNumber = 1) => {
 		["listProducts", pageNumber],
 		() => getListOfProducts(keyword, pageNumber)
 	);
+	return [data, isLoading];
+};
+
+const searchProducts = async (keyword = "", pageNumber = 1) => {
+	console.log(keyword, pageNumber);
+	const { data } = await http.get(
+		`http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+	);
+	return data;
+};
+
+export const useSearchProducts = (keyword = "", pageNumber = 1) => {
+	console.log(keyword, pageNumber);
+
+	const { data, error, isLoading, isError, refetch, isFetching } = useQuery(
+		["searchProducts", pageNumber],
+		() => searchProducts(keyword, pageNumber)
+	);
 	return [data, isLoading, refetch, isFetching];
 };
 

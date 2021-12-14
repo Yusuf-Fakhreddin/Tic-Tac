@@ -25,6 +25,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import TablePaginationActions from "../../components/TablePaginationActions";
 import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
 import CenteredCircularProgress from "../../components/CenteredCircularProgress";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 const UsersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -111,13 +112,18 @@ const UsersListScreen = () => {
 													</NavLink>
 												</TableCell>
 												<TableCell align="center">
-													<Button
+													{/* <Button
 														onClick={() => DeleteUserHandler(row._id)}
 														variant="contained"
 														color="error"
 													>
 														<DeleteIcon />
-													</Button>
+													</Button> */}
+													<ConfirmationDialog
+														buttonLabel={<DeleteIcon />}
+														action={DeleteUserHandler}
+														id={row._id}
+													/>
 												</TableCell>
 											</TableRow>
 										))

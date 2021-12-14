@@ -56,7 +56,7 @@ const OrdersListScreen = () => {
 				<AdminNavigationBox />
 			</Grid>
 			<Grid item md={10}>
-				{isLoadingOrders || !data.orders ? (
+				{isLoadingOrders ? (
 					<div className="flex">
 						<CircularProgress
 							size="3.2em"
@@ -75,7 +75,7 @@ const OrdersListScreen = () => {
 							}}
 						>
 							<Typography variant="h3" sx={{ display: "inline" }}>
-								All Products
+								All Orders
 							</Typography>
 
 							<NavLink to="/createproduct">
@@ -96,67 +96,71 @@ const OrdersListScreen = () => {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{React.Children.toArray(
-										data.orders.map((row) => (
-											<TableRow
-												hover
-												sx={{
-													"&:last-child td, &:last-child th": { border: 0 },
-												}}
-											>
-												<TableCell component="th" scope="row">
-													{row._id}
-												</TableCell>
-												<TableCell align="center" component="th" scope="row">
-													{row.user && row.user.name}
-												</TableCell>
-												<TableCell align="center" component="th" scope="row">
-													{row.createdAt.substring(0, 10)}{" "}
-												</TableCell>
-												<TableCell align="center" component="th" scope="row">
-													{row.totalPrice}{" "}
-												</TableCell>
+									{data &&
+										data.orders &&
+										React.Children.toArray(
+											data.orders.map((row) => (
+												<TableRow
+													hover
+													sx={{
+														"&:last-child td, &:last-child th": { border: 0 },
+													}}
+												>
+													<TableCell component="th" scope="row">
+														{row._id}
+													</TableCell>
+													<TableCell align="center" component="th" scope="row">
+														{row.user && row.user.name}
+													</TableCell>
+													<TableCell align="center" component="th" scope="row">
+														{row.createdAt.substring(0, 10)}{" "}
+													</TableCell>
+													<TableCell align="center" component="th" scope="row">
+														{row.totalPrice}{" "}
+													</TableCell>
 
-												<TableCell align="center">
-													{row.isPaid ? (
-														row.paidAt.substring(0, 10)
-													) : (
-														<ClearTwoToneIcon color="error" />
-													)}
-												</TableCell>
-												<TableCell align="center">
-													{row.isDelivered ? (
-														row.deliveredAt.substring(0, 10)
-													) : (
-														<ClearTwoToneIcon color="error" />
-													)}
-												</TableCell>
-												<TableCell align="center">
-													<NavLink to={`/order/${row._id}`}>
-														<Button variant="contained">DETAILS</Button>
-													</NavLink>
-												</TableCell>
-											</TableRow>
-										))
-									)}
+													<TableCell align="center">
+														{row.isPaid ? (
+															row.paidAt.substring(0, 10)
+														) : (
+															<ClearTwoToneIcon color="error" />
+														)}
+													</TableCell>
+													<TableCell align="center">
+														{row.isDelivered ? (
+															row.deliveredAt.substring(0, 10)
+														) : (
+															<ClearTwoToneIcon color="error" />
+														)}
+													</TableCell>
+													<TableCell align="center">
+														<NavLink to={`/order/${row._id}`}>
+															<Button variant="contained">DETAILS</Button>
+														</NavLink>
+													</TableCell>
+												</TableRow>
+											))
+										)}
 								</TableBody>
-								<TableFooter>
-									<TableRow>
-										<TablePagination
-											colSpan={5}
-											count={data.count}
-											page={data.page - 1}
-											rowsPerPage={10}
-											labelDisplayedRows={({ from, to, count }) => {
-												return `Total Number of Orders = ${count}`;
-											}}
-											labelRowsPerPage=""
-											rowsPerPageOptions={[]}
-											onPageChange={handleChangePage}
-											ActionsComponent={TablePaginationActions}
-										/>
-									</TableRow>
-								</TableFooter>
+								{data && data.orders && (
+									<TableFooter>
+										<TableRow>
+											<TablePagination
+												colSpan={5}
+												count={data.count}
+												page={data.page - 1}
+												rowsPerPage={10}
+												labelDisplayedRows={({ from, to, count }) => {
+													return `Total Number of Orders = ${count}`;
+												}}
+												labelRowsPerPage=""
+												rowsPerPageOptions={[]}
+												onPageChange={handleChangePage}
+												ActionsComponent={TablePaginationActions}
+											/>
+										</TableRow>
+									</TableFooter>
+								)}
 							</Table>
 						</TableContainer>
 					</Box>

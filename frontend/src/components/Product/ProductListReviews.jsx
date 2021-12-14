@@ -1,18 +1,14 @@
-import {
-	Alert,
-	Divider,
-	List,
-	ListItem,
-	ListItemText,
-	Rating,
-	Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
+import { Alert, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import DisplayReviewBox from "./DisplayReviewBox";
 
 const ProductListReviews = ({ reviews }) => {
 	const { t } = useTranslation();
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	return (
 		<div>
@@ -22,43 +18,13 @@ const ProductListReviews = ({ reviews }) => {
 
 			{React.Children.toArray(
 				reviews.map((review) => (
-					<Box
-						sx={{
-							border: "1.5px solid #e0e0e0",
-							borderRadius: "5px",
-							marginTop: "15px",
-						}}
-					>
-						<List>
-							<ListItem
-								sx={{
-									marginY: 0,
-									paddingY: 0,
-								}}
-							>
-								<ListItemText>
-									<Typography variant="subtitle2">{review.name}</Typography>
-									<Typography variant="caption">
-										{review.createdAt.substring(0, 10)}
-									</Typography>
-								</ListItemText>
-							</ListItem>
-
-							<Divider />
-							<ListItem>
-								<ListItemText>
-									{" "}
-									<Rating
-										size="small"
-										precision={0.5}
-										readOnly
-										defaultValue={review.rating}
-									/>{" "}
-									<Typography variant="body1">{review.comment}</Typography>
-								</ListItemText>
-							</ListItem>
-						</List>
-					</Box>
+					<DisplayReviewBox
+						reviewer={review.name}
+						time={review.createdAt.substring(0, 10)}
+						rating={review.rating}
+						comment={review.comment}
+						manage={userInfo && userInfo._id === review.user ? true : false}
+					/>
 				))
 			)}
 		</div>
