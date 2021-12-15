@@ -12,8 +12,18 @@ import {
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmationDialog from "../ConfirmationDialog";
 
-const DisplayReviewBox = ({ reviewer, time, rating, comment, manage }) => {
+const DisplayReviewBox = ({
+	reviewer,
+	time,
+	rating,
+	comment,
+	manage,
+	DeleteReviewHandler,
+	reviewId,
+}) => {
+	console.log("reviewId ", reviewId);
 	return (
 		<Box
 			sx={{
@@ -58,7 +68,11 @@ const DisplayReviewBox = ({ reviewer, time, rating, comment, manage }) => {
 								variant="outlined"
 								aria-label="outlined button group"
 							>
-								<Button>Delete Confirmation Dialog</Button>
+								<ConfirmationDialog
+									buttonLabel={<DeleteIcon />}
+									action={DeleteReviewHandler}
+									id={reviewId}
+								/>
 								<Button>Edit Dialog</Button>
 							</ButtonGroup>
 						</ListItem>

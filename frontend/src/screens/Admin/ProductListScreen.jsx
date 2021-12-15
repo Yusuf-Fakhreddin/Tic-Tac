@@ -149,13 +149,6 @@ const ProductListScreen = () => {
 													</NavLink>
 												</TableCell>
 												<TableCell align="center">
-													{/* <Button
-														onClick={() => DeleteProductHandler(row._id)}
-														variant="contained"
-														color="error"
-													>
-														<DeleteIcon />
-													</Button> */}
 													<ConfirmationDialog
 														buttonLabel={<DeleteIcon />}
 														action={DeleteProductHandler}

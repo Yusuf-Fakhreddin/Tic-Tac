@@ -170,24 +170,3 @@ export const useUpdateProduct = () => {
 	);
 	return [mutateAsync, isLoading, isSuccess, isError, error];
 };
-
-const createProductReview = async ({ productId, review, token }) => {
-	const config = {
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		},
-	};
-	await http.post(`/api/products/${productId}/reviews`, review, config);
-};
-
-export const useCreateReview = () => {
-	const queryClient = useQueryClient();
-
-	const { mutateAsync, isLoading } = useMutation(createProductReview, {
-		onSuccess: (data, variables, context) => {
-			queryClient.invalidateQueries(["productDetails", variables.productId]);
-		},
-	});
-	return [mutateAsync, isLoading];
-};

@@ -26,18 +26,20 @@ const ProductScreen = ({ match }) => {
 	const [deleteProduct, isDeleteLoading, isDeleteSuccess] = useDeleteProduct();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	const [alreadyReviewed, setAlreadyReviewed] = useState(false);
 
 	const { t } = useTranslation();
 	const history = useHistory();
+	let alreadyReviewed = false;
+	if (product && product.reviews.some((e) => e.user === userInfo._id)) {
+		alreadyReviewed = true;
+	} else {
+		alreadyReviewed = false;
+	}
 
 	useEffect(() => {
 		if (!isSuccess) document.title = "Product Details";
 		else document.title = product.name;
-		if (product)
-			if (product.reviews.some((e) => e.user === userInfo._id)) {
-				setAlreadyReviewed(true);
-			} else setAlreadyReviewed(false);
+
 		if (isDeleteSuccess) history.goBack();
 	}, [isSuccess, isDeleteSuccess]);
 

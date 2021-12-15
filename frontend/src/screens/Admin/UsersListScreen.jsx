@@ -112,13 +112,6 @@ const UsersListScreen = () => {
 													</NavLink>
 												</TableCell>
 												<TableCell align="center">
-													{/* <Button
-														onClick={() => DeleteUserHandler(row._id)}
-														variant="contained"
-														color="error"
-													>
-														<DeleteIcon />
-													</Button> */}
 													<ConfirmationDialog
 														buttonLabel={<DeleteIcon />}
 														action={DeleteUserHandler}
