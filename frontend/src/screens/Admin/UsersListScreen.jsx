@@ -25,7 +25,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import TablePaginationActions from "../../components/TablePaginationActions";
 import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
 import CenteredCircularProgress from "../../components/CenteredCircularProgress";
-import ConfirmationDialog from "../../components/ConfirmationDialog";
+import ConfirmationDialog from "../../components/Dialogs/ConfirmationDialog";
 const UsersListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;

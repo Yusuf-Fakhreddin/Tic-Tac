@@ -12,18 +12,33 @@ import {
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ConfirmationDialog from "../ConfirmationDialog";
+import ConfirmationDialog from "../Dialogs/ConfirmationDialog";
+import FormDialog from "../Dialogs/FormDialog";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDeleteReview, useUpdateReview } from "../../Queries/ReviewsQueries";
 
-const DisplayReviewBox = ({
-	reviewer,
-	time,
-	rating,
-	comment,
-	manage,
-	DeleteReviewHandler,
-	reviewId,
-}) => {
-	console.log("reviewId ", reviewId);
+const DisplayReviewBox = ({ review, manage }) => {
+	const { id } = useParams();
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
+	const [deleteReview, isDeleteLoading] = useDeleteReview();
+	const [updateReview, isUpdateLoading] = useUpdateReview();
+
+	const DeleteReviewHandler = async (reviewId) => {
+		await deleteReview({ productId: id, reviewId, token: userInfo.token });
+	};
+	const UpdateReviewHandler = async (reviewId, review) => {
+		console.log(id, reviewId);
+		await updateReview({
+			productId: id,
+			reviewId,
+			review,
+			token: userInfo.token,
+		});
+	};
+
 	return (
 		<Box
 			sx={{
@@ -40,8 +55,10 @@ const DisplayReviewBox = ({
 					}}
 				>
 					<ListItemText>
-						<Typography variant="subtitle2">{reviewer}</Typography>
-						<Typography variant="caption">{time}</Typography>
+						<Typography variant="subtitle2">{review.name}</Typography>
+						<Typography variant="caption">
+							{review.updatedAt.substring(0, 10)}
+						</Typography>
 					</ListItemText>
 				</ListItem>
 
@@ -53,9 +70,9 @@ const DisplayReviewBox = ({
 							size="small"
 							precision={0.5}
 							readOnly
-							defaultValue={rating}
+							value={review.rating}
 						/>{" "}
-						<Typography variant="body1">{comment}</Typography>
+						<Typography variant="body1">{review.comment}</Typography>
 					</ListItemText>
 				</ListItem>
 				{/* Put Section List Item for buttons delete and edit if admin or review owner */}
@@ -71,9 +88,17 @@ const DisplayReviewBox = ({
 								<ConfirmationDialog
 									buttonLabel={<DeleteIcon />}
 									action={DeleteReviewHandler}
-									id={reviewId}
+									id={review._id}
 								/>
-								<Button>Edit Dialog</Button>
+								<FormDialog
+									buttonLabel={<EditIcon />}
+									action={UpdateReviewHandler}
+									id={review._id}
+									initialValues={{
+										comment: review.comment,
+										rating: review.rating,
+									}}
+								/>
 							</ButtonGroup>
 						</ListItem>
 					</>

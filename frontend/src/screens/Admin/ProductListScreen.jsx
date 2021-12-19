@@ -29,7 +29,7 @@ import {
 import TablePaginationActions from "../../components/TablePaginationActions";
 import ProductImageBox from "../../components/Product/ProductImageBox";
 import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
-import ConfirmationDialog from "../../components/ConfirmationDialog";
+import ConfirmationDialog from "../../components/Dialogs/ConfirmationDialog";
 
 const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
