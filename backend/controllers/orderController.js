@@ -52,6 +52,25 @@ const getOrderById = asyncHandler(async (req, res) => {
 	}
 });
 
+// @desc    Update order to shipped
+// @route   GET /api/orders/:id/ship
+// @access  Private/Admin
+const updateOrderToShipped = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+
+	if (order) {
+		order.isShipped = true;
+		order.shippedAt = Date.now();
+
+		const updatedOrder = await order.save();
+
+		res.json(updatedOrder);
+	} else {
+		res.status(404);
+		throw new Error("Order not found");
+	}
+});
+
 // @desc    Update order to paid
 // @route   GET /api/orders/:id/pay
 // @access  Private
@@ -120,11 +139,41 @@ const getOrders = asyncHandler(async (req, res) => {
 	res.json({ orders, count, page, pages: Math.ceil(count / pageSize) });
 });
 
+// @desc    Delete an order
+// @route   DELETE  /api/orders/:id/
+// @access  Private/admin
+const deleteOrder = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+	// delete order if user is admin || user owns the order and the order has not been shipped yet
+	if (order) {
+		if (!req.user.isAdmin && !order.user === req.user._id) {
+			res.status(401);
+			throw new Error("Not authorized");
+		} else if (req.user.isAdmin) {
+			await order.remove();
+			res.json({ message: "Order removed" });
+		} else if (order.user === req.user._id) {
+			if (!order.isShipped) {
+				await order.remove();
+				res.json({ message: "Order removed" });
+			} else {
+				res.status(401);
+				throw new Error("Order has been already shipped");
+			}
+		}
+	} else {
+		res.status(404);
+		throw new Error("Order not found");
+	}
+});
+
 export {
 	addOrderItems,
 	getOrderById,
 	updateOrderToPaid,
 	updateOrderToDelivered,
+	updateOrderToShipped,
 	getMyOrders,
 	getOrders,
+	deleteOrder,
 };
