@@ -11,8 +11,8 @@ const ProductImageBox = ({ productImage, dragProps, ...props }) => {
 				sx={{
 					// maxWidth: "100%",
 					// maxHegiht: "100%",
-					width: "100%",
-					height: "100%",
+					width: "50%",
+					// height: "70%",
 					// height: 233,
 					// width: 350,
 					// maxHeight: { xs: 233, md: 167 },

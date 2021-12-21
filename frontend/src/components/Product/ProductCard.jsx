@@ -11,11 +11,12 @@ const ProductCard = ({ product }) => {
 
 	return (
 		<NavLink to={`/product/${product._id}`}>
-			<Card variant="outlined" sx={{ maxWidth: 345 }}>
-				<CardActionArea>
+			<Card variant="outlined">
+				<CardActionArea sx={{ width: 345, height: 600 }}>
 					<CardMedia
 						component="img"
-						height="250"
+						height="450"
+						width="350"
 						image={product.image}
 						alt={product.name}
 						variant="top"

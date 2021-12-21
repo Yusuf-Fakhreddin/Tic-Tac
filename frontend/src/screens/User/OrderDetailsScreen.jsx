@@ -25,8 +25,8 @@ const OrderDetailsScreen = () => {
 	useEffect(() => {
 		document.title = "Order";
 		if (!userInfo) history.push(`/login?redirect=orderdetails/${id}`);
-		else if (orderDetails && userInfo._id !== orderDetails.user)
-			history.push(`/`);
+		// else if (orderDetails && userInfo._id != orderDetails.user)
+		// 	history.push(`/`);
 	}, [userInfo, history, id, orderDetails]);
 
 	const [payOrder, isPayOrderLoading] = usePayOrder();

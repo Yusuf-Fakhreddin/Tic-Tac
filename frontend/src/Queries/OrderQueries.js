@@ -132,3 +132,45 @@ export const usePayOrder = () => {
 	});
 	return [mutateAsync, isLoading];
 };
+
+const shipOrder = async ({ orderId, token }) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	await http.put(`/api/orders/${orderId}`, {}, config);
+};
+
+export const useShipOrder = () => {
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading } = useMutation(shipOrder, {
+		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries(["orderDetails", variables.orderId]);
+		},
+	});
+	return [mutateAsync, isLoading];
+};
+
+const deleteOrder = async ({ orderId, token }) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	await http.put(`/api/orders/${orderId}`, {}, config);
+};
+
+export const useDeleteOrder = () => {
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading } = useMutation(deleteOrder, {
+		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries(["orderDetails", variables.orderId]);
+		},
+	});
+	return [mutateAsync, isLoading];
+};

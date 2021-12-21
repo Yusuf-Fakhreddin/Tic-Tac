@@ -47,9 +47,6 @@ const PlaceOrderSummary = ({ cart, token }) => {
 				orderItems: cartItems,
 				shippingAddress: shippingAddress,
 				paymentMethod: paymentMethod,
-				itemsPrice: itemsPrice,
-				shippingPrice: shippingPrice,
-				totalPrice: totalPrice,
 			},
 			token: token,
 		});

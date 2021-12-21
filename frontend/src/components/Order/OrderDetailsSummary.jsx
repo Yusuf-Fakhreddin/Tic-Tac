@@ -19,28 +19,11 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 	paymentMethod = order.paymentMethod;
 	cartItems = order.orderItems;
 
-	const addDecimals = (num) => {
-		return (Math.round(num * 100) / 100).toFixed(2);
-	};
-
-	let itemsPrice = addDecimals(
-		cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-	);
-	let shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 20);
-	let totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);
-
 	const [deliverOrder, deliverOrderLoading] = useDeliverOrder();
 	const [payOrder, isPayOrderLoading] = usePayOrder();
 
 	const deliverOrderHandler = async () => {
-		console.log(
-			cartItems,
-			shippingAddress,
-			paymentMethod,
-			itemsPrice,
-			shippingPrice,
-			totalPrice
-		);
+		console.log(cartItems, shippingAddress, paymentMethod);
 		if (paymentMethod === "Cash On Delivery") {
 			await payOrder({ orderId: order._id, token: userInfo.token });
 		}
@@ -71,7 +54,7 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 					<ListItemText>
 						{t("itemsCost")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + itemsPrice} {t("egp")}
+							{" " + order.itemsPrice} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
@@ -80,7 +63,7 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 					<ListItemText>
 						{t("shippingCost")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + shippingPrice} {t("egp")}
+							{" " + order.shippingPrice} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>
@@ -89,7 +72,7 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 					<ListItemText>
 						{t("totalCost")}:
 						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + totalPrice} {t("egp")}
+							{" " + order.totalPrice} {t("egp")}
 						</Typography>
 					</ListItemText>
 				</ListItem>

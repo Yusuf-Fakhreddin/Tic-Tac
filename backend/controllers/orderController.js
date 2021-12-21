@@ -1,35 +1,58 @@
 import asyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
+import Product from "../models/productModel.js";
+import User from "../models/userModel.js";
+import chalk from "chalk";
+
+const addDecimals = (num) => {
+	return (Math.round(num * 100) / 100).toFixed(2);
+};
 
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
-	const {
-		orderItems,
-		shippingAddress,
-		paymentMethod,
-		itemsPrice,
-		shippingPrice,
-		totalPrice,
-	} = req.body;
+	const { orderItems, shippingAddress, paymentMethod } = req.body;
 
+	console.log(chalk.yellow(orderItems));
 	if (orderItems && orderItems.length === 0) {
 		res.status(400);
 		throw new Error("No order items");
-		return;
 	} else {
+		let verifiedOrderItems = [];
+		let itemsPrice = 0;
+		for (let i = 0; i < orderItems.length; i++) {
+			let id = orderItems[0].product._id;
+			const product = await Product.findById(id);
+			itemsPrice += orderItems[i].qty * product.price;
+			verifiedOrderItems.push({
+				qty: orderItems[i].qty,
+				product: {
+					name: product.name,
+					image: product.image,
+					price: product.price,
+					productId: product._id,
+				},
+			});
+		}
+		let shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 20);
+		let totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);
+
 		const order = new Order({
-			orderItems,
+			orderItems: verifiedOrderItems,
 			user: req.user._id,
 			shippingAddress,
 			paymentMethod,
-			itemsPrice,
 			shippingPrice,
 			totalPrice,
+			itemsPrice,
 		});
-
 		const createdOrder = await order.save();
+
+		// empty user cart
+		const user = await User.findById(req.user._id);
+		user.cart = [];
+		await user.save();
 
 		res.status(201).json(createdOrder);
 	}
