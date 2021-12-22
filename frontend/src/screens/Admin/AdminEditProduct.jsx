@@ -57,7 +57,7 @@ const AdminEditProduct = () => {
 				document.title = product.name;
 			}
 		}
-	}, [userInfo, history, id, adminUpdateSuccess, productDetailsSuccess]);
+	}, [userInfo, history, id, adminUpdateSuccess]);
 
 	return (
 		<Box

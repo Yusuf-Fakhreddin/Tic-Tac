@@ -1,7 +1,5 @@
 import React from "react";
 import {
-	Button,
-	ButtonGroup,
 	Divider,
 	List,
 	ListItem,
@@ -17,6 +15,7 @@ import FormDialog from "../Dialogs/FormDialog";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDeleteReview, useUpdateReview } from "../../Queries/ReviewsQueries";
+import OptionsMenu from "../OptionsMenu";
 
 const DisplayReviewBox = ({ review, manage }) => {
 	const { id } = useParams();
@@ -59,7 +58,28 @@ const DisplayReviewBox = ({ review, manage }) => {
 						<Typography variant="caption">
 							{review.updatedAt.substring(0, 10)}
 						</Typography>
-					</ListItemText>
+					</ListItemText>{" "}
+					<Box sx={{ flexGrow: 1 }} />
+					{manage && (
+						<OptionsMenu
+							options={[
+								<ConfirmationDialog
+									buttonLabel={<DeleteIcon />}
+									action={DeleteReviewHandler}
+									id={review._id}
+								/>,
+								<FormDialog
+									buttonLabel={<EditIcon />}
+									action={UpdateReviewHandler}
+									id={review._id}
+									initialValues={{
+										comment: review.comment,
+										rating: review.rating,
+									}}
+								/>,
+							]}
+						/>
+					)}
 				</ListItem>
 
 				<Divider />
@@ -75,34 +95,6 @@ const DisplayReviewBox = ({ review, manage }) => {
 						<Typography variant="body1">{review.comment}</Typography>
 					</ListItemText>
 				</ListItem>
-				{/* Put Section List Item for buttons delete and edit if admin or review owner */}
-				{manage && (
-					<>
-						{" "}
-						<Divider />
-						<ListItem>
-							<ButtonGroup
-								variant="outlined"
-								aria-label="outlined button group"
-							>
-								<ConfirmationDialog
-									buttonLabel={<DeleteIcon />}
-									action={DeleteReviewHandler}
-									id={review._id}
-								/>
-								<FormDialog
-									buttonLabel={<EditIcon />}
-									action={UpdateReviewHandler}
-									id={review._id}
-									initialValues={{
-										comment: review.comment,
-										rating: review.rating,
-									}}
-								/>
-							</ButtonGroup>
-						</ListItem>
-					</>
-				)}
 			</List>
 		</Box>
 	);

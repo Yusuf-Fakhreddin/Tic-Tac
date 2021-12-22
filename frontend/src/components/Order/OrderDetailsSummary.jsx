@@ -1,33 +1,39 @@
 import { Box } from "@mui/system";
+import { Button, Divider, List, ListItem } from "@mui/material";
 import {
-	Button,
-	CircularProgress,
-	Divider,
-	List,
-	ListItem,
-	ListItemText,
-	Typography,
-} from "@mui/material";
-import { useDeliverOrder, usePayOrder } from "../../Queries/OrderQueries";
-import { useTranslation } from "react-i18next";
+	useDeliverOrder,
+	usePayOrder,
+	useShipOrder,
+	useDeleteOrder,
+} from "../../Queries/OrderQueries";
+import CenteredCircularProgress from "../CenteredCircularProgress";
+import PricesSummary from "./PricesSummary";
 
 const OrderDetailsSummary = ({ order, userInfo }) => {
-	const { t } = useTranslation();
-
-	let shippingAddress, paymentMethod, cartItems;
-	shippingAddress = order.shippingAddress;
-	paymentMethod = order.paymentMethod;
-	cartItems = order.orderItems;
+	let paymentMethod = order.paymentMethod;
 
 	const [deliverOrder, deliverOrderLoading] = useDeliverOrder();
 	const [payOrder, isPayOrderLoading] = usePayOrder();
+	const [shipOrder, isShipOrderLoading] = useShipOrder();
+	const [deleteOrder, isDeleteOrderLoading] = useDeleteOrder();
 
 	const deliverOrderHandler = async () => {
-		console.log(cartItems, shippingAddress, paymentMethod);
 		if (paymentMethod === "Cash On Delivery") {
 			await payOrder({ orderId: order._id, token: userInfo.token });
 		}
 		await deliverOrder({
+			orderId: order._id,
+			token: userInfo.token,
+		});
+	};
+	const shipOrderHandler = async () => {
+		await shipOrder({
+			orderId: order._id,
+			token: userInfo.token,
+		});
+	};
+	const cancelOrderHandler = async () => {
+		await deleteOrder({
 			orderId: order._id,
 			token: userInfo.token,
 		});
@@ -42,41 +48,13 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 			}}
 		>
 			<List>
-				<ListItem>
-					<ListItemText>
-						<Typography variant="h6" component="h3">
-							{t("orderSummary")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				<Divider />
-				<ListItem>
-					<ListItemText>
-						{t("itemsCost")}:
-						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + order.itemsPrice} {t("egp")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				<Divider />
-				<ListItem>
-					<ListItemText>
-						{t("shippingCost")}:
-						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + order.shippingPrice} {t("egp")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				<Divider />
-				<ListItem>
-					<ListItemText>
-						{t("totalCost")}:
-						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + order.totalPrice} {t("egp")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				{order && userInfo && userInfo.isAdmin && (
+				<PricesSummary
+					totalPrice={order.totalPrice}
+					itemsPrice={order.itemsPrice}
+					shippingPrice={order.shippingPrice}
+				/>
+
+				{order && !order.isShipped && (
 					<>
 						<Divider />
 						<ListItem>
@@ -84,15 +62,56 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 								fullWidth
 								variant="contained"
 								disableElevation
-								onClick={deliverOrderHandler}
-								disabled={order.isDelivered}
+								onClick={cancelOrderHandler}
 							>
-								{order.isDelivered ? "Delivered" : "Mark As Delivered"}
+								Cancel Order
 							</Button>
 						</ListItem>
 					</>
 				)}
-				{deliverOrderLoading && <CircularProgress />}
+
+				{order && userInfo && userInfo.isAdmin && !order.isShipped && (
+					<>
+						<Divider />
+						<ListItem>
+							<Button
+								fullWidth
+								variant="contained"
+								disableElevation
+								onClick={shipOrderHandler}
+								disabled={paymentMethod === "Credit/Debit Card" && !order.isPad}
+							>
+								{paymentMethod === "Credit/Debit Card" && !order.isPad
+									? "Not Paid"
+									: "Mark As Shipped"}
+							</Button>
+						</ListItem>
+					</>
+				)}
+				{order &&
+					userInfo &&
+					userInfo.isAdmin &&
+					order.isShipped &&
+					!order.isDelivered && (
+						<>
+							<Divider />
+							<ListItem>
+								<Button
+									fullWidth
+									variant="contained"
+									disableElevation
+									onClick={deliverOrderHandler}
+								>
+									Mark As Delivered
+								</Button>
+							</ListItem>
+						</>
+					)}
+
+				{(deliverOrderLoading ||
+					isDeleteOrderLoading ||
+					isPayOrderLoading ||
+					isShipOrderLoading) && <CenteredCircularProgress />}
 			</List>
 		</Box>
 	);

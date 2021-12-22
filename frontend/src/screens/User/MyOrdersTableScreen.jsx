@@ -37,6 +37,7 @@ const MyOrdersTable = () => {
 								<TableCell align="center">Date Ordered</TableCell>
 								<TableCell align="center">Total Price (EGP)</TableCell>
 								<TableCell align="center">Paid</TableCell>
+								<TableCell align="center">Shipped</TableCell>
 								<TableCell align="center">Delivered</TableCell>
 								<TableCell align="center"></TableCell>
 							</TableRow>
@@ -61,6 +62,13 @@ const MyOrdersTable = () => {
 											<TableCell align="center">
 												{row.isPaid ? (
 													row.paidAt.substring(0, 10)
+												) : (
+													<ClearTwoToneIcon color="error" />
+												)}
+											</TableCell>
+											<TableCell align="center">
+												{row.isShipped ? (
+													row.isShipped.substring(0, 10)
 												) : (
 													<ClearTwoToneIcon color="error" />
 												)}

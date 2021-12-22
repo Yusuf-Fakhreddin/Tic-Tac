@@ -46,5 +46,6 @@
 	"back": "رجوع",
 	"topProducts": "أعلى المنتجات تقييماً",
 	"noResults": " نعتذر لا يوجد نتائج للبحث عن",
-	"searchResults": " نتائج البحث عن"
+	"searchResults": " نتائج البحث عن",
+	"totalPrice": "السعر الكلي"
 }

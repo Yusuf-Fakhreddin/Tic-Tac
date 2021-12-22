@@ -140,7 +140,7 @@ const shipOrder = async ({ orderId, token }) => {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	await http.put(`/api/orders/${orderId}`, {}, config);
+	await http.put(`/api/orders/${orderId}/ship`, {}, config);
 };
 
 export const useShipOrder = () => {

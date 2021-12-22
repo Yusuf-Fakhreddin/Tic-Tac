@@ -1,16 +1,11 @@
 import { Box } from "@mui/system";
-import {
-	Button,
-	Divider,
-	List,
-	ListItem,
-	ListItemText,
-	Typography,
-} from "@mui/material";
+import { Button, Divider, List, ListItem } from "@mui/material";
 import { useCreateOrder } from "../../Queries/OrderQueries";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
+import PricesSummary from "./PricesSummary";
+import CenteredCircularProgress from "../CenteredCircularProgress";
 
 const PlaceOrderSummary = ({ cart, token }) => {
 	const { t } = useTranslation();
@@ -65,40 +60,11 @@ const PlaceOrderSummary = ({ cart, token }) => {
 			}}
 		>
 			<List>
-				<ListItem>
-					<ListItemText>
-						<Typography variant="h6" component="h3">
-							{t("orderSummary")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				<Divider />
-				<ListItem>
-					<ListItemText>
-						{t("itemsCost")}:
-						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + itemsPrice} {t("egp")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				<Divider />
-				<ListItem>
-					<ListItemText>
-						{t("shippingCost")}:
-						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + shippingPrice} {t("egp")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
-				<Divider />
-				<ListItem>
-					<ListItemText>
-						{t("totalCost")}:
-						<Typography variant="h6" component="h3" sx={{ display: "inline" }}>
-							{" " + totalPrice} {t("egp")}
-						</Typography>
-					</ListItemText>
-				</ListItem>
+				<PricesSummary
+					totalPrice={totalPrice}
+					itemsPrice={itemsPrice}
+					shippingPrice={shippingPrice}
+				/>
 				{cart && (
 					<>
 						<Divider />
@@ -115,6 +81,7 @@ const PlaceOrderSummary = ({ cart, token }) => {
 						</ListItem>
 					</>
 				)}
+				{createOrderLoading && <CenteredCircularProgress />}
 			</List>
 		</Box>
 	);

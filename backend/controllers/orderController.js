@@ -21,9 +21,18 @@ const addOrderItems = asyncHandler(async (req, res) => {
 	} else {
 		let verifiedOrderItems = [];
 		let itemsPrice = 0;
+
 		for (let i = 0; i < orderItems.length; i++) {
 			let id = orderItems[0].product._id;
 			const product = await Product.findById(id);
+			// if product is out of stock don't include it in the order
+			if (product.countInStock === 0) continue;
+			// if product stock less than order qty take what's on stock
+			else if (orderItems[i].qty > product.countInStock) {
+				orderItems[i].qty = product.countInStock;
+			}
+			product.countInStock -= orderItems[i].qty;
+			await product.save();
 			itemsPrice += orderItems[i].qty * product.price;
 			verifiedOrderItems.push({
 				qty: orderItems[i].qty,

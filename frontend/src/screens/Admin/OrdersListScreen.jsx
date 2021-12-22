@@ -91,6 +91,7 @@ const OrdersListScreen = () => {
 										<TableCell align="center">DATE</TableCell>
 										<TableCell align="center">TOTAL (EGP)</TableCell>
 										<TableCell align="center">PAID</TableCell>
+										<TableCell align="center">SHIPPED</TableCell>
 										<TableCell align="center">DELIVERED</TableCell>
 										<TableCell align="center"></TableCell>
 									</TableRow>
@@ -122,6 +123,13 @@ const OrdersListScreen = () => {
 													<TableCell align="center">
 														{row.isPaid ? (
 															row.paidAt.substring(0, 10)
+														) : (
+															<ClearTwoToneIcon color="error" />
+														)}
+													</TableCell>
+													<TableCell align="center">
+														{row.isShipped ? (
+															row.isShipped.substring(0, 10)
 														) : (
 															<ClearTwoToneIcon color="error" />
 														)}

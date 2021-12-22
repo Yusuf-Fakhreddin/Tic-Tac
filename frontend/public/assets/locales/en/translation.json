@@ -46,5 +46,6 @@
 	"back": "Back",
 	"topProducts": "Top Rated",
 	"noResults": "Sorry no results for ",
-	"searchResults": "Search Results for "
+	"searchResults": "Search Results for ",
+	"totalPrice": "Total Price"
 }
