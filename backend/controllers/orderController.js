@@ -38,7 +38,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 				qty: orderItems[i].qty,
 				product: {
 					name: product.name,
-					image: product.image,
+					images: product.images,
 					price: product.price,
 					productId: product._id,
 				},

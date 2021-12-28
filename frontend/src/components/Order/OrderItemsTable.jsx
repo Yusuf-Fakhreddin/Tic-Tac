@@ -8,7 +8,7 @@ import {
 	TableRow,
 } from "@mui/material";
 import React from "react";
-import ProductImageBox from "../Product/ProductImageBox";
+import ProductTableImage from "../Product/ProductTableImage";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -51,7 +51,7 @@ const OrderItemsTable = ({ orderItems }) => {
 									component="th"
 									scope="row"
 								>
-									<ProductImageBox productImage={row.product.image} />
+									<ProductTableImage productImage={row.product.images[0]} />
 								</TableCell>
 								<TableCell align="center" component="th" scope="row">
 									<NavLink to={`/product/${row.product._id}`}>

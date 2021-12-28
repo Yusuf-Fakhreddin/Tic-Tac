@@ -1,33 +1,36 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { CircularProgress, Grid, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useUploadProductImage } from "../../Queries/UploadQueries";
 import { useCreateProduct } from "../../Queries/ProductsQueries";
 import ProductForm from "../../components/Product/ProductForm";
+import { resetImages } from "../../actions/imageActions";
 
 const ProductCreateScreen = () => {
 	const history = useHistory();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
 	const [createProduct, createProductLoading, createProductSuccess] =
 		useCreateProduct();
 
+	const uploadImagesState = useSelector((state) => state.uploadImagesState);
+	const { images } = uploadImagesState;
+
 	const onSubmit = async (data) => {
-		console.log("hello World");
-		console.log(data);
-		console.log(imageUrl);
 		await createProduct({
-			product: { ...data, image: imageUrl },
+			product: { ...data, images: images },
 			token: userInfo.token,
 		});
 	};
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (createProductSuccess) history.push("/admin/products");
+		if (createProductSuccess) {
+			dispatch(resetImages());
+			history.push("/admin/products");
+		}
 		if (!userInfo || !userInfo.isAdmin) history.push("/");
 		document.title = "New Product";
 	}, [userInfo, history, createProductSuccess]);
@@ -48,12 +51,7 @@ const ProductCreateScreen = () => {
 				Create Product{" "}
 			</Typography>
 			<Box marginY={3}>
-				<ProductForm
-					onSubmit={onSubmit}
-					userInfo={userInfo}
-					isUploadLoading={isUploadLoading}
-					uploadImage={uploadImage}
-				/>
+				<ProductForm onSubmit={onSubmit} userInfo={userInfo} />
 			</Box>
 			{createProductLoading && <CircularProgress />}
 		</Box>

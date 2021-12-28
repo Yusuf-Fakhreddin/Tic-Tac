@@ -79,7 +79,7 @@ const updateReview = asyncHandler(async (req, res) => {
 				product.numReviews = product.reviews.length;
 
 				await product.save();
-				res.status(201).json({ message: "Review Updated" });
+				res.json({ message: "Review Updated" });
 			} else {
 				res.status(401);
 				throw new Error("Not authorized");

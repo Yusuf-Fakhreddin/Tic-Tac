@@ -9,7 +9,7 @@ const addCartItems = asyncHandler(async (req, res) => {
 	const { items } = req.body;
 	const user = await User.findById(req.user._id).populate(
 		"cart.product",
-		"id name image price countInStock"
+		"id name images price countInStock"
 	);
 	console.log(chalk.red(items));
 	if (user) {
@@ -42,7 +42,7 @@ const removeCartItem = asyncHandler(async (req, res) => {
 	// receives id in the url parameters
 	const user = await User.findById(req.user._id).populate(
 		"cart.product",
-		"id name image price countInStock"
+		"id name images price countInStock"
 	);
 	console.log(chalk.yellow(req.params.id));
 	if (user) {
@@ -73,7 +73,7 @@ const removeCartItem = asyncHandler(async (req, res) => {
 const getMyCart = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.user._id).populate(
 		"cart.product",
-		"id name image price countInStock"
+		"id name images price countInStock"
 	);
 	// console.log(chalk.green(user));
 	if (user) {

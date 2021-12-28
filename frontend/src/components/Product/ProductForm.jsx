@@ -1,19 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Button, Grid, LinearProgress, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ImageUpload from "./ImageUpload";
 import ReactHookFormRadio from "../Form/ReactHookFormRadio";
 
-const ProductForm = ({
-	onSubmit,
-	userInfo,
-	initialValues,
-	alreadyExistedImage,
-	uploadImage,
-	isUploadLoading,
-}) => {
+const ProductForm = ({ onSubmit, userInfo, initialValues }) => {
 	const validationSchema = Yup.object({
 		name: Yup.string().required("Required"),
 		brand: Yup.string().required("Required"),
@@ -122,12 +115,7 @@ const ProductForm = ({
 					/>
 				</Grid>
 				<Grid item xs={10} align="left" md={10}>
-					{isUploadLoading && <LinearProgress sx={{ marginBottom: "10px" }} />}
-					<ImageUpload
-						uploadImage={uploadImage}
-						token={userInfo.token}
-						alreadyExistedImage={initialValues && initialValues.image}
-					/>
+					<ImageUpload token={userInfo.token} />
 				</Grid>
 
 				<Grid item align="center" xs={10} md={10}>

@@ -3,15 +3,28 @@ import ImageGallery from "react-image-gallery";
 import { Box } from "@mui/material";
 
 const ProductImagesCarousel = ({ images }) => {
+	let newImages = images.map((image) => {
+		return {
+			original: image,
+			originalHeight: "100%",
+		};
+	});
 	return (
-		<Box sx={{ marginTop: "25px", width: "80%", marginX: " auto" }}>
+		<Box
+			sx={{
+				// marginTop: "25px",
+				marginX: "auto",
+			}}
+		>
 			<ImageGallery
-				items={images}
+				items={newImages}
 				// showThumbnails={false}
 				// showPlayButton={false}
-				// showBullets={true}
-				// showFullscreenButton={false}
+				showBullets={true}
+				showFullscreenButton={true}
 				// autoPlay={true}
+				lazyLoad={true}
+				wid
 			/>
 		</Box>
 	);

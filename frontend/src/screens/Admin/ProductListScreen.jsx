@@ -27,7 +27,7 @@ import {
 	useListOfProducts,
 } from "../../Queries/ProductsQueries";
 import TablePaginationActions from "../../components/TablePaginationActions";
-import ProductImageBox from "../../components/Product/ProductImageBox";
+import ProductTableImage from "../../components/Product/ProductTableImage";
 import AdminNavigationBox from "../../components/Admin/AdminNavigationBox";
 import ConfirmationDialog from "../../components/Dialogs/ConfirmationDialog";
 
@@ -121,7 +121,7 @@ const ProductListScreen = () => {
 													scope="row"
 												>
 													<Zoom>
-														<ProductImageBox productImage={row.image} />{" "}
+														<ProductTableImage productImage={row.images[0]} />{" "}
 													</Zoom>
 												</TableCell>
 												<TableCell component="th" scope="row">

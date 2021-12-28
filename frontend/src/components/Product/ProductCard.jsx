@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
 						component="img"
 						height="450"
 						width="350"
-						image={product.image}
+						image={product.images[0]}
 						alt={product.name}
 						variant="top"
 					/>

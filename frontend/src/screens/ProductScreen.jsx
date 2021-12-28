@@ -19,6 +19,7 @@ import ProductImageBox from "../components/Product/ProductImageBox";
 import AddToCartBox from "../components/Order/AddToCartBox";
 import ProductListReviews from "../components/Product/ProductListReviews";
 import CreateReviewBox from "../components/Product/CreateReviewBox";
+import ProductImagesCarousel from "../components/Product/ProductImagesCarousel";
 
 const ProductScreen = ({ match }) => {
 	const { id } = useParams();
@@ -47,7 +48,7 @@ const ProductScreen = ({ match }) => {
 		console.log(id);
 		await deleteProduct({ id: id, token: userInfo.token });
 	};
-
+	console.log(product);
 	if (isLoading) return <CenteredCircularProgress />;
 	else
 		return (
@@ -93,7 +94,8 @@ const ProductScreen = ({ match }) => {
 				>
 					<Grid item xs={10} md={6}>
 						{" "}
-						<ProductImageBox productImage={product.image} />
+						{/* <ProductImageBox productImage={product.image} /> */}
+						<ProductImagesCarousel images={product.images} />
 					</Grid>
 					<Grid item xs={10} md={3}>
 						<ProductInfo product={product} />

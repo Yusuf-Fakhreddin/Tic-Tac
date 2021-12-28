@@ -11,6 +11,7 @@ import {
 	userRegisterReducer,
 } from "./reducers/authReducers";
 import { cartReducer } from "./reducers/cartReducers";
+import { imagesReducer } from "./reducers/imageReducers";
 
 const reducer = combineReducers({
 	// part of state : its reducer
@@ -21,6 +22,7 @@ const reducer = combineReducers({
 	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
 	cartState: cartReducer,
+	uploadImagesState: imagesReducer,
 });
 
 // initializing the userinfo state from what's saved in local storage or nothing

@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 
-import {
-	Alert,
-	CircularProgress,
-	Grid,
-	Stack,
-	Typography,
-} from "@mui/material";
+import { Alert, CircularProgress, Stack, Typography } from "@mui/material";
 
 import { Box } from "@mui/system";
 
@@ -17,22 +11,21 @@ import {
 	useListProductDetailsById,
 	useUpdateProduct,
 } from "../../Queries/ProductsQueries";
-import { useUploadProductImage } from "../../Queries/UploadQueries";
 
 import CenteredCircularProgress from "../../components/CenteredCircularProgress";
 import ProductForm from "../../components/Product/ProductForm";
+import { resetImages, initialImages } from "../../actions/imageActions";
 
 const AdminEditProduct = () => {
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const { id } = useParams();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const [product, productDetailsLoading, productDetailsSuccess] =
 		useListProductDetailsById(id, userInfo.token);
-	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
 
 	console.log(product);
-
 	const [
 		AdminEditProduct,
 		adminUpdateLoading,
@@ -40,13 +33,23 @@ const AdminEditProduct = () => {
 		editIsError,
 		editError,
 	] = useUpdateProduct();
+
+	const uploadImagesState = useSelector((state) => state.uploadImagesState);
+	const { images } = uploadImagesState;
+
 	const onSubmit = async (data) => {
 		console.log(data);
+		console.log(images);
+
 		await AdminEditProduct({
 			id,
-			product: { ...data, image: imageUrl || (product && product.image) },
+			product: {
+				...data,
+				images: images,
+			},
 			token: userInfo.token,
 		});
+		dispatch(resetImages());
 	};
 
 	useEffect(() => {
@@ -55,9 +58,10 @@ const AdminEditProduct = () => {
 		} else if (product) {
 			if (product.name && product._id === id) {
 				document.title = product.name;
+				dispatch(initialImages(product.images));
 			}
 		}
-	}, [userInfo, history, id, adminUpdateSuccess]);
+	}, [userInfo, history, id, adminUpdateSuccess, productDetailsSuccess]);
 
 	return (
 		<Box
@@ -88,8 +92,6 @@ const AdminEditProduct = () => {
 						onSubmit={onSubmit}
 						initialValues={product}
 						userInfo={userInfo}
-						uploadImage={uploadImage}
-						isUploadLoading={isUploadLoading}
 					/>
 				</Box>
 			)}

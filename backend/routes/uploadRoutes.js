@@ -5,11 +5,11 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
 	destination(req, file, cb) {
-		cb(null, "uploads/");
+		cb(null, "images/");
 	},
 	filename(req, file, cb) {
 		// Temporary Solution for development but names should be change in deployment
-		cb(null, `${file.originalname}${path.extname(file.originalname)}`);
+		cb(null, `${file.originalname}`);
 	},
 });
 

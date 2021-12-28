@@ -1,14 +1,15 @@
+import React from "react";
 import { Box } from "@mui/system";
 
-const ProductImageBox = ({ productImage, dragProps, ...props }) => {
+const ProductTableImage = ({ productImage }) => {
 	return (
 		<Box
-			{...props}
 			component="img"
 			sx={{
 				// maxWidth: "100%",
 				// maxHegiht: "100%",
-				width: "100%",
+				width: "50%",
+				margin: "auto",
 				// height: "70%",
 				// height: 233,
 				// width: 350,
@@ -17,8 +18,8 @@ const ProductImageBox = ({ productImage, dragProps, ...props }) => {
 			}}
 			alt="Product"
 			src={productImage}
-		></Box>
+		/>
 	);
 };
 
-export default ProductImageBox;
+export default ProductTableImage;
