@@ -114,7 +114,7 @@ const ProductForm = ({ onSubmit, userInfo, initialValues }) => {
 						variant="filled"
 					/>
 				</Grid>
-				<Grid item xs={10} align="left" md={10}>
+				<Grid item xs={10} align="left" md={12}>
 					<ImageUpload token={userInfo.token} />
 				</Grid>
 

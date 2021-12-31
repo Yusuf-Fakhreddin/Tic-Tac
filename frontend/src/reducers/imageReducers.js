@@ -32,7 +32,9 @@ export const imagesReducer = (state = { images: [] }, action) => {
 			return {
 				...state,
 				images:
-					action.payload > 0 ? state.images.splice(action.payload, 1) : [],
+					action.payload > 0
+						? state.images.filter((image, index) => index !== action.payload)
+						: [],
 			};
 		case UPDATE_TO_IMAGES:
 			return {

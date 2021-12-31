@@ -142,7 +142,13 @@ const createNewProduct = async ({ product, token }) => {
 };
 
 export const useCreateProduct = () => {
-	const { mutateAsync, isLoading, isSuccess } = useMutation(createNewProduct);
+	const queryClient = useQueryClient();
+
+	const { mutateAsync, isLoading, isSuccess } = useMutation(createNewProduct, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["listProducts", 1]);
+		},
+	});
 	return [mutateAsync, isLoading, isSuccess];
 };
 

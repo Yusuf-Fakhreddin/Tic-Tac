@@ -72,8 +72,8 @@ const ImageUpload = () => {
 					isDragging,
 					dragProps,
 				}) => (
-					<Grid container>
-						<Grid item xs={10} md={5}>
+					<Grid container rowSpacing={2} spacing={2}>
+						<Grid align="center" item xs={10} md={5}>
 							<label htmlFor="icon-button-file">
 								<Button
 									startIcon={<PhotoCamera />}
@@ -86,27 +86,26 @@ const ImageUpload = () => {
 							</label>
 						</Grid>
 
-						<Grid item xs={10} md={6}>
+						<Grid item align="center" xs={10} md={6}>
 							<DragAndDrop onClick={onImageUpload} {...dragProps} />
 						</Grid>
 
-						<Grid item xs={10} md={6}>
-							{images.length > 0 &&
-								React.Children.toArray(
-									images.map((image, index) => (
-										<>
-											<ProductImageBox productImage={image} />
-											<Button
-												variant="contained"
-												color="error"
-												onClick={() => handleImageDelete(index)}
-											>
-												Delete
-											</Button>
-										</>
-									))
-								)}
-						</Grid>
+						{images.length > 0 &&
+							React.Children.toArray(
+								images.map((image, index) => (
+									<Grid align="center" item xs={10} md={6}>
+										<ProductImageBox productImage={image} />
+										<Button
+											variant="contained"
+											color="error"
+											sx={{ marginTop: "10px" }}
+											onClick={() => handleImageDelete(index)}
+										>
+											Delete
+										</Button>
+									</Grid>
+								))
+							)}
 					</Grid>
 				)}
 			</ImageUploading>

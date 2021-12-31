@@ -60,7 +60,6 @@ const products = [
 			"/images/EFR-554L-7AV_2.jpg",
 			"/images/EFR-554L-7AV_3.jpg",
 			"/images/EFR-554L-7AV_4.jpg",
-			"/images/EFR-554L-7AV_5.jpg",
 		],
 		description:
 			"Manufacturer Number: 2724443725129.0\nWatch Shape: Round\nBand Material: Leather\nDisplay Type: Analog\nTargeted Group: Men\nType: Dress Watch\nModel Number: 2724443725129.0",
