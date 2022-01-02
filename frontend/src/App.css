@@ -43,3 +43,22 @@ h6 {
 p {
 	color: #223862;
 }
+
+/* React Image Gallery */
+.image-gallery {
+	width: 100%;
+	height: auto;
+}
+
+.image-gallery-slide img {
+	width: 100%;
+	height: 450px;
+	max-height: 80vh;
+	object-fit: cover;
+	overflow: hidden;
+	object-position: center center;
+}
+
+.fullscreen .image-gallery-slide img {
+	height: 100vh;
+}

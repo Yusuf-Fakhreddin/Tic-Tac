@@ -54,7 +54,9 @@ const ProductInfo = ({ product }) => {
 
 			<ListItem>
 				<ListItemText>
-					<Typography variant="body2">{product.description}</Typography>
+					{product.description.split("\n").map((line) => (
+						<Typography variant="body2">{line}</Typography>
+					))}
 				</ListItemText>
 			</ListItem>
 		</List>

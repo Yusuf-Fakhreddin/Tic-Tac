@@ -6,16 +6,10 @@ const ProductImagesCarousel = ({ images }) => {
 	let newImages = images.map((image) => {
 		return {
 			original: image,
-			originalHeight: "100%",
 		};
 	});
 	return (
-		<Box
-			sx={{
-				// marginTop: "25px",
-				marginX: "auto",
-			}}
-		>
+		<Box>
 			<ImageGallery
 				items={newImages}
 				// showThumbnails={false}
@@ -24,7 +18,6 @@ const ProductImagesCarousel = ({ images }) => {
 				showFullscreenButton={true}
 				// autoPlay={true}
 				lazyLoad={true}
-				wid
 			/>
 		</Box>
 	);

@@ -8,17 +8,18 @@ const ProductImageBox = ({ productImage, dragProps, ...props }) => {
 				{...props}
 				component="img"
 				sx={{
-					// maxWidth: "100%",
+					maxWidth: "100%",
 					// maxHegiht: "100%",
-					width: "100%",
-					// height: "70%",
+					width: "350px",
+					height: "450px",
 					// height: 233,
 					// width: 350,
 					// maxHeight: { xs: 233, md: 167 },
 					// maxWidth: { xs: 350, md: 250 },
 					cursor: "pointer",
+					objectFit: "contain",
 				}}
-				alt="Product"
+				alt="Product Image"
 				src={productImage}
 			></Box>
 		</Zoom>

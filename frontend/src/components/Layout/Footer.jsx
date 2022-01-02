@@ -26,7 +26,7 @@ const Footer = () => {
 								This is a demo project
 							</Typography>
 							<Typography color="white" variant="h6">
-								Please Don't enter any real payment card information
+								Please don't enter any real payment card information
 							</Typography>
 						</Grid>
 						<Grid item textAlign="center" xs={12} md={6}>
