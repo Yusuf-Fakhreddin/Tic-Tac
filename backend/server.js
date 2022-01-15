@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -36,6 +37,21 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/payment_intents", stripeRoutes);
 app.use("/api/interval_statistics", intervalStatisticsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+
+const __dirname = path.resolve();
+app.use("/images", express.static(path.join(__dirname, "/images")));
+
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+	app.get("*", (req, res) =>
+		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+	);
+} else {
+	app.get("/", (req, res) => {
+		res.send("API is running....");
+	});
+}
 
 // handling not Found URLs
 app.use(notFound);
