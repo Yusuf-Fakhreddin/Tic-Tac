@@ -48,7 +48,6 @@ const ProductListScreen = () => {
 	}, [history, userInfo]);
 
 	const DeleteProductHandler = async (id) => {
-		console.log(id);
 		await deleteProduct({ id: id, token: userInfo.token, pageNumber });
 	};
 

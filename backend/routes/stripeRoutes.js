@@ -9,7 +9,6 @@ const stripe = new Stripe(process.env.SECRET_KEY);
 const router = express.Router();
 
 export default router.post("/", async (req, res) => {
-	console.log(req.body);
 	try {
 		const { amount } = req.body;
 		// Psst. For production-ready applications we recommend not using the
@@ -23,7 +22,6 @@ export default router.post("/", async (req, res) => {
 			amount,
 			currency: "egp",
 		});
-		console.log(paymentIntent.client_secret);
 		res.status(200).send(paymentIntent.client_secret);
 	} catch (err) {
 		res.status(500).json({ statusCode: 500, message: err.message });

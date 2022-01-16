@@ -35,11 +35,9 @@ const OrdersListScreen = () => {
 		if (!userInfo || !userInfo.isAdmin) {
 			history.push("/");
 		}
-		if (data) console.log(data);
 	}, [history, userInfo, data]);
 
 	// const DeleteProductHandler = async (id) => {
-	// 	console.log(id);
 	// 	await deleteProduct({ id: id, token: userInfo.token, pageNumber });
 	// };
 

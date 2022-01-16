@@ -32,7 +32,6 @@ const ProductForm = ({ onSubmit, userInfo, initialValues }) => {
 			  }
 			: { category: "Men" },
 	});
-	console.log(initialValues);
 
 	return (
 		<form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>

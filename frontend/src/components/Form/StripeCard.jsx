@@ -63,14 +63,12 @@ const StripeCard = ({ price, user, shippingAddress, onSuccessfulCheckout }) => {
 					payment_method: paymentMethodReq.paymentMethod.id,
 				}
 			);
-			console.log(paymentIntent);
-			console.log(paymentIntent.id);
+
 			if (error) {
 				setCheckoutError(error.message);
 				setProcessingTo(false);
 				return;
 			}
-			console.log(checkoutError);
 
 			onSuccessfulCheckout();
 		} catch (err) {

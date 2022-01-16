@@ -45,10 +45,8 @@ const ProductScreen = ({ match }) => {
 	}, [isSuccess, isDeleteSuccess]);
 
 	const DeleteProductHandler = async (id) => {
-		console.log(id);
 		await deleteProduct({ id: id, token: userInfo.token });
 	};
-	console.log(product);
 	if (isLoading) return <CenteredCircularProgress />;
 	else
 		return (

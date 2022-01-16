@@ -4,7 +4,6 @@ import Stack from "@mui/material/Stack";
 
 //  USE WHEN LS and backend carts are properly in sync
 const CartScreenDifferences = ({ cartItems, userInfo, backendCart }) => {
-	console.log(backendCart);
 	let alerts = [];
 	if (backendCart) {
 		for (let i = 0; i < backendCart.length; i++) {

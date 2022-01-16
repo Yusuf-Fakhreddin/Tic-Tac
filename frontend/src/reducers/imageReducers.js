@@ -14,7 +14,6 @@ export const imagesReducer = (state = { images: [] }, action) => {
 			const image = action.payload;
 			const existItem = state.images.find((x) => x === image);
 
-			console.log(existItem);
 			if (existItem) {
 				return {
 					...state,
@@ -28,7 +27,6 @@ export const imagesReducer = (state = { images: [] }, action) => {
 			}
 
 		case REMOVE_FROM_IMAGES:
-			console.log(action.payload);
 			return {
 				...state,
 				images:

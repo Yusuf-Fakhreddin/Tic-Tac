@@ -21,7 +21,6 @@ import { getCartFromBackend } from "../actions/cartActions";
 const CartScreen = () => {
 	const cart = useSelector((state) => state.cartState);
 	const { cartItems } = cart;
-	console.log(cartItems);
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;

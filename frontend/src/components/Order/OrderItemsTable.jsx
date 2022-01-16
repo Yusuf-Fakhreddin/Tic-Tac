@@ -14,7 +14,6 @@ import { useTranslation } from "react-i18next";
 
 const OrderItemsTable = ({ orderItems }) => {
 	const { t } = useTranslation();
-	console.log(orderItems);
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: "100%" }} aria-label="simple table">

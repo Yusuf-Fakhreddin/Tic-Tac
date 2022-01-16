@@ -55,7 +55,6 @@ const ShippingScreen = () => {
 	}, [userInfo, history]);
 
 	const onSubmit = (data) => {
-		console.log(data);
 		let { address, city, mobileNumber, country } = data;
 		dispatch(saveShippingAddress({ address, city, mobileNumber, country }));
 		history.push("/paymentmethod");

@@ -6,7 +6,6 @@ import { USER_LOGIN_SUCCESS } from "../constants/authConstants";
 // <----------- Queries ---------->
 
 const getUserDetailsById = async (userId, token) => {
-	console.log(userId, "userId");
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -17,7 +16,6 @@ const getUserDetailsById = async (userId, token) => {
 };
 
 export const useListUserDetailsById = (id, token) => {
-	console.log("id", id);
 	const { data, error, isLoading, isError, isSuccess } = useQuery(
 		["userDetails", id],
 		() => getUserDetailsById(id, token)
@@ -64,7 +62,6 @@ export const useDeleteUser = () => {
 	const { mutateAsync, isLoading } = useMutation(deleteUserById, {
 		// When mutate is called:
 		onMutate: async ({ id, pageNumber }) => {
-			console.log(id, pageNumber);
 			// Cancel any outgoing refetches (so they don't overwrite our optimistic update)
 			await queryClient.cancelQueries(["listUsers", pageNumber]);
 
@@ -78,7 +75,6 @@ export const useDeleteUser = () => {
 					users: old.users.filter((f) => f._id !== id),
 					count: old.count - 1,
 				};
-				console.log(newState);
 				return newState;
 			});
 
@@ -94,7 +90,6 @@ export const useDeleteUser = () => {
 		},
 		// Always refetch after error or success:
 		onSettled: (data, error, { pageNumber }, context) => {
-			console.log(pageNumber);
 			queryClient.invalidateQueries(["listUsers", pageNumber]);
 		},
 	});
@@ -105,7 +100,6 @@ export const useDeleteUser = () => {
 };
 
 const updateUserProfile = async ({ user, token }) => {
-	console.log(user, token);
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -125,7 +119,6 @@ export const useUpdateUserProfile = () => {
 		updateUserProfile,
 		{
 			onSuccess: (data) => {
-				console.log(data);
 				dispatch({
 					type: USER_LOGIN_SUCCESS,
 					payload: data,

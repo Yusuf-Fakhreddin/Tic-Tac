@@ -29,14 +29,6 @@ const PlaceOrderSummary = ({ cart, token }) => {
 	const [createOrder, createOrderLoading, createOrderSuccess, createdOrder] =
 		useCreateOrder();
 	const placeOrderHandler = async () => {
-		console.log(
-			cartItems,
-			shippingAddress,
-			paymentMethod,
-			itemsPrice,
-			shippingPrice,
-			totalPrice
-		);
 		await createOrder({
 			order: {
 				orderItems: cartItems,

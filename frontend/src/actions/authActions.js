@@ -139,7 +139,6 @@ export const logout = () => (dispatch) => {
 };
 
 export const register = (name, email, password) => async (dispatch) => {
-	console.log("register");
 	try {
 		dispatch({
 			type: USER_REGISTER_REQUEST,
@@ -178,7 +177,6 @@ export const register = (name, email, password) => async (dispatch) => {
 };
 
 export const forgotPassword = (email) => async (dispatch) => {
-	console.log("forgot password action");
 	try {
 		dispatch({
 			type: FORGOT_PASSWORD_REQUEST,
@@ -194,7 +192,6 @@ export const forgotPassword = (email) => async (dispatch) => {
 			{ email },
 			config
 		);
-		console.log(data + " of forgotpassword");
 		dispatch({
 			type: FORGOT_PASSWORD_SUCCESS,
 			payload: data,
@@ -210,7 +207,6 @@ export const forgotPassword = (email) => async (dispatch) => {
 	}
 };
 export const resetPassword = (resettoken, password) => async (dispatch) => {
-	console.log("forgot password action");
 	try {
 		dispatch({
 			type: RESET_PASSWORD_REQUEST,
@@ -226,7 +222,6 @@ export const resetPassword = (resettoken, password) => async (dispatch) => {
 			{ password },
 			config
 		);
-		console.log(data + " of resetpassword");
 		dispatch({
 			type: RESET_PASSWORD_SUCCESS,
 			payload: data,

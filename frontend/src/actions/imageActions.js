@@ -12,7 +12,6 @@ export const resetImages = () => (dispatch) => {
 	});
 };
 export const initialImages = (images) => (dispatch) => {
-	console.log(images);
 	dispatch({
 		type: INITIAL_IMAGES,
 		payload: images,
@@ -20,7 +19,6 @@ export const initialImages = (images) => (dispatch) => {
 };
 
 export const addToImages = (imageUrl) => (dispatch) => {
-	console.log(imageUrl);
 	dispatch({
 		type: ADD_TO_IMAGES,
 		payload: imageUrl,

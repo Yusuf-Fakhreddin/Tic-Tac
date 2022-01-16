@@ -16,14 +16,12 @@ export const cartReducer = (
 			// check if the item already exist in the cart
 
 			const item = action.payload;
-			console.log(item);
 			const existItem = state.cartItems.find(
 				(x) => x.product._id === item.product._id
 			);
 			// const idx = state.cartItems.findIndex(
 			// 	(x) => x.product._id == action.payload.product
 			// );
-			console.log(existItem);
 			if (existItem) {
 				return {
 					...state,

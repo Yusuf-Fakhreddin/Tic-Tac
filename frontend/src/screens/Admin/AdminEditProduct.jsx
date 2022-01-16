@@ -25,7 +25,6 @@ const AdminEditProduct = () => {
 	const [product, productDetailsLoading, productDetailsSuccess] =
 		useListProductDetailsById(id, userInfo.token);
 
-	console.log(product);
 	const [
 		AdminEditProduct,
 		adminUpdateLoading,
@@ -38,9 +37,6 @@ const AdminEditProduct = () => {
 	const { images } = uploadImagesState;
 
 	const onSubmit = async (data) => {
-		console.log(data);
-		console.log(images);
-
 		await AdminEditProduct({
 			id,
 			product: {

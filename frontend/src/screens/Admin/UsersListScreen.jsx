@@ -38,11 +38,9 @@ const UsersListScreen = () => {
 		if (!userInfo || !userInfo.isAdmin) {
 			history.push("/");
 		}
-		if (data) console.log(data);
 	}, [history, userInfo, data]);
 
 	const DeleteUserHandler = async (id) => {
-		console.log(id);
 		await deleteUser({ id: id, token: userInfo.token, pageNumber });
 	};
 

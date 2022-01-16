@@ -48,7 +48,6 @@ const AdminEditUserScreen = () => {
 	const [AdminEditUser, adminEditLoading, editSuccess, editIsError, editError] =
 		useAdminUpdateUser();
 	const onSubmit = async (data) => {
-		console.log(data);
 		await AdminEditUser({ id, user: data, token: userInfo.token });
 	};
 

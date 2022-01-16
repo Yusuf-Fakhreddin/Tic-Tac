@@ -59,7 +59,6 @@ const RegisterScreen = () => {
 	}, [userInfo, history, redirect]);
 
 	const onSubmit = (data) => {
-		console.log(data);
 		let { name, email, password } = data;
 		dispatch(signUp(name, email, password));
 	};

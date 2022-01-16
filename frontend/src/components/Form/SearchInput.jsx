@@ -59,7 +59,6 @@ const SearchInput = () => {
 	});
 
 	const onSubmit = (data) => {
-		console.log(data);
 		let { keyword } = data;
 		if (keyword.trim()) history.push(`/search/${keyword}`);
 		else history.push("/");

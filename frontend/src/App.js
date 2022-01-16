@@ -43,7 +43,9 @@ import Dashboard from "./screens/Admin/Dashboard";
 import MyBottomNavigation from "./components/Layout/MyBottomNavigation";
 import SearchResults from "./screens/SearchResults";
 
-const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(
+	"pk_test_51JlXInJ0ElzwxyfLM4xSifxQhuyJcLrLUeGXHp4rx73qQfHEQ5u0R5wcBubuozzYhXpZsXvAIeYzzFV9CGsMVG3a001nfCoVgh"
+);
 
 const queryClient = new QueryClient({
 	defaultOptions: {

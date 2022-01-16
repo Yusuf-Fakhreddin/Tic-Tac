@@ -29,7 +29,6 @@ const DisplayReviewBox = ({ review, manage }) => {
 		await deleteReview({ productId: id, reviewId, token: userInfo.token });
 	};
 	const UpdateReviewHandler = async (reviewId, review) => {
-		console.log(id, reviewId);
 		await updateReview({
 			productId: id,
 			reviewId,

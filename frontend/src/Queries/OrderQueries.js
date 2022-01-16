@@ -5,7 +5,6 @@ import http from "../httpService";
 
 // <----------- Queries ---------->
 const getOrderDetailsById = async (orderId, token) => {
-	console.log(orderId, "orderId");
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -17,7 +16,6 @@ const getOrderDetailsById = async (orderId, token) => {
 };
 
 export const useListOrderDetailsById = (orderId, token) => {
-	console.log("id", orderId);
 	const { data, error, isLoading, isError } = useQuery(
 		["orderDetails", orderId],
 		() => getOrderDetailsById(orderId, token)
@@ -161,16 +159,16 @@ const deleteOrder = async ({ orderId, token }) => {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	await http.put(`/api/orders/${orderId}`, {}, config);
+	await http.delete(`/api/orders/${orderId}`, config);
 };
 
 export const useDeleteOrder = () => {
 	const queryClient = useQueryClient();
 
-	const { mutateAsync, isLoading } = useMutation(deleteOrder, {
+	const { mutateAsync, isLoading, isSuccess } = useMutation(deleteOrder, {
 		onSuccess: (data, variables, context) => {
 			queryClient.invalidateQueries(["orderDetails", variables.orderId]);
 		},
 	});
-	return [mutateAsync, isLoading];
+	return [mutateAsync, isLoading, isSuccess];
 };

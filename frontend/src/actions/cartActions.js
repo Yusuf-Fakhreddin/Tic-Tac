@@ -20,7 +20,6 @@ export const getCartFromBackend = () => async (dispatch, getState) => {
 	};
 
 	const { data } = await http.get(`/api/cart/mycart`, config);
-	console.log(data);
 	dispatch({
 		type: CART_FROM_SERVER,
 		payload: data,

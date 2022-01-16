@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 // <----------- Queries ---------->
 
 const getProductDetailsById = async (productId) => {
-	console.log(productId, "productId");
 	if (!productId) return;
 
 	const { data } = await http.get(`/api/products/${productId}`);
@@ -12,7 +11,6 @@ const getProductDetailsById = async (productId) => {
 };
 
 export const useListProductDetailsById = (id) => {
-	console.log("id", id);
 	const { data, error, isLoading, isError, isSuccess, refetch } = useQuery(
 		["productDetails", id],
 		() => getProductDetailsById(id)
@@ -21,7 +19,6 @@ export const useListProductDetailsById = (id) => {
 };
 
 const getListOfProducts = async (keyword = "", pageNumber = 1) => {
-	console.log(keyword, pageNumber);
 	const { data } = await http.get(
 		`http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
 	);
@@ -29,8 +26,6 @@ const getListOfProducts = async (keyword = "", pageNumber = 1) => {
 };
 
 export const useListOfProducts = (keyword = "", pageNumber = 1) => {
-	console.log(keyword, pageNumber);
-
 	const { data, error, isLoading, isError, refetch, isFetching } = useQuery(
 		["listProducts", pageNumber],
 		() => getListOfProducts(keyword, pageNumber)
@@ -39,7 +34,6 @@ export const useListOfProducts = (keyword = "", pageNumber = 1) => {
 };
 
 const searchProducts = async (keyword = "", pageNumber = 1) => {
-	console.log(keyword, pageNumber);
 	const { data } = await http.get(
 		`http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
 	);
@@ -47,8 +41,6 @@ const searchProducts = async (keyword = "", pageNumber = 1) => {
 };
 
 export const useSearchProducts = (keyword = "", pageNumber = 1) => {
-	console.log(keyword, pageNumber);
-
 	const { data, error, isLoading, isError, refetch, isFetching } = useQuery(
 		["searchProducts", pageNumber],
 		() => searchProducts(keyword, pageNumber)
@@ -86,7 +78,6 @@ export const useDeleteProduct = () => {
 	const { mutateAsync, isLoading, isSuccess } = useMutation(deleteProductById, {
 		// When mutate is called:
 		onMutate: async ({ id, pageNumber }) => {
-			console.log(id, pageNumber);
 			// Cancel any outgoing refetches (so they don't overwrite our optimistic update)
 			await queryClient.cancelQueries(["listProducts", pageNumber]);
 
@@ -103,7 +94,6 @@ export const useDeleteProduct = () => {
 						products: old.products.filter((f) => f._id !== id),
 						count: old.count - 1,
 					};
-					console.log(newState);
 					return newState;
 				});
 
@@ -121,7 +111,6 @@ export const useDeleteProduct = () => {
 		},
 		// Always refetch after error or success:
 		onSettled: (data, error, { pageNumber }, context) => {
-			console.log(pageNumber);
 			queryClient.invalidateQueries(["listProducts", pageNumber]);
 		},
 	});
@@ -159,7 +148,6 @@ const updateProduct = async ({ id, product, token }) => {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	console.log(product, "product Update");
 	await http.put(`/api/products/${id}`, product, config);
 };
 

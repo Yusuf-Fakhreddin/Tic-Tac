@@ -175,16 +175,22 @@ const getOrders = asyncHandler(async (req, res) => {
 // @route   DELETE  /api/orders/:id/
 // @access  Private/admin
 const deleteOrder = asyncHandler(async (req, res) => {
+	console.log(chalk.red(req.params.id));
 	const order = await Order.findById(req.params.id);
 	// delete order if user is admin || user owns the order and the order has not been shipped yet
 	if (order) {
-		if (!req.user.isAdmin && !order.user === req.user._id) {
+		if (
+			!req.user.isAdmin &&
+			order.user.toString() !== req.user._id.toString()
+		) {
 			res.status(401);
+			console.log(chalk.yellow(order.user !== req.user._id));
+
 			throw new Error("Not authorized");
 		} else if (req.user.isAdmin) {
 			await order.remove();
 			res.json({ message: "Order removed" });
-		} else if (order.user === req.user._id) {
+		} else if (order.user.toString() === req.user._id.toString()) {
 			if (!order.isShipped) {
 				await order.remove();
 				res.json({ message: "Order removed" });

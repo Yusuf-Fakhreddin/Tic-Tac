@@ -10,7 +10,6 @@ const CreateReviewBox = ({ productId, token }) => {
 
 	const [createReview, createReviewLoading] = useCreateReview();
 	const onSubmit = (data) => {
-		console.log(data);
 		createReview({
 			productId,
 			review: { ...data },

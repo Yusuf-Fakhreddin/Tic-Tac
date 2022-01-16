@@ -54,7 +54,6 @@ const ProfileScreen = () => {
 		updateError,
 	] = useUpdateUserProfile();
 	const onSubmit = async (data) => {
-		console.log(data);
 		// let { name, email, password } = data;
 		// dispatch(updateUserProfile({ name, email, password }));
 		await updateUserProfile({ user: data, token: userInfo.token });

@@ -15,7 +15,6 @@ const ImageUpload = () => {
 
 	const uploadImagesState = useSelector((state) => state.uploadImagesState);
 	const { images } = uploadImagesState;
-	console.log({ images });
 
 	const [uploadImage, isUploadLoading, imageUrl] = useUploadProductImage();
 	const dispatch = useDispatch();
@@ -36,7 +35,6 @@ const ImageUpload = () => {
 
 	const onChange = async (imageList, addUpdateIndex) => {
 		// data for submit
-		console.log(imageList, addUpdateIndex);
 		// setImages(imageList);
 		// await uploadImage({
 		// 	file: imageList[addUpdateIndex].file,
@@ -46,7 +44,6 @@ const ImageUpload = () => {
 	};
 
 	const handleImageDelete = (index) => {
-		console.log(index);
 		dispatch(removeFromImages(index));
 	};
 

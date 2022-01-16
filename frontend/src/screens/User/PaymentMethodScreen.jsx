@@ -47,13 +47,10 @@ const PaymentMethodScreen = () => {
 	useEffect(() => {
 		document.title = "Payment Method";
 		if (!userInfo) history.push("/login?redirect=paymentmethod");
-		console.log(values.paymentMethod);
 	}, [userInfo, history, values.paymentMethod]);
 
 	const onSubmit = (data) => {
-		console.log(data);
 		let { paymentMethod } = data;
-		// console.log(paymentMethod);
 		dispatch(savePaymentMethod(paymentMethod));
 		history.push("/placeorder");
 	};

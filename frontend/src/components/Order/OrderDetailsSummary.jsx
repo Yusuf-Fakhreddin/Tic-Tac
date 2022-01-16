@@ -8,6 +8,8 @@ import {
 } from "../../Queries/OrderQueries";
 import CenteredCircularProgress from "../CenteredCircularProgress";
 import PricesSummary from "./PricesSummary";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const OrderDetailsSummary = ({ order, userInfo }) => {
 	let paymentMethod = order.paymentMethod;
@@ -15,7 +17,10 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 	const [deliverOrder, deliverOrderLoading] = useDeliverOrder();
 	const [payOrder, isPayOrderLoading] = usePayOrder();
 	const [shipOrder, isShipOrderLoading] = useShipOrder();
-	const [deleteOrder, isDeleteOrderLoading] = useDeleteOrder();
+	const [deleteOrder, isDeleteOrderLoading, isDeleteOrderSuccess] =
+		useDeleteOrder();
+
+	const history = useHistory();
 
 	const deliverOrderHandler = async () => {
 		if (paymentMethod === "Cash On Delivery") {
@@ -38,7 +43,9 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 			token: userInfo.token,
 		});
 	};
-
+	useEffect(() => {
+		if (isDeleteOrderSuccess) history.goBack();
+	}, [isDeleteOrderSuccess]);
 	return (
 		<Box
 			sx={{
