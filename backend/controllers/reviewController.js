@@ -63,7 +63,10 @@ const updateReview = asyncHandler(async (req, res) => {
 			}
 		}
 		if (reviewIndex > -1) {
-			if (req.user.isAdmin || review.user === req.user._id) {
+			if (
+				req.user.isAdmin ||
+				review.user.toString() === req.user._id.toString()
+			) {
 				const newReview = {
 					name: req.user.name,
 					rating: Number(rating),
@@ -115,7 +118,10 @@ const deleteReview = asyncHandler(async (req, res) => {
 		}
 
 		if (reviewIndex > -1) {
-			if (req.user.isAdmin || review.user === req.user._id) {
+			if (
+				req.user.isAdmin ||
+				review.user.toString() === req.user._id.toString()
+			) {
 				product.reviews.splice(reviewIndex, 1);
 				if (product.reviews.length)
 					product.rating =

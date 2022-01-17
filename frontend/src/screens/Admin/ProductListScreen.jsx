@@ -137,7 +137,7 @@ const ProductListScreen = () => {
 													{row.price}
 												</TableCell>
 												<TableCell align="center" component="th" scope="row">
-													{row.price}
+													{row.category}
 												</TableCell>
 												<TableCell align="center">
 													<NavLink to={`/admin/editproduct/${row._id}`}>

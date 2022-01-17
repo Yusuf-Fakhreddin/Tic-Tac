@@ -159,6 +159,7 @@ export const useUpdateProduct = () => {
 		{
 			onSuccess: (data, variables, context) => {
 				queryClient.invalidateQueries(["productDetails", variables.id]);
+				queryClient.invalidateQueries(["listProducts", 1]);
 			},
 		}
 	);

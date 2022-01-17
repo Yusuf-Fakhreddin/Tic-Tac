@@ -24,7 +24,7 @@ const Dashboard = () => {
 			history.push("/");
 		}
 	}, [history, userInfo]);
-	const [data, loading] = useDashboardStatistics(userInfo.token);
+	const [data, loading] = useDashboardStatistics(userInfo && userInfo.token);
 	return (
 		<Grid container spacing={2}>
 			<Grid item md={2}>

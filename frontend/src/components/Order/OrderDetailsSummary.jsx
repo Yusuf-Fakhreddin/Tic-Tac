@@ -86,9 +86,11 @@ const OrderDetailsSummary = ({ order, userInfo }) => {
 								variant="contained"
 								disableElevation
 								onClick={shipOrderHandler}
-								disabled={paymentMethod === "Credit/Debit Card" && !order.isPad}
+								disabled={
+									paymentMethod === "Credit/Debit Card" && !order.isPaid
+								}
 							>
-								{paymentMethod === "Credit/Debit Card" && !order.isPad
+								{paymentMethod === "Credit/Debit Card" && !order.isPaid
 									? "Not Paid"
 									: "Mark As Shipped"}
 							</Button>

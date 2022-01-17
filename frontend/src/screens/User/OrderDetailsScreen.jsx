@@ -25,7 +25,11 @@ const OrderDetailsScreen = () => {
 	useEffect(() => {
 		document.title = "Order";
 		if (!userInfo) history.push(`/login?redirect=orderdetails/${id}`);
-		else if (orderDetails && userInfo._id !== orderDetails.user._id)
+		else if (
+			orderDetails &&
+			userInfo._id.toString() !== orderDetails.user._id.toString() &&
+			!userInfo.isAdmin
+		)
 			history.push(`/`);
 	}, [userInfo, history, id, orderDetails]);
 
@@ -97,7 +101,7 @@ const OrderDetailsScreen = () => {
 								{orderDetails.shippingAddress.country}
 							</Typography>
 
-							{orderDetails.isShipping && !orderDetails.isDelivered ? (
+							{orderDetails.isShipped ? (
 								<Stack sx={{ width: "100%" }} spacing={2}>
 									<Alert severity="success">
 										Shipped at {orderDetails.shippedAt.substring(0, 10)}

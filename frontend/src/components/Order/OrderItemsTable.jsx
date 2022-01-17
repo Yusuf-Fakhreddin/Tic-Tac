@@ -53,7 +53,7 @@ const OrderItemsTable = ({ orderItems }) => {
 									<ProductTableImage productImage={row.product.images[0]} />
 								</TableCell>
 								<TableCell align="center" component="th" scope="row">
-									<NavLink to={`/product/${row.product._id}`}>
+									<NavLink to={`/product/${row.product.productId}`}>
 										{row.product.name}
 									</NavLink>
 								</TableCell>
